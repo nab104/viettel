@@ -207,9 +207,9 @@ export default function HanhTrinhPage() {
 
            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
               {[
-                { title: "HỆ THỐNG & ĐỔI MỚI", items: ["Hệ sinh thái đa kênh", "Phủ sóng toàn quốc", "Tiên phong bán lẻ"] },
-                { title: "KHÁCH HÀNG", items: ["20 triệu khách/năm", "Phân phối toàn quốc", "Cửa hàng trải nghiệm chuẩn"] },
-                { title: "NHÂN SỰ & CỘNG ĐỒNG", items: ["2.000+ nhân sự", "Môi trường chuyên nghiệp", "Hoạt động xã hội"] }
+                { title: "HỆ THỐNG & ĐỔI MỚI", items: ["Hệ sinh thái đa kênh", "Phủ sóng toàn quốc", "Tiên phong bán lẻ", "Tích hợp tài chính", "Mở rộng kinh doanh"] },
+                { title: "KHÁCH HÀNG", items: ["Tiên phong bán lẻ ĐTDĐ (2006)", "20 triệu khách/năm", "Phân phối toàn quốc", "Cửa hàng trải nghiệm chuẩn"] },
+                { title: "ĐỐI TÁC - XÃ HỘI NHÂN SỰ", items: ["Đối tác công nghệ lớn", "2.000+ nhân sự", "Môi trường chuyên nghiệp", "Hoạt động cộng đồng", "Chuyển đổi số quốc gia"] }
               ].map((card, idx) => (
                 <div key={idx} className="bg-white p-10 rounded-[2.5rem] shadow-xl border border-gray-100 hover:-translate-y-2 transition-all">
                   <h4 className="text-viettel font-black text-lg mb-6 uppercase tracking-tight border-b pb-4">{card.title}</h4>
