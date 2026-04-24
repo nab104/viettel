@@ -208,59 +208,99 @@ export default function HanhTrinhPage() {
         </div>
       </section>
 
-      {/* 4. DANH HIỆU - Carousel Stack Redesigned */}
-      <section className="py-40 bg-viettel text-white relative overflow-hidden min-h-[800px] md:min-h-[950px] flex flex-col justify-center">
-        <div className="absolute top-0 left-0 w-full h-[500px] opacity-20 pointer-events-none">
-          <Image src="/images/diahinh1.1.png" fill className="object-cover object-top" alt="" />
+      {/* 4. DANH HIỆU - High-Fidelity Stack Carousel */}
+      <section className="relative w-full bg-viettel py-[110px] md:py-[130px] min-h-[760px] md:min-h-[850px] overflow-hidden flex flex-col">
+        {/* Topography Pattern */}
+        <div className="absolute top-0 left-0 w-full h-[380px] opacity-40 pointer-events-none z-0">
+          <Image 
+            src="/images/diahinh1.1.png" 
+            fill 
+            className="object-cover object-top" 
+            alt="" 
+          />
         </div>
         
-        <div className="container mx-auto px-6 max-w-7xl relative z-20">
-          <div className="mb-24 md:mb-32">
-            <h2 className="text-5xl md:text-7xl font-bold uppercase tracking-tight leading-none font-beausans text-white">DANH HIỆU</h2>
-          </div>
+        <div className="container mx-auto max-w-[1280px] px-6 md:px-[56px] relative z-10 flex-1 flex flex-col">
+          {/* Title */}
+          <h2 className="text-white font-bold text-4xl md:text-[56px] uppercase leading-none mb-[70px] md:mb-[90px] font-beausans">
+            DANH HIỆU
+          </h2>
 
-          <div className="relative w-full h-[500px] flex items-center justify-center select-none">
+          {/* Carousel Wrapper */}
+          <div className="relative w-full h-[400px] md:h-[450px] flex items-center justify-center overflow-visible">
             {awards.map((award, i) => {
               const total = awards.length;
               const diff = (i - awardsActiveIndex + total) % total;
               
-              let styleClass = "opacity-0 scale-50 pointer-events-none z-0";
-              let translateX = 0;
-              let scale = 0.5;
-              let opacity = 0;
-              let zIndex = 0;
-              let blur = "blur(0px)";
+              // Define positions based on diff
+              let style = {
+                transform: "translate(-50%, -50%) scale(0.5)",
+                opacity: 0,
+                zIndex: 0,
+                filter: "blur(4px)",
+                pointerEvents: "none"
+              } as React.CSSProperties;
 
               if (diff === 0) {
-                translateX = 0; scale = 1; opacity = 1; zIndex = 40; blur = "blur(0px)"; styleClass = "pointer-events-auto shadow-2xl";
+                // Main Card
+                style = {
+                  transform: "translate(-50%, -50%) scale(1)",
+                  opacity: 1,
+                  zIndex: 10,
+                  filter: "blur(0px)",
+                  pointerEvents: "auto"
+                };
               } else if (diff === 1) {
-                translateX = 320; scale = 0.85; opacity = 0.8; zIndex = 30; blur = "blur(1px)"; styleClass = "pointer-events-auto";
+                // Right Near
+                style = {
+                  transform: "translate(calc(-50% + 280px), -50%) scale(0.85)",
+                  opacity: 0.8,
+                  zIndex: 5,
+                  filter: "blur(1px)",
+                  pointerEvents: "auto"
+                };
               } else if (diff === 2) {
-                translateX = 480; scale = 0.7; opacity = 0.6; zIndex = 20; blur = "blur(2px)"; styleClass = "pointer-events-auto";
+                // Right Far
+                style = {
+                  transform: "translate(calc(-50% + 480px), -50%) scale(0.75)",
+                  opacity: 0.6,
+                  zIndex: 3,
+                  filter: "blur(2px)",
+                  pointerEvents: "auto"
+                };
               } else if (diff === total - 1) {
-                translateX = -320; scale = 0.85; opacity = 0.8; zIndex = 30; blur = "blur(1px)"; styleClass = "pointer-events-auto";
+                // Left Near
+                style = {
+                  transform: "translate(calc(-50% - 280px), -50%) scale(0.85)",
+                  opacity: 0.8,
+                  zIndex: 5,
+                  filter: "blur(1px)",
+                  pointerEvents: "auto"
+                };
               } else if (diff === total - 2) {
-                translateX = -480; scale = 0.7; opacity = 0.6; zIndex = 20; blur = "blur(2px)"; styleClass = "pointer-events-auto";
+                // Left Far
+                style = {
+                  transform: "translate(calc(-50% - 480px), -50%) scale(0.75)",
+                  opacity: 0.6,
+                  zIndex: 3,
+                  filter: "blur(2px)",
+                  pointerEvents: "auto"
+                };
               }
 
               return (
                 <div 
                   key={i} 
-                  className={`absolute w-[90%] sm:w-[450px] md:w-[620px] bg-white rounded-[2.5rem] p-8 md:p-14 text-center transition-all duration-700 ease-out flex flex-col justify-center items-center shadow-2xl cursor-pointer ${styleClass}`}
-                  style={{
-                    transform: `translateX(${translateX}px) scale(${scale})`,
-                    opacity: opacity,
-                    zIndex: zIndex,
-                    filter: blur
-                  }}
+                  className="absolute top-1/2 left-1/2 w-[90%] sm:w-[480px] md:w-[620px] h-[260px] md:h-[300px] bg-white rounded-[28px] p-8 md:p-[52px_60px] text-center transition-all duration-700 ease-out flex flex-col justify-center items-center shadow-[0_22px_48px_rgba(0,0,0,0.22)] cursor-pointer"
+                  style={style}
                   onClick={() => setAwardsActiveIndex(i)}
                 >
-                  <span className="block text-gray-900 font-bold text-xl md:text-2xl mb-6">NĂM {award.year}</span>
-                  <h3 className="text-2xl md:text-[34px] font-bold text-gray-900 uppercase leading-tight mb-4 max-w-[500px] font-beausans">
+                  <span className="block text-gray-900 font-bold text-lg md:text-[22px] mb-4 md:mb-6 font-roboto">NĂM {award.year}</span>
+                  <h3 className="text-xl md:text-[32px] font-bold text-gray-900 uppercase leading-[1.1] mb-4 max-w-[500px] font-beausans">
                     {award.title}
                   </h3>
-                  <div className="w-48 md:w-56 h-1 bg-viettel mx-auto my-7"></div>
-                  <p className="text-gray-600 text-sm md:text-[14px] font-roboto leading-relaxed max-w-[460px]">
+                  <div className="w-[180px] md:w-[210px] h-[4px] bg-viettel mx-auto mb-6 md:mb-7"></div>
+                  <p className="text-gray-600 text-[11px] md:text-[14px] font-roboto leading-[1.4] max-w-[460px]">
                     {award.desc}
                   </p>
                 </div>
@@ -268,16 +308,17 @@ export default function HanhTrinhPage() {
             })}
           </div>
 
-          <div className="flex justify-center gap-6 mt-20 relative z-30">
+          {/* Navigation Buttons - Centered below carousel */}
+          <div className="flex justify-center gap-4 mt-12 md:mt-16">
             <button 
               onClick={() => setAwardsActiveIndex((awardsActiveIndex - 1 + awards.length) % awards.length)}
-              className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-viettel transition-all group"
+              className="w-11 h-11 rounded-full bg-white text-viettel flex items-center justify-center hover:bg-gray-100 transition-all shadow-md"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button 
               onClick={() => setAwardsActiveIndex((awardsActiveIndex + 1) % awards.length)}
-              className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-viettel transition-all group"
+              className="w-11 h-11 rounded-full bg-white text-viettel flex items-center justify-center hover:bg-gray-100 transition-all shadow-md"
             >
               <ChevronRight className="w-6 h-6" />
             </button>
