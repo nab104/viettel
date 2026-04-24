@@ -182,9 +182,9 @@ export default function HanhTrinhPage() {
       {/* 3. THÀNH TỰU (White Stats) */}
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-6 max-w-7xl">
-           <h2 className="text-[#EE0033] font-black text-6xl md:text-8xl uppercase mb-32 tracking-tighter opacity-10 leading-none">THÀNH TỰU</h2>
+           <h2 className="text-[#EE0033] font-black text-6xl md:text-8xl uppercase mb-48 tracking-tighter opacity-25 leading-none">THÀNH TỰU</h2>
            
-           <div className="bg-white rounded-[3rem] shadow-2xl p-12 md:p-20 flex flex-col md:flex-row items-center gap-16 relative -mt-24">
+           <div className="bg-white rounded-[3rem] shadow-2xl p-12 md:p-20 flex flex-col md:flex-row items-center gap-16 relative -mt-40">
              <div className="flex-1 space-y-6">
                 {[
                   "Top 3 bán lẻ Việt Nam",
