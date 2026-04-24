@@ -208,45 +208,67 @@ export default function HanhTrinhPage() {
         </div>
       </section>
 
-      {/* 4. DANH HIỆU - Carousel Stack Redesigned */}
-      <section className="py-32 bg-viettel text-white relative overflow-hidden min-h-[700px] md:min-h-[850px] flex flex-col justify-center">
-        <div className="absolute top-0 left-0 w-full h-[400px] opacity-20 pointer-events-none">
-          <Image src="/images/diahinh1.1.png" fill className="object-cover object-top" alt="" />
+      {/* 4. DANH HIỆU - High-Fidelity Stack Carousel */}
+      <section className="py-24 md:py-32 bg-viettel text-white relative overflow-hidden min-h-[720px] md:min-h-[760px] flex flex-col items-center">
+        {/* Topography Pattern Overlay - Clearer as per request */}
+        <div className="absolute top-0 left-0 w-full h-[360px] opacity-[0.65] pointer-events-none z-0">
+          <Image 
+            src="/images/diahinh1.1.png" 
+            fill 
+            className="object-cover object-top" 
+            alt="" 
+          />
         </div>
         
-        <div className="container mx-auto px-6 max-w-7xl relative z-20">
-          <div className="mb-16 md:mb-24">
-            <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tight leading-none font-beausans text-white">DANH HIỆU</h2>
+        <div className="container mx-auto px-6 md:px-12 max-w-[1280px] relative z-10 flex flex-col h-full">
+          {/* Section Title - Top Left, No overlap */}
+          <div className="mb-[60px] md:mb-[95px]">
+            <h2 className="text-4xl md:text-[52px] font-bold uppercase tracking-tight leading-none font-beausans text-white">
+              DANH HIỆU
+            </h2>
           </div>
 
-          <div className="relative w-full h-[450px] flex items-center justify-center select-none">
+          {/* Awards Stack Carousel Container */}
+          <div className="relative w-full h-[320px] md:h-[350px] flex items-center justify-center select-none">
             {awards.map((award, i) => {
               const total = awards.length;
               const diff = (i - awardsActiveIndex + total) % total;
               
+              // Map diff to relative position: -2, -1, 0, 1, 2
+              let pos = diff;
+              if (pos > total / 2) pos -= total;
+
               let styleClass = "opacity-0 scale-50 pointer-events-none z-0";
               let translateX = 0;
               let scale = 0.5;
               let opacity = 0;
               let zIndex = 0;
               let blur = "blur(0px)";
+              let isVisible = false;
 
-              if (diff === 0) {
-                translateX = 0; scale = 1; opacity = 1; zIndex = 40; blur = "blur(0px)"; styleClass = "";
-              } else if (diff === 1) {
-                translateX = 300; scale = 0.85; opacity = 0.8; zIndex = 30; blur = "blur(1px)"; styleClass = "";
-              } else if (diff === 2) {
-                translateX = 450; scale = 0.7; opacity = 0.6; zIndex = 20; blur = "blur(2px)"; styleClass = "";
-              } else if (diff === total - 1) {
-                translateX = -300; scale = 0.85; opacity = 0.8; zIndex = 30; blur = "blur(1px)"; styleClass = "";
-              } else if (diff === total - 2) {
-                translateX = -450; scale = 0.7; opacity = 0.6; zIndex = 20; blur = "blur(2px)"; styleClass = "";
+              // Card Styles based on position
+              if (pos === 0) { // Main
+                translateX = 0; scale = 1; opacity = 1; zIndex = 10; isVisible = true;
+              } else if (pos === -1) { // Left Near
+                translateX = -280; scale = 0.88; opacity = 0.75; zIndex = 5; blur = "blur(1px)"; isVisible = true;
+              } else if (pos === -2) { // Left Far
+                translateX = -550; scale = 0.78; opacity = 0.55; zIndex = 2; blur = "blur(2px)"; isVisible = true;
+              } else if (pos === 1) { // Right Near
+                translateX = 280; scale = 0.88; opacity = 0.75; zIndex = 5; blur = "blur(1px)"; isVisible = true;
+              } else if (pos === 2) { // Right Far
+                translateX = 550; scale = 0.78; opacity = 0.55; zIndex = 2; blur = "blur(2px)"; isVisible = true;
               }
+
+              if (!isVisible) return null;
 
               return (
                 <div 
                   key={i} 
-                  className={`absolute w-[90%] sm:w-[450px] md:w-[620px] bg-white rounded-[2.5rem] p-8 md:p-14 text-center transition-all duration-700 ease-out flex flex-col justify-center items-center shadow-2xl cursor-pointer ${styleClass}`}
+                  className={`absolute bg-white rounded-[26px] shadow-[0_18px_38px_rgba(0,0,0,0.18)] transition-all duration-700 ease-out flex flex-col justify-center items-center cursor-pointer overflow-hidden
+                    ${pos === 0 
+                      ? "w-[90%] md:w-[560px] min-h-[240px] md:min-h-[260px] p-8 md:p-12" 
+                      : "hidden md:flex w-[430px] min-h-[190px] p-6 md:p-10"
+                    }`}
                   style={{
                     transform: `translateX(${translateX}px) scale(${scale})`,
                     opacity: opacity,
@@ -255,12 +277,18 @@ export default function HanhTrinhPage() {
                   }}
                   onClick={() => setAwardsActiveIndex(i)}
                 >
-                  <span className="block text-gray-900 font-bold text-xl md:text-2xl mb-6">NĂM {award.year}</span>
-                  <h3 className="text-2xl md:text-[34px] font-bold text-gray-900 uppercase leading-tight mb-4 max-w-[500px] font-beausans">
+                  <span className={`block text-gray-900 font-bold mb-4 md:mb-6 ${pos === 0 ? "text-xl md:text-[22px]" : "text-lg"}`}>
+                    NĂM {award.year}
+                  </span>
+                  <h3 className={`font-bold text-gray-900 uppercase leading-tight font-beausans max-w-[460px]
+                    ${pos === 0 ? "text-2xl md:text-[30px]" : "text-xl"}
+                  `}>
                     {award.title}
                   </h3>
-                  <div className="w-48 md:w-56 h-1 bg-viettel mx-auto my-7"></div>
-                  <p className="text-gray-600 text-sm md:text-[14px] font-roboto leading-relaxed max-w-[460px]">
+                  <div className={`bg-viettel mx-auto ${pos === 0 ? "w-48 md:w-[210px] h-1 my-6 md:my-7" : "w-32 h-1 my-4"}`}></div>
+                  <p className={`text-gray-500 font-roboto leading-relaxed max-w-[460px]
+                    ${pos === 0 ? "text-xs md:text-[13px] opacity-100" : "text-[10px] opacity-0"}
+                  `}>
                     {award.desc}
                   </p>
                 </div>
@@ -268,16 +296,23 @@ export default function HanhTrinhPage() {
             })}
           </div>
 
-          <div className="flex justify-center gap-6 mt-20 relative z-30">
+          {/* Navigation Arrows */}
+          <div className="flex justify-center gap-6 mt-16 md:mt-24 relative z-30">
             <button 
               onClick={() => setAwardsActiveIndex((awardsActiveIndex - 1 + awards.length) % awards.length)}
-              className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-viettel transition-all group"
+              className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-viettel transition-all group"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button 
               onClick={() => setAwardsActiveIndex((awardsActiveIndex + 1) % awards.length)}
-              className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-viettel transition-all group"
+              className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hidden md:flex hover:bg-white hover:text-viettel transition-all group"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+            <button 
+              onClick={() => setAwardsActiveIndex((awardsActiveIndex + 1) % awards.length)}
+              className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center md:hidden hover:bg-white hover:text-viettel transition-all group"
             >
               <ChevronRight className="w-6 h-6" />
             </button>
