@@ -228,27 +228,33 @@ export default function HanhTrinhPage() {
       </section>
 
       {/* 4. DANH HIỆU (Awards) */}
-      <section className="py-24 bg-viettel text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 flex items-center justify-center">
+      <section className="py-24 bg-[#1a1a1a] text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-5 flex items-center justify-center">
           <span className="text-[20rem] font-black italic">AWARDS</span>
         </div>
         <div className="container mx-auto px-6 max-w-7xl relative z-10">
           <h2 className="text-4xl md:text-6xl font-black uppercase mb-16 tracking-tighter text-center">DANH HIỆU CAO QUÝ</h2>
-          <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={awardRef}>
-            <div className="flex">
-              {[1, 2, 3].map((_, i) => (
-                <div key={i} className="flex-[0_0_100%] min-w-0 flex justify-center p-4">
-                  <div className="bg-white text-gray-900 rounded-[3rem] p-12 md:p-20 max-w-3xl w-full shadow-2xl text-center relative">
-                    <span className="block text-viettel font-black text-2xl mb-4">NĂM 2025</span>
-                    <h3 className="text-3xl md:text-5xl font-black uppercase mb-8 tracking-tighter leading-tight">CỜ THI ĐUA TẬP ĐOÀN</h3>
-                    <div className="w-20 h-1 bg-viettel mx-auto rounded-full mb-8"></div>
-                    <p className="text-gray-500 text-sm font-medium leading-relaxed">
-                      Quyết định số 16704/QĐ-CNVTQĐ ngày 31/12/2025 của Tập đoàn Công nghiệp - Viễn thông Quân đội trao tặng.
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            {[
+              { year: "2025", title: "CỜ THI ĐUA TẬP ĐOÀN", desc: "Quyết định số: 16704/QĐ-CNVTQĐ ngày 31/12/2025 của Tập đoàn Công nghiệp - Viễn thông Quân đội" },
+              { year: "2024", title: "LAO ĐỘNG XUẤT SẮC", desc: "Quyết định số: 15316/QĐ-CNVTQĐ ngày 25/12/2024 của Tập đoàn Công nghiệp - Viễn thông Quân đội" },
+              { year: "2024", title: "BẰNG KHEN BỘ QUỐC PHÒNG", desc: "Quyết định số: 3692/QĐ-BQP ngày 21/08/2024 của Bộ trưởng Bộ Quốc phòng." },
+              { year: "2024", title: "BẰNG KHEN TẬP ĐOÀN CN-VTQĐ", desc: "Quyết định số: 3524/QĐ-CNVTQĐ ngày 08/04/2024 của Tập đoàn Công nghiệp - Viễn thông Quân đội." },
+              { year: "2023", title: "ĐƠN VỊ QUYẾT THẮNG", desc: "Số: 11278/QĐ-CNVTQĐ ngày 31/12/2023; Tập đoàn Công nghiệp - Viễn thông Quân đội" },
+              { year: "2022", title: "CỜ THI ĐUA TẬP ĐOÀN", desc: "Số: 7220/QĐ-CNVTQĐ ngày 27/12/2022; Tập đoàn Công nghiệp - Viễn thông Quân đội" },
+              { year: "2021", title: "BẰNG KHEN BỘ QUỐC PHÒNG", desc: "Quyết định số: 2810/QĐ-BQP ngày 21/08/2021 của Bộ trưởng Bộ Quốc phòng." },
+              { year: "2021", title: "ĐƠN VỊ QUYẾT THẮNG", desc: "Số: 96/QĐ-CNVTQĐ ngày 07/01/2022; Tập đoàn Công nghiệp - Viễn thông Quân đội" }
+            ].map((award, i) => (
+              <div key={i} className="bg-white text-gray-900 rounded-[2.5rem] p-10 md:p-14 shadow-2xl text-center relative group hover:-translate-y-2 transition-all duration-500">
+                <span className="block text-gray-900 font-black text-xl md:text-2xl mb-4">NĂM {award.year}</span>
+                <h3 className="text-2xl md:text-4xl font-black uppercase mb-6 tracking-tighter leading-tight">{award.title}</h3>
+                <div className="w-48 h-1 bg-viettel mx-auto rounded-full mb-8"></div>
+                <p className="text-gray-500 text-xs md:text-sm font-medium leading-relaxed max-w-md mx-auto">
+                  {award.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
