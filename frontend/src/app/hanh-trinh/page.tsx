@@ -50,7 +50,7 @@ export default function HanhTrinhPage() {
         </div>
 
         {/* Block nền đỏ lớn */}
-        <div className="bg-[#EE0033] relative pt-16 pb-32 md:pb-48 -mt-1">
+        <div className="bg-viettel relative pt-16 pb-32 md:pb-48 -mt-1">
           <div className="container mx-auto px-6 max-w-[1320px] relative z-10">
             
             {/* Intro Grid: Title/Desc (Left) & Collage (Right) */}
@@ -69,7 +69,7 @@ export default function HanhTrinhPage() {
                 <div className="relative col-span-1 row-span-1">
                   <Image src="/images/z5250551357995_82a057a13e401ac4007bed59bda159fb.jpg" fill className="object-cover" alt="Store 1" />
                 </div>
-                <div className="bg-[#EE0033] border border-white/10"></div>
+                <div className="bg-viettel border border-white/10"></div>
                 <div className="relative col-span-1 row-span-1">
                   <Image src="/images/DSC04237.jpg" fill className="object-cover" alt="Store 2" />
                 </div>
@@ -148,7 +148,7 @@ export default function HanhTrinhPage() {
       <section className="py-24 bg-white relative">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="text-center mb-20">
-            <h2 className="text-[#EE0033] font-black text-4xl md:text-5xl uppercase tracking-tighter mb-4">HÀNH TRÌNH TỰ HÀO</h2>
+            <h2 className="text-viettel font-black text-4xl md:text-5xl uppercase tracking-tighter mb-4">HÀNH TRÌNH TỰ HÀO</h2>
             <p className="text-gray-500 uppercase tracking-widest font-bold text-sm">15 cột mốc lịch sử</p>
           </div>
 
@@ -173,8 +173,8 @@ export default function HanhTrinhPage() {
           </div>
           
           <div className="flex justify-center gap-4 mt-12">
-            <button onClick={() => timelineApi?.scrollPrev()} className="w-12 h-12 rounded-full border-2 border-gray-100 flex items-center justify-center hover:bg-[#EE0033] hover:text-white transition-all shadow-sm"><ChevronLeft /></button>
-            <button onClick={() => timelineApi?.scrollNext()} className="w-12 h-12 rounded-full border-2 border-gray-100 flex items-center justify-center hover:bg-[#EE0033] hover:text-white transition-all shadow-sm"><ChevronRight /></button>
+            <button onClick={() => timelineApi?.scrollPrev()} className="w-12 h-12 rounded-full border-2 border-gray-100 flex items-center justify-center hover:bg-viettel hover:text-white transition-all shadow-sm"><ChevronLeft /></button>
+            <button onClick={() => timelineApi?.scrollNext()} className="w-12 h-12 rounded-full border-2 border-gray-100 flex items-center justify-center hover:bg-viettel hover:text-white transition-all shadow-sm"><ChevronRight /></button>
           </div>
         </div>
       </section>
@@ -182,7 +182,7 @@ export default function HanhTrinhPage() {
       {/* 3. THÀNH TỰU (White Stats) */}
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-6 max-w-7xl">
-           <h2 className="text-[#EE0033] font-black text-6xl md:text-8xl uppercase mb-96 tracking-tighter opacity-70 leading-none relative z-10">THÀNH TỰU</h2>
+           <h2 className="text-viettel font-black text-6xl md:text-8xl uppercase mb-96 tracking-tighter opacity-80 leading-none relative z-10">THÀNH TỰU</h2>
            
            <div className="bg-white rounded-[3rem] shadow-2xl p-12 md:p-20 flex flex-col md:flex-row items-center gap-16 relative -mt-80">
              <div className="flex-1 space-y-6">
@@ -194,13 +194,13 @@ export default function HanhTrinhPage() {
                   "Top 3 thương hiệu uy tín"
                 ].map((text, i) => (
                   <div key={i} className="flex items-center gap-4 group">
-                    <div className="w-3 h-3 bg-[#EE0033] rounded-full group-hover:scale-150 transition-transform"></div>
+                    <div className="w-3 h-3 bg-viettel rounded-full group-hover:scale-150 transition-transform"></div>
                     <span className="text-xl md:text-2xl font-black text-gray-800 uppercase italic">{text}</span>
                   </div>
                 ))}
              </div>
              <div className="flex-1 text-center md:text-right">
-                <h3 className="text-[#EE0033] text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-4">VỊ THẾ <br /> THỊ TRƯỜNG</h3>
+                <h3 className="text-viettel text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-4">VỊ THẾ <br /> THỊ TRƯỜNG</h3>
                 <p className="text-gray-400 font-bold uppercase tracking-widest text-sm">Khẳng định sức mạnh dẫn đầu</p>
              </div>
            </div>
@@ -212,7 +212,7 @@ export default function HanhTrinhPage() {
                 { title: "NHÂN SỰ & CỘNG ĐỒNG", items: ["2.000+ nhân sự", "Môi trường chuyên nghiệp", "Hoạt động xã hội"] }
               ].map((card, idx) => (
                 <div key={idx} className="bg-white p-10 rounded-[2.5rem] shadow-xl border border-gray-100 hover:-translate-y-2 transition-all">
-                  <h4 className="text-[#EE0033] font-black text-lg mb-6 uppercase tracking-tight border-b pb-4">{card.title}</h4>
+                  <h4 className="text-viettel font-black text-lg mb-6 uppercase tracking-tight border-b pb-4">{card.title}</h4>
                   <ul className="space-y-3">
                     {card.items.map((item, i) => (
                       <li key={i} className="text-gray-600 font-medium flex items-center gap-2">
@@ -228,7 +228,7 @@ export default function HanhTrinhPage() {
       </section>
 
       {/* 4. DANH HIỆU (Awards) */}
-      <section className="py-24 bg-[#EE0033] text-white relative overflow-hidden">
+      <section className="py-24 bg-viettel text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 flex items-center justify-center">
           <span className="text-[20rem] font-black italic">AWARDS</span>
         </div>
@@ -239,9 +239,9 @@ export default function HanhTrinhPage() {
               {[1, 2, 3].map((_, i) => (
                 <div key={i} className="flex-[0_0_100%] min-w-0 flex justify-center p-4">
                   <div className="bg-white text-gray-900 rounded-[3rem] p-12 md:p-20 max-w-3xl w-full shadow-2xl text-center relative">
-                    <span className="block text-[#EE0033] font-black text-2xl mb-4">NĂM 2025</span>
+                    <span className="block text-viettel font-black text-2xl mb-4">NĂM 2025</span>
                     <h3 className="text-3xl md:text-5xl font-black uppercase mb-8 tracking-tighter leading-tight">CỜ THI ĐUA TẬP ĐOÀN</h3>
-                    <div className="w-20 h-1 bg-[#EE0033] mx-auto rounded-full mb-8"></div>
+                    <div className="w-20 h-1 bg-viettel mx-auto rounded-full mb-8"></div>
                     <p className="text-gray-500 text-sm font-medium leading-relaxed">
                       Quyết định số 16704/QĐ-CNVTQĐ ngày 31/12/2025 của Tập đoàn Công nghiệp - Viễn thông Quân đội trao tặng.
                     </p>
@@ -257,10 +257,10 @@ export default function HanhTrinhPage() {
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-            <h2 className="text-[#EE0033] font-black text-5xl md:text-6xl uppercase tracking-tighter leading-none">CÚP VÀ <br /> GIẢI THƯỞNG</h2>
+            <h2 className="text-viettel font-black text-5xl md:text-6xl uppercase tracking-tighter leading-none">CÚP VÀ <br /> GIẢI THƯỞNG</h2>
             <div className="flex gap-4">
-              <button onClick={() => cupApi?.scrollPrev()} className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center hover:bg-[#EE0033] hover:text-white transition-all shadow-lg"><ChevronLeft /></button>
-              <button onClick={() => cupApi?.scrollNext()} className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center hover:bg-[#EE0033] hover:text-white transition-all shadow-lg"><ChevronRight /></button>
+              <button onClick={() => cupApi?.scrollPrev()} className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center hover:bg-viettel hover:text-white transition-all shadow-lg"><ChevronLeft /></button>
+              <button onClick={() => cupApi?.scrollNext()} className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center hover:bg-viettel hover:text-white transition-all shadow-lg"><ChevronRight /></button>
             </div>
           </div>
 
@@ -274,7 +274,7 @@ export default function HanhTrinhPage() {
                     </div>
                     <div className="text-center">
                       <h4 className="font-black text-xl mb-2 text-gray-800 uppercase tracking-tight">{trophy.title}</h4>
-                      <p className="text-[#EE0033] font-bold text-xs uppercase tracking-widest">{trophy.subtitle}</p>
+                      <p className="text-viettel font-bold text-xs uppercase tracking-widest">{trophy.subtitle}</p>
                     </div>
                   </div>
                 </div>
