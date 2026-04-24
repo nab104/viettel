@@ -182,7 +182,7 @@ export default function HanhTrinhPage() {
       {/* 3. THÀNH TỰU (White Stats) */}
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-6 max-w-7xl">
-           <h2 className="text-viettel font-black text-6xl md:text-8xl uppercase mb-96 tracking-tighter opacity-80 leading-none relative z-10">THÀNH TỰU</h2>
+           <h2 className="text-viettel font-black text-6xl md:text-8xl uppercase mb-96 tracking-tighter leading-none relative z-10">THÀNH TỰU</h2>
            
            <div className="bg-white rounded-[3rem] shadow-2xl p-12 md:p-20 flex flex-col md:flex-row items-center gap-16 relative -mt-80">
              <div className="flex-1 space-y-6">
@@ -200,7 +200,7 @@ export default function HanhTrinhPage() {
                 ))}
              </div>
              <div className="flex-1 text-center md:text-right">
-                <h3 className="text-viettel text-3xl md:text-5xl font-black uppercase tracking-tighter leading-none mb-4 font-beausans">VỊ THẾ <br /> THỊ TRƯỜNG</h3>
+                <h3 className="text-viettel text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4">VỊ THẾ <br /> THỊ TRƯỜNG</h3>
                 <p className="text-gray-400 font-bold uppercase tracking-widest text-sm">Khẳng định sức mạnh dẫn đầu</p>
              </div>
            </div>
