@@ -19,7 +19,7 @@ export const Header = () => {
 
   return (
     <header className="fixed top-6 left-0 w-full z-50 flex justify-center px-6 pointer-events-none">
-      <div className="bg-white/95 backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.15)] rounded-2xl w-full max-w-7xl px-8 md:px-12 h-20 flex items-center justify-between pointer-events-auto border border-white/20">
+      <div className="bg-white/95 backdrop-blur-md shadow-[0_20px_50px_rgba(0,0,0,0.15)] rounded-none w-full max-w-7xl px-8 md:px-12 h-20 flex items-center justify-between pointer-events-auto border border-white/20">
         <div className="flex items-center flex-shrink-0 h-full">
           <Link href="/" className="block relative w-48 h-full md:w-64 overflow-hidden">
             <Image 
