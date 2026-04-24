@@ -200,7 +200,7 @@ export default function HanhTrinhPage() {
                 ))}
              </div>
              <div className="flex-1 text-center md:text-right">
-                <h3 className="text-viettel text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none mb-4">VỊ THẾ <br /> THỊ TRƯỜNG</h3>
+                <h3 className="text-viettel text-4xl md:text-6xl font-black uppercase tracking-tighter leading-none mb-4">VỊ THẾ <br /> THỊ TRƯỜNG</h3>
                 <p className="text-gray-400 font-bold uppercase tracking-widest text-sm">Khẳng định sức mạnh dẫn đầu</p>
              </div>
            </div>
