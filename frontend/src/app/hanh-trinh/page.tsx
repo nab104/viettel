@@ -1,13 +1,14 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight, Target, Rocket, Globe, ShieldCheck } from "lucide-react";
 
 export default function HanhTrinhPage() {
   const [timelineRef, timelineApi] = useEmblaCarousel({ align: "start", loop: false });
-  const [awardRef, awardApi] = useEmblaCarousel({ loop: true });
   const [cupRef, cupApi] = useEmblaCarousel({ align: "center", loop: true });
+  
+  const [awardsActiveIndex, setAwardsActiveIndex] = useState(0);
 
   const milestones = [
     { year: "2006", title: "Khởi đầu một hành trình lớn", img: "/images/z5250551338991_e69aae7652c168f0874c54ff8b85240d.jpg" },
@@ -33,12 +34,22 @@ export default function HanhTrinhPage() {
     { title: "VIETTEL STORE", subtitle: "Top 10 Công ty Bán lẻ uy tín 2022", img: "/images/OK5A7235.JPG" },
   ];
 
+  const awards = [
+    { year: "2025", title: "CỜ THI ĐUA TẬP ĐOÀN", desc: "Quyết định số: 16704/QĐ-CNVTQĐ ngày 31/12/2025 của Tập đoàn Công nghiệp - Viễn thông Quân đội" },
+    { year: "2024", title: "LAO ĐỘNG XUẤT SẮC", desc: "Quyết định số: 15316/QĐ-CNVTQĐ ngày 25/12/2024 của Tập đoàn Công nghiệp - Viễn thông Quân đội" },
+    { year: "2024", title: "BẰNG KHEN BỘ QUỐC PHÒNG", desc: "Quyết định số: 3692/QĐ-BQP ngày 21/08/2024 của Bộ trưởng Bộ Quốc phòng." },
+    { year: "2024", title: "BẰNG KHEN TẬP ĐOÀN CN-VTQĐ", desc: "Quyết định số: 3524/QĐ-CNVTQĐ ngày 08/04/2024 của Tập đoàn Công nghiệp - Viễn thông Quân đội." },
+    { year: "2023", title: "ĐƠN VỊ QUYẾT THẮNG", desc: "Số: 11278/QĐ-CNVTQĐ ngày 31/12/2023; Tập đoàn Công nghiệp - Viễn thông Quân đội" },
+    { year: "2022", title: "CỜ THI ĐUA TẬP ĐOÀN", desc: "Số: 7220/QĐ-CNVTQĐ ngày 27/12/2022; Tập đoàn Công nghiệp - Viễn thông Quân đội" },
+    { year: "2021", title: "BẰNG KHEN BỘ QUỐC PHÒNG", desc: "Quyết định số: 2810/QĐ-BQP ngày 21/08/2021 của Bộ trưởng Bộ Quốc phòng." },
+    { year: "2021", title: "ĐƠN VỊ QUYẾT THẮNG", desc: "Số: 96/QĐ-CNVTQĐ ngày 07/01/2022; Tập đoàn Công nghiệp - Viễn thông Quân đội" }
+  ];
+
   return (
     <div className="min-h-screen flex flex-col font-sans bg-white pt-24 overflow-x-hidden">
       
-      {/* 1. VỀ CHÚNG TÔI (Detailed High-Fidelity Section) */}
+      {/* 1. VỀ CHÚNG TÔI */}
       <section className="w-full">
-        {/* Banner nhân viên ở trên */}
         <div className="w-full h-[300px] md:h-[400px] relative overflow-hidden">
           <Image 
             src="/images/410A1920.JPG" 
@@ -49,11 +60,8 @@ export default function HanhTrinhPage() {
           />
         </div>
 
-        {/* Block nền đỏ lớn */}
         <div className="bg-viettel relative pt-16 pb-32 md:pb-48 -mt-1">
           <div className="container mx-auto px-6 max-w-[1320px] relative z-10">
-            
-            {/* Intro Grid: Title/Desc (Left) & Collage (Right) */}
             <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] gap-12 items-start">
               <div className="text-white space-y-8">
                 <h2 className="text-4xl md:text-[48px] font-bold leading-none tracking-tight text-white uppercase font-beausans">
@@ -64,7 +72,6 @@ export default function HanhTrinhPage() {
                 </p>
               </div>
 
-              {/* Collage Ảnh Mosaic */}
               <div className="grid grid-cols-3 grid-rows-2 gap-1 h-[300px] md:h-[400px]">
                 <div className="relative col-span-1 row-span-1">
                   <Image src="/images/z5250551357995_82a057a13e401ac4007bed59bda159fb.jpg" fill className="object-cover" alt="Store 1" />
@@ -82,69 +89,49 @@ export default function HanhTrinhPage() {
               </div>
             </div>
 
-            {/* 4 Cột Thông Tin */}
             <div className="mt-24 md:mt-32 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
-              {/* Cột 1 */}
               <div className="flex flex-col items-center text-center text-white group">
                 <Target className="w-14 md:w-16 h-14 md:h-16 mb-6 stroke-[1.5]" />
-                <h4 className="text-xl md:text-[24px] font-bold uppercase mb-4 font-beausans leading-none">
-                  TẦM NHÌN
-                </h4>
+                <h4 className="text-xl md:text-[24px] font-bold uppercase mb-4 font-beausans leading-none">TẦM NHÌN</h4>
                 <p className="text-sm md:text-[16px] leading-[1.35] font-roboto opacity-90 max-w-[220px]">
                   Trở thành nhà bán lẻ đa sản phẩm, dịch vụ hàng đầu tại Việt Nam
                 </p>
               </div>
 
-              {/* Cột 2 */}
               <div className="flex flex-col items-center text-center text-white group">
                 <Rocket className="w-14 md:w-16 h-14 md:h-16 mb-6 stroke-[1.5]" />
-                <h4 className="text-xl md:text-[24px] font-bold uppercase mb-4 font-beausans leading-none">
-                  SỨ MỆNH
-                </h4>
+                <h4 className="text-xl md:text-[24px] font-bold uppercase mb-4 font-beausans leading-none">SỨ MỆNH</h4>
                 <div className="text-sm md:text-[16px] leading-[1.35] font-roboto opacity-90 max-w-[220px] space-y-4">
-                  <p><span className="font-bold">Với khách hàng:</span> Đặt khách hàng làm trung tâm, mang đến trải nghiệm thuận tiện – tận tâm – hiện đại.</p>
-                  <p><span className="font-bold">Với đối tác:</span> Hợp tác bền vững, cùng phát triển và mở rộng giá trị công nghệ.</p>
-                  <p><span className="font-bold">Với nhân viên:</span> Xây dựng môi trường chuyên nghiệp, kỷ luật và phát triển lâu dài.</p>
+                  <p><span className="font-bold">Với khách hàng:</span> Đặt khách hàng làm trung tâm.</p>
+                  <p><span className="font-bold">Với đối tác:</span> Hợp tác bền vững.</p>
                 </div>
               </div>
 
-              {/* Cột 3 */}
               <div className="flex flex-col items-center text-center text-white group">
                 <Globe className="w-14 md:w-16 h-14 md:h-16 mb-6 stroke-[1.5]" />
-                <h4 className="text-xl md:text-[24px] font-bold uppercase mb-4 font-beausans leading-none">
-                  MẠNG LƯỚI & SẢN PHẨM
-                </h4>
+                <h4 className="text-xl md:text-[24px] font-bold uppercase mb-4 font-beausans leading-none">MẠNG LƯỚI</h4>
                 <p className="text-sm md:text-[16px] leading-[1.35] font-roboto opacity-90 max-w-[220px]">
-                  Phủ sóng toàn quốc với hệ thống siêu thị hiện đại, cung cấp đa dạng sản phẩm: smartphone, laptop, thiết bị thông minh và dịch vụ viễn thông – tài chính – số. Đáp ứng toàn diện nhu cầu công nghệ với chất lượng cao và giá cạnh tranh.
+                  Phủ sóng toàn quốc với hệ thống siêu thị hiện đại.
                 </p>
               </div>
 
-              {/* Cột 4 */}
               <div className="flex flex-col items-center text-center text-white group">
                 <ShieldCheck className="w-14 md:w-16 h-14 md:h-16 mb-6 stroke-[1.5]" />
-                <h4 className="text-xl md:text-[24px] font-bold uppercase mb-4 font-beausans leading-none">
-                  CHUYỂN ĐỔI SỐ & TRẢI NGHIỆM
-                </h4>
+                <h4 className="text-xl md:text-[24px] font-bold uppercase mb-4 font-beausans leading-none">CHUYỂN ĐỔI SỐ</h4>
                 <p className="text-sm md:text-[16px] leading-[1.35] font-roboto opacity-90 max-w-[220px]">
-                  Chuyển dịch mạnh mẽ sang mô hình bán hàng đa kênh Omnichannel, kết hợp hệ thống cửa hàng và nền tảng online. Không ngừng tối ưu trải nghiệm khách hàng với hệ thống CRM hiện đại.
+                  Chuyển dịch mạnh mẽ sang mô hình bán hàng đa kênh.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* Pattern đáy (Wavy contour) */}
           <div className="absolute bottom-0 left-0 w-full h-[200px] md:h-[280px] pointer-events-none z-0">
-            <Image 
-              src="/images/diahinh2.png" 
-              alt="Wave Pattern" 
-              fill 
-              className="object-cover object-bottom opacity-40 mix-blend-overlay"
-            />
+            <Image src="/images/diahinh2.png" alt="Wave Pattern" fill className="object-cover object-bottom opacity-40 mix-blend-overlay" />
           </div>
         </div>
       </section>
 
-      {/* 2. HÀNH TRÌNH TỰ HÀO (Timeline) */}
+      {/* 2. HÀNH TRÌNH TỰ HÀO */}
       <section className="py-24 bg-white relative">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="text-center mb-20">
@@ -164,8 +151,8 @@ export default function HanhTrinhPage() {
                     </div>
                   </div>
                   <div className="mt-8 text-center">
-                    <div className="text-3xl font-black text-[#EE0033] mb-2">{item.year}</div>
-                    <div className="w-12 h-1 bg-gray-200 mx-auto rounded-full group-hover:bg-[#EE0033] transition-colors"></div>
+                    <div className="text-3xl font-black text-viettel mb-2">{item.year}</div>
+                    <div className="w-12 h-1 bg-gray-200 mx-auto rounded-full group-hover:bg-viettel transition-colors"></div>
                   </div>
                 </div>
               ))}
@@ -179,20 +166,14 @@ export default function HanhTrinhPage() {
         </div>
       </section>
 
-      {/* 3. THÀNH TỰU (White Stats) */}
+      {/* 3. THÀNH TỰU */}
       <section className="py-24 bg-gray-50">
         <div className="container mx-auto px-6 max-w-7xl">
            <h2 className="text-viettel font-black text-5xl md:text-7xl uppercase mb-96 tracking-tighter leading-none relative z-10">THÀNH TỰU</h2>
            
            <div className="bg-white rounded-[3rem] shadow-2xl p-12 md:p-20 flex flex-col md:flex-row items-center gap-16 relative -mt-80">
              <div className="flex-1 space-y-6">
-                {[
-                  "Top 3 bán lẻ Việt Nam",
-                  "Top 2 Đông Nam Á",
-                  "Doanh thu TMĐT dẫn đầu",
-                  "Tỷ trọng online cao nhất",
-                  "Top 3 thương hiệu uy tín"
-                ].map((text, i) => (
+                {["Top 3 bán lẻ Việt Nam", "Top 2 Đông Nam Á", "Doanh thu TMĐT dẫn đầu", "Tỷ trọng online cao nhất", "Top 3 thương hiệu uy tín"].map((text, i) => (
                   <div key={i} className="flex items-center gap-4 group">
                     <div className="w-3 h-3 bg-viettel rounded-full group-hover:scale-150 transition-transform"></div>
                     <span className="text-xl md:text-2xl font-black text-gray-800 uppercase italic">{text}</span>
@@ -227,39 +208,84 @@ export default function HanhTrinhPage() {
         </div>
       </section>
 
-      {/* 4. DANH HIỆU (Awards) */}
-      <section className="py-24 bg-[#1a1a1a] text-white relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5 flex items-center justify-center">
-          <span className="text-[20rem] font-black italic">AWARDS</span>
+      {/* 4. DANH HIỆU - Carousel Stack Redesigned */}
+      <section className="py-32 bg-viettel text-white relative overflow-hidden min-h-[700px] md:min-h-[850px] flex flex-col justify-center">
+        <div className="absolute top-0 left-0 w-full h-[400px] opacity-20 pointer-events-none">
+          <Image src="/images/diahinh1.1.png" fill className="object-cover object-top" alt="" />
         </div>
-        <div className="container mx-auto px-6 max-w-7xl relative z-10">
-          <h2 className="text-4xl md:text-6xl font-black uppercase mb-16 tracking-tighter text-center">DANH HIỆU CAO QUÝ</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-            {[
-              { year: "2025", title: "CỜ THI ĐUA TẬP ĐOÀN", desc: "Quyết định số: 16704/QĐ-CNVTQĐ ngày 31/12/2025 của Tập đoàn Công nghiệp - Viễn thông Quân đội" },
-              { year: "2024", title: "LAO ĐỘNG XUẤT SẮC", desc: "Quyết định số: 15316/QĐ-CNVTQĐ ngày 25/12/2024 của Tập đoàn Công nghiệp - Viễn thông Quân đội" },
-              { year: "2024", title: "BẰNG KHEN BỘ QUỐC PHÒNG", desc: "Quyết định số: 3692/QĐ-BQP ngày 21/08/2024 của Bộ trưởng Bộ Quốc phòng." },
-              { year: "2024", title: "BẰNG KHEN TẬP ĐOÀN CN-VTQĐ", desc: "Quyết định số: 3524/QĐ-CNVTQĐ ngày 08/04/2024 của Tập đoàn Công nghiệp - Viễn thông Quân đội." },
-              { year: "2023", title: "ĐƠN VỊ QUYẾT THẮNG", desc: "Số: 11278/QĐ-CNVTQĐ ngày 31/12/2023; Tập đoàn Công nghiệp - Viễn thông Quân đội" },
-              { year: "2022", title: "CỜ THI ĐUA TẬP ĐOÀN", desc: "Số: 7220/QĐ-CNVTQĐ ngày 27/12/2022; Tập đoàn Công nghiệp - Viễn thông Quân đội" },
-              { year: "2021", title: "BẰNG KHEN BỘ QUỐC PHÒNG", desc: "Quyết định số: 2810/QĐ-BQP ngày 21/08/2021 của Bộ trưởng Bộ Quốc phòng." },
-              { year: "2021", title: "ĐƠN VỊ QUYẾT THẮNG", desc: "Số: 96/QĐ-CNVTQĐ ngày 07/01/2022; Tập đoàn Công nghiệp - Viễn thông Quân đội" }
-            ].map((award, i) => (
-              <div key={i} className="bg-white text-gray-900 rounded-[2.5rem] p-10 md:p-14 shadow-2xl text-center relative group hover:-translate-y-2 transition-all duration-500">
-                <span className="block text-gray-900 font-black text-xl md:text-2xl mb-4">NĂM {award.year}</span>
-                <h3 className="text-2xl md:text-4xl font-black uppercase mb-6 tracking-tighter leading-tight">{award.title}</h3>
-                <div className="w-48 h-1 bg-viettel mx-auto rounded-full mb-8"></div>
-                <p className="text-gray-500 text-xs md:text-sm font-medium leading-relaxed max-w-md mx-auto">
-                  {award.desc}
-                </p>
-              </div>
-            ))}
+        
+        <div className="container mx-auto px-6 max-w-7xl relative z-20">
+          <div className="mb-16 md:mb-24">
+            <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tight leading-none font-beausans text-white">DANH HIỆU</h2>
+          </div>
+
+          <div className="relative w-full h-[450px] flex items-center justify-center select-none">
+            {awards.map((award, i) => {
+              const total = awards.length;
+              const diff = (i - awardsActiveIndex + total) % total;
+              
+              let styleClass = "opacity-0 scale-50 pointer-events-none z-0";
+              let translateX = 0;
+              let scale = 0.5;
+              let opacity = 0;
+              let zIndex = 0;
+              let blur = "blur(0px)";
+
+              if (diff === 0) {
+                translateX = 0; scale = 1; opacity = 1; zIndex = 40; blur = "blur(0px)"; styleClass = "";
+              } else if (diff === 1) {
+                translateX = 300; scale = 0.85; opacity = 0.8; zIndex = 30; blur = "blur(1px)"; styleClass = "";
+              } else if (diff === 2) {
+                translateX = 450; scale = 0.7; opacity = 0.6; zIndex = 20; blur = "blur(2px)"; styleClass = "";
+              } else if (diff === total - 1) {
+                translateX = -300; scale = 0.85; opacity = 0.8; zIndex = 30; blur = "blur(1px)"; styleClass = "";
+              } else if (diff === total - 2) {
+                translateX = -450; scale = 0.7; opacity = 0.6; zIndex = 20; blur = "blur(2px)"; styleClass = "";
+              }
+
+              return (
+                <div 
+                  key={i} 
+                  className={`absolute w-[90%] sm:w-[450px] md:w-[620px] bg-white rounded-[2.5rem] p-8 md:p-14 text-center transition-all duration-700 ease-out flex flex-col justify-center items-center shadow-2xl cursor-pointer ${styleClass}`}
+                  style={{
+                    transform: `translateX(${translateX}px) scale(${scale})`,
+                    opacity: opacity,
+                    zIndex: zIndex,
+                    filter: blur
+                  }}
+                  onClick={() => setAwardsActiveIndex(i)}
+                >
+                  <span className="block text-gray-900 font-bold text-xl md:text-2xl mb-6">NĂM {award.year}</span>
+                  <h3 className="text-2xl md:text-[34px] font-bold text-gray-900 uppercase leading-tight mb-4 max-w-[500px] font-beausans">
+                    {award.title}
+                  </h3>
+                  <div className="w-48 md:w-56 h-1 bg-viettel mx-auto my-7"></div>
+                  <p className="text-gray-600 text-sm md:text-[14px] font-roboto leading-relaxed max-w-[460px]">
+                    {award.desc}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex justify-center gap-6 mt-20 relative z-30">
+            <button 
+              onClick={() => setAwardsActiveIndex((awardsActiveIndex - 1 + awards.length) % awards.length)}
+              className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-viettel transition-all group"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button 
+              onClick={() => setAwardsActiveIndex((awardsActiveIndex + 1) % awards.length)}
+              className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-viettel transition-all group"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
           </div>
         </div>
       </section>
 
-      {/* 5. CÚP VÀ GIẢI THƯỞNG (Trophy Slider) */}
+      {/* 5. CÚP VÀ GIẢI THƯỞNG */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
@@ -289,7 +315,6 @@ export default function HanhTrinhPage() {
           </div>
         </div>
       </section>
-
     </div>
   );
 }
