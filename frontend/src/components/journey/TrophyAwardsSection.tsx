@@ -21,7 +21,7 @@ export const TrophyAwardsSection: React.FC = () => {
     alt="Pattern"
     className="absolute opacity-50 max-w-none"
     style={{
-      width: "12000px",
+      width: "200vw",
       height: "auto",
       top: "60%",
       left: "50%",

@@ -1,8 +1,9 @@
 "use client";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { journeyData } from "@/data/journeyData";
+import { journeyData, Milestone } from "@/data/journeyData";
 import { MilestoneCircle } from "./MilestoneCircle";
+import { JourneyModal } from "./JourneyModal";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
@@ -16,6 +17,8 @@ export const JourneyGrid: React.FC = () => {
   const totalPages = Math.ceil(journeyData.length / itemsPerPage);
   
   const [[page, direction], setPage] = useState([0, 0]);
+  const [selectedMilestone, setSelectedMilestone] = useState<Milestone | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const paginate = (newDirection: number) => {
     const nextPage = (page + newDirection + totalPages) % totalPages;
@@ -76,12 +79,21 @@ export const JourneyGrid: React.FC = () => {
                 key={milestone.id}
                 milestone={milestone}
                 isActive={true}
-                onClick={() => {}}
+                onClick={() => {
+                  setSelectedMilestone(milestone);
+                  setIsModalOpen(true);
+                }}
               />
             ))}
           </motion.div>
         </AnimatePresence>
       </div>
+
+      <JourneyModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        milestone={selectedMilestone}
+      />
 
       <div className="mt-8 flex items-center justify-center gap-4">
         <button

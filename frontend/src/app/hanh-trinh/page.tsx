@@ -15,6 +15,17 @@ import { AboutUsRedSection } from "@/components/journey/AboutUsRedSection";
 import { ProudJourneySection } from "@/components/journey/ProudJourneySection";
 import { JourneySection } from "@/components/journey/JourneySection";
 import { RipplePattern } from "@/components/journey/RipplePattern";
+import { motion } from "framer-motion";
+
+const fadeInUp = {
+  initial: { opacity: 0, y: 50 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, amount: 0.15 },
+  transition: { 
+    duration: 1.0, 
+    ease: [0.22, 1, 0.36, 1] 
+  }
+};
 const HonorsStyles = () => (
   <style dangerouslySetInnerHTML={{
     __html: `
@@ -83,11 +94,12 @@ const HonorsStyles = () => (
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       z-index: 100;
       text-align: center;
-      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      will-change: transform, opacity;
     }
     .honor-card-side {
       position: absolute;
@@ -101,12 +113,13 @@ const HonorsStyles = () => (
       opacity: 0.6;
       z-index: 10;
       text-align: center;
-      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.8s ease;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      will-change: transform, opacity;
     }
     .left-near { transform: translate(-65%, -50%) scale(0.94); z-index: 80; opacity: 0.95; }
     .left-mid { transform: translate(-78%, -50%) scale(0.88); z-index: 60; opacity: 0.8; }
@@ -208,13 +221,20 @@ export default function HanhTrinhPage() {
 
 
       {/* 1. VỀ CHÚNG TÔI */}
-      <AboutUsRedSection />
+      <motion.div {...fadeInUp}>
+        <AboutUsRedSection />
+      </motion.div>
 
       {/* 2. HÀNH TRÌNH TỰ HÀO */}
-      <JourneySection />
+      <motion.div {...fadeInUp}>
+        <JourneySection />
+      </motion.div>
 
       {/* 3. THÀNH TỰU */}
-      <section className="py-24 bg-gray-50 mt-16 relative overflow-hidden">
+      <motion.section 
+        className="py-24 bg-gray-50 mt-16 relative overflow-hidden"
+        {...fadeInUp}
+      >
         {/* Background Ripples */}
         <RipplePattern 
           className="absolute" 
@@ -459,11 +479,14 @@ export default function HanhTrinhPage() {
               ))}
             </div>
         </div>
-      </section>
+      </motion.section>
 
 
       {/* 4. DANH HIỆU - Carousel Stack Redesigned */}
-      <section className="honors-section mt-32">
+      <motion.section 
+        className="honors-section mt-32"
+        {...fadeInUp}
+      >
         <div className="honors-pattern">
           <Image src="/images/diahinh1.1.png" fill className="object-cover" alt="" />
         </div>
@@ -541,12 +564,12 @@ export default function HanhTrinhPage() {
             </button>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* 5. CÚP VÀ GIẢI THƯỞNG */}
-      <div className="mt-32">
+      <motion.div className="mt-32" {...fadeInUp}>
         <TrophyAwardsSection />
-      </div>
+      </motion.div>
     </div>
   );
 }
