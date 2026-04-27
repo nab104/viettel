@@ -1,5 +1,4 @@
-"use client";
-
+import React, { memo } from "react";
 import Image from "next/image";
 import { Milestone } from "@/data/journeyData";
 
@@ -9,13 +8,13 @@ interface MilestoneCircleProps {
   onClick: () => void;
 }
 
-export const MilestoneCircle = ({ milestone, onClick }: MilestoneCircleProps) => {
+export const MilestoneCircle = memo(({ milestone, onClick }: MilestoneCircleProps) => {
   return (
     <button
       type="button"
       onClick={onClick}
       style={{ width: 300, height: 300, minWidth: 300, minHeight: 300 }}
-      className="relative block shrink-0 rounded-full overflow-hidden shadow-xl cursor-pointer bg-gray-100 group"
+      className="relative block shrink-0 rounded-full overflow-hidden shadow-xl cursor-pointer bg-gray-100 group will-change-transform"
     >
       {/* Background image */}
       <Image
@@ -23,7 +22,7 @@ export const MilestoneCircle = ({ milestone, onClick }: MilestoneCircleProps) =>
         alt={milestone.title}
         fill
         sizes="300px"
-        className="object-cover"
+        className="object-cover transition-transform duration-500 group-hover:scale-110"
       />
 
       {/* LEFT HALF — dark overlay */}
@@ -116,4 +115,6 @@ export const MilestoneCircle = ({ milestone, onClick }: MilestoneCircleProps) =>
       </div>
     </button>
   );
-};
+});
+
+MilestoneCircle.displayName = "MilestoneCircle";

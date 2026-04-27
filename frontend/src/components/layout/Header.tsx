@@ -6,6 +6,8 @@ import { useState } from "react";
 import clsx from "clsx";
 import Image from "next/image";
 
+import { motion } from "framer-motion";
+
 export const Header = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -41,11 +43,18 @@ export const Header = () => {
                 key={link.name}
                 href={link.href}
                 className={clsx(
-                  "text-xs xl:text-sm font-black transition-colors uppercase whitespace-nowrap tracking-tight",
+                  "relative text-xs xl:text-sm font-black transition-colors uppercase whitespace-nowrap tracking-tight py-1",
                   isActive ? "text-viettel" : "text-gray-500 hover:text-viettel"
                 )}
               >
                 {link.name}
+                {isActive && (
+                  <motion.div
+                    layoutId="header-active-link"
+                    className="absolute -bottom-1 left-0 right-0 h-1 bg-viettel"
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                  />
+                )}
               </Link>
             );
           })}

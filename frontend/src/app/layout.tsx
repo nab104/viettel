@@ -70,6 +70,7 @@ export const metadata: Metadata = {
 import { Header } from "@/components/layout/Header";
 import { Providers } from "@/components/providers/Providers";
 import { LoadingIntro } from "@/components/layout/LoadingIntro";
+import { PageTransition } from "@/components/layout/PageTransition";
 
 export default function RootLayout({
   children,
@@ -82,7 +83,11 @@ export default function RootLayout({
         <LoadingIntro />
         <Providers>
           <Header />
-          <main className="flex-1 overflow-x-clip">{children}</main>
+          <main className="flex-1 overflow-x-clip">
+            <PageTransition>
+              {children}
+            </PageTransition>
+          </main>
         </Providers>
       </body>
     </html>
