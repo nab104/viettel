@@ -1,153 +1,526 @@
+"use client";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { Roboto } from 'next/font/google';
+import useEmblaCarousel from "embla-carousel-react";
 
-export default function HanhTrinhTuHaoPage() {
+const roboto = Roboto({
+  weight: ['400', '700'],
+  subsets: ['latin', 'vietnamese'],
+  display: 'swap',
+});
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { TrophyAwardsSection } from "@/components/journey/TrophyAwardsSection";
+import { AboutUsRedSection } from "@/components/journey/AboutUsRedSection";
+import { ProudJourneySection } from "@/components/journey/ProudJourneySection";
+import { JourneySection } from "@/components/journey/JourneySection";
+
+const HonorsStyles = () => (
+  <style dangerouslySetInnerHTML={{
+    __html: `
+    .honors-section {
+      position: relative;
+      width: 100%;
+      min-height: 850px;
+      padding: 110px 0 140px;
+      background: #EE0033 !important;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .honors-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 400px;
+      opacity: 0.3;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .honors-container {
+      position: relative;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 24px;
+      z-index: 10;
+      width: 100%;
+    }
+    .honors-title {
+      font-size: 48px;
+      font-weight: 900;
+      color: white !important;
+      opacity: 0.9;
+      position: absolute;
+      top: 40px;
+      left: 60px;
+      z-index: 5;
+      pointer-events: none;
+      line-height: 1;
+      text-transform: uppercase;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+    .honors-carousel {
+      position: relative;
+      height: 600px;
+      margin-top: 100px;
+      perspective: 2000px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .honor-card-main {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 562px;
+      height: 349px;
+      background: #F5F5F5 !important;
+      border-radius: 28px;
+      padding: 40px 60px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      z-index: 100;
+      text-align: center;
+      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .honor-card-side {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 562px;
+      height: 349px;
+      background: #F5F5F5 !important;
+      border-radius: 28px;
+      padding: 40px 60px;
+      opacity: 0.6;
+      z-index: 10;
+      text-align: center;
+      transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .left-near { transform: translate(-65%, -50%) scale(0.94); z-index: 80; opacity: 0.95; }
+    .left-mid { transform: translate(-78%, -50%) scale(0.88); z-index: 60; opacity: 0.8; }
+    .left-far { transform: translate(-88%, -50%) scale(0.82); z-index: 40; opacity: 0.6; }
+    .left-extra { transform: translate(-95%, -50%) scale(0.75); z-index: 20; opacity: 0.4; }
+
+    .right-near { transform: translate(-35%, -50%) scale(0.94); z-index: 80; opacity: 0.95; }
+    .right-mid { transform: translate(-22%, -50%) scale(0.88); z-index: 60; opacity: 0.8; }
+    .right-far { transform: translate(-12%, -50%) scale(0.82); z-index: 40; opacity: 0.6; }
+    .right-extra { transform: translate(-5%, -50%) scale(0.75); z-index: 20; opacity: 0.4; }
+
+    .honor-year {
+      color: #000 !important;
+      font-family: var(--font-beausans) !important;
+      font-size: 24px !important;
+      font-style: normal !important;
+      font-weight: 700 !important;
+      line-height: normal !important;
+      margin-bottom: 24px;
+      display: block;
+    }
+    .honor-card-title {
+      color: #000 !important;
+      font-family: var(--font-beausans) !important;
+      font-size: 32px !important;
+      font-style: normal !important;
+      font-weight: 700 !important;
+      line-height: normal !important;
+      text-transform: uppercase !important;
+      margin-bottom: 32px;
+    }
+    .honor-divider {
+      width: 220px;
+      height: 3px;
+      background: #E60023;
+      margin: 0 auto 40px;
+      border-radius: 2px;
+    }
+    .honor-desc {
+      color: #000 !important;
+      text-align: center !important;
+      font-family: var(--font-beausans) !important;
+      font-size: 16px !important;
+      font-style: normal !important;
+      font-weight: 400 !important;
+      line-height: normal !important;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+  `}} />
+);
+
+import { RipplePattern } from "@/components/journey/RipplePattern";
+
+export default function ProudJourneyPage() {
+  const [awardsActiveIndex, setAwardsActiveIndex] = useState(0);
+  const [isMarketHovered, setIsMarketHovered] = useState(false);
+  const [hoveredCardIndex, setHoveredCardIndex] = useState<number | null>(null);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start" });
+
+
+  const awards = [
+    { year: "2025", title: "CỜ THI ĐUA TẬP ĐOÀN", desc: "Quyết định số: 16704/QĐ-CNVTQĐ ngày 31/12/2025 của Tập đoàn Công nghiệp - Viễn thông Quân đội" },
+    { year: "2024", title: "LAO ĐỘNG XUẤT SẮC", desc: "Quyết định số: 15316/QĐ-CNVTQĐ ngày 25/12/2024 của Tập đoàn Công nghiệp - Viễn thông Quân đội" },
+    { year: "2024", title: "BẰNG KHEN BỘ QUỐC PHÒNG", desc: "Quyết định số: 3692/QĐ-BQP ngày 21/08/2024 của Bộ trưởng Bộ Quốc phòng." },
+    { year: "2024", title: "BẰNG KHEN TẬP ĐOÀN CN-VTQĐ", desc: "Quyết định số: 3524/QĐ-CNVTQĐ ngày 08/04/2024 của Tập đoàn Công nghiệp - Viễn thông Quân đội." },
+    { year: "2023", title: "ĐƠN VỊ QUYẾT THẮNG", desc: "Số: 11278/QĐ-CNVTQĐ ngày 31/12/2023; Tập đoàn Công nghiệp - Viễn thông Quân đội" },
+    { year: "2022", title: "CỜ THI ĐUA TẬP ĐOÀN", desc: "Số: 7220/QĐ-CNVTQĐ ngày 27/12/2022; Tập đoàn Công nghiệp - Viễn thông Quân đội" },
+    { year: "2021", title: "BẰNG KHEN BỘ QUỐC PHÒNG", desc: "Quyết định số: 2810/QĐ-BQP ngày 21/08/2021 của Bộ trưởng Bộ Quốc phòng." },
+    { year: "2021", title: "ĐƠN VỊ QUYẾT THẮNG", desc: "Số: 96/QĐ-CNVTQĐ ngày 07/01/2022; Tập đoàn Công nghiệp - Viễn thông Quân đội" }
+  ];
+
   return (
-    <div className="bg-white min-h-screen flex flex-col font-fs-magistral overflow-hidden">
+    <main className="flex flex-col font-sans bg-white min-h-screen">
+      <HonorsStyles />
       
-      {/* 1. Hero Banner for Hành Trình */}
-      <section className="relative w-full h-[40vh] md:h-[50vh] flex items-center justify-center overflow-hidden">
-        <Image
-          src="/images/Anh 5.jpg"
-          alt="Viettel Store Hero"
-          fill
-          className="object-cover object-center"
-          priority
+      {/* 1. HERO */}
+      <ProudJourneySection />
+
+      {/* 2. VỀ CHÚNG TÔI */}
+      <AboutUsRedSection />
+
+      {/* 3. HÀNH TRÌNH TỰ HÀO */}
+      <div className="mt-16">
+        <JourneySection />
+      </div>
+
+      {/* 4. THÀNH TỰU */}
+      <section 
+        className="relative overflow-hidden bg-[#F2F2F2] py-24 mt-16"
+        style={{ minHeight: "800px" }}
+      >
+        {/* background circles */}
+        <RipplePattern
+          className="absolute z-0"
+          style={{ top: "40px", right: "280px", width: "280px", height: "280px", opacity: 0.38 }}
         />
-        <div className="absolute inset-0 bg-black/50"></div>
-        <div className="relative text-center text-white z-10 px-4 max-w-4xl">
-          <h1 className="text-5xl md:text-7xl font-bold uppercase mb-6 tracking-wide drop-shadow-lg">HÀNH TRÌNH TỰ HÀO</h1>
-          <p className="text-xl md:text-3xl font-light drop-shadow-md">Viettel Store - Nơi kiến tạo tương lai số</p>
-        </div>
-      </section>
 
-      {/* 2. Core Values (4 Cột) */}
-      <section className="bg-[#EE0033] text-white py-20 relative">
-        <div className="absolute top-0 left-0 w-full overflow-hidden leading-none transform -translate-y-full">
-          <svg className="relative block w-full h-[60px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118,130.85,121.22,201.2,112.5,242.42,107.38,282.8,92.05,321.39,56.44Z" fill="#EE0033"></path>
-          </svg>
-        </div>
+        <RipplePattern
+          className="absolute z-0"
+          style={{ top: "450px", left: "320px", width: "100px", height: "100px", opacity: 0.38 }}
+        />
 
-        <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-12 text-center max-w-6xl">
-          {[
-            { icon: "🎯", title: "TẦM NHÌN", desc: "Trở thành hệ thống bán lẻ các sản phẩm, dịch vụ viễn thông, công nghệ thông tin lớn nhất Việt Nam" },
-            { icon: "❤️", title: "SỨ MỆNH", desc: "Đem đến cho khách hàng trải nghiệm mua sắm tuyệt vời cùng những sản phẩm công nghệ tiên tiến nhất" },
-            { icon: "🤝", title: "MẠNG LƯỚI", desc: "Hơn 400 siêu thị trải dài khắp 63 tỉnh thành trên toàn quốc, phục vụ hàng triệu khách hàng" },
-            { icon: "👥", title: "CON NGƯỜI", desc: "Đội ngũ nhân sự trẻ trung, năng động, nhiệt huyết, luôn tận tâm phục vụ khách hàng" }
-          ].map((item, idx) => (
-            <div key={idx} className="flex flex-col items-center group">
-              <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mb-6 text-4xl group-hover:bg-white/20 transition-all duration-300 shadow-[0_0_15px_rgba(255,255,255,0.2)]">
-                {item.icon}
-              </div>
-              <h3 className="font-bold text-2xl mb-4 tracking-wider">{item.title}</h3>
-              <p className="text-base font-light text-red-100/90 leading-relaxed">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
+        <RipplePattern
+          className="absolute z-0"
+          style={{ bottom: "-10px", left: "350px", width: "350px", height: "350px", opacity: 0.38 }}
+        />
 
-      {/* 3. Timeline Lịch Sử */}
-      <section className="py-24 bg-white relative">
-        <div className="container mx-auto px-4 max-w-5xl text-center">
-          <h2 className="text-[#EE0033] font-bold text-4xl md:text-5xl uppercase mb-20 tracking-wider">Hành Trình Tự Hào</h2>
-          
-          <div className="relative">
-            {/* Horizontal Timeline Line */}
-            <div className="hidden md:block absolute top-1/2 left-0 w-full h-[2px] bg-[#EE0033]/20 -translate-y-1/2 z-0"></div>
-            
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-y-16 gap-x-8 relative z-10">
-              {[
-                { year: '2006', image: '/images/DSC04237.jpg', desc: 'Thành lập Hệ thống bán lẻ Viettel' },
-                { year: '2009', image: '/images/DSC04246.jpg', desc: 'Mở rộng chuỗi cửa hàng toàn quốc' },
-                { year: '2015', image: '/images/Anh 6.jpg', desc: 'Ra mắt nhận diện thương hiệu Viettel Store' },
-                { year: '2018', image: '/images/PMD_2333.jpg', desc: 'Đạt mốc 300 siêu thị' },
-                { year: '2020', image: '/images/PMD_2426.jpg', desc: 'Đẩy mạnh chuyển đổi số & thương mại điện tử' },
-                { year: '2024', image: '/images/C38A5937a.jpg', desc: 'Hơn 400 siêu thị, phục vụ hàng triệu khách hàng' }
-              ].map((item, idx) => (
-                <div key={idx} className="flex flex-col items-center group cursor-pointer">
-                  <div className="w-40 h-40 md:w-48 md:h-48 rounded-full overflow-hidden border-[6px] border-white shadow-xl bg-gray-200 relative mb-6 transition-all duration-500 group-hover:scale-105 group-hover:border-[#EE0033]/20">
-                    <Image
-                      src={item.image}
-                      alt={`Viettel Store ${item.year}`}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-300"></div>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-white font-black text-3xl md:text-4xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] tracking-wider">{item.year}</span>
-                    </div>
+        <RipplePattern
+          className="absolute z-0"
+          style={{ bottom: "120px", right: "40px", width: "180px", height: "180px", opacity: 0.38 }}
+        />
+
+        {/* content */}
+        <div className="relative z-10 max-w-[1200px] mx-auto px-6">
+          <div className="mx-auto" style={{ width: '1152px', paddingLeft: '30px' }}>
+            <h2 
+              className="uppercase relative z-10 mb-16"
+              style={{
+                color: '#44494D',
+                fontFamily: 'var(--font-beausans)',
+                fontSize: '48px',
+                fontStyle: 'normal',
+                fontWeight: 700,
+                lineHeight: 'normal',
+                width: '373px',
+                height: '72px'
+              }}
+            >
+              THÀNH TỰU
+            </h2>
+          </div>
+
+
+          {/* Vị thế thị trường grid */}
+          <div 
+            className={`shadow-2xl relative mb-16 mx-auto transition-all duration-300 ${isMarketHovered ? "" : "grid"}`}
+            onMouseEnter={() => setIsMarketHovered(true)}
+            onMouseLeave={() => setIsMarketHovered(false)}
+            style={{
+              width: '1152px',
+              height: '269px',
+              borderRadius: '20px',
+              backgroundColor: isMarketHovered ? 'rgba(0, 0, 0, 0.80)' : '#FFF',
+              gridTemplateColumns: isMarketHovered ? "none" : "520px 1fr",
+              alignItems: 'center',
+              display: isMarketHovered ? 'flex' : 'grid',
+              justifyContent: isMarketHovered ? 'center' : 'stretch'
+            }}
+          >
+            {isMarketHovered ? (
+              <div 
+                style={{
+                  width: '919px',
+                  height: '114px',
+                  color: '#FFF',
+                  fontFamily: roboto.style.fontFamily,
+                  fontSize: '16px',
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  lineHeight: 'normal',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  gap: '4px'
+                }}
+              >
+                {[
+                  "Top 3 thị trường bán lẻ điện thoại tại Việt Nam (thị phần 12%).",
+                  "Nhà mạng bán máy lớn thứ 2 trong khu vực Đông Nam Á, đi đầu trong việc bán máy trợ giá, kèm gói cước.",
+                  "Nhà bán lẻ có doanh thu lớn nhất toàn sàn TMĐT.",
+                  "Nhà bán lẻ có tỷ trọng Online tốt nhất thị trường.",
+                  "3 năm liên tục Top 3 nhà bán lẻ uy tín nhất tại Việt Nam (2023-2025)."
+                ].map((text, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <span className="w-1 h-1 rounded-full bg-white shrink-0" />
+                    <span>{text}</span>
                   </div>
-                  <p className="text-base text-gray-800 font-medium px-4">{item.desc}</p>
+                ))}
+              </div>
+            ) : (
+              <>
+                <div className="space-y-[6px]" style={{ paddingLeft: '90px' }}>
+                  {["Top 3 bán lẻ Việt Nam", "Top 2 Đông Nam Á", "Doanh thu TMĐT dẫn đầu", "Tỷ trọng online cao nhất", "Top 3 thương hiệu uy tín"].map((text, i) => (
+                    <div key={i} className="flex items-center gap-3 group">
+                      <div className="w-3 h-3 bg-viettel rounded-full group-hover:scale-150 transition-transform"></div>
+                      <span 
+                        style={{ 
+                          width: '354px',
+                          color: '#000', 
+                          fontFamily: 'var(--font-beausans)',
+                          fontSize: '20px',
+                          fontStyle: 'normal',
+                          fontWeight: 400,
+                          lineHeight: 'normal',
+                          display: 'inline-block'
+                        }}
+                      >
+                        {text}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+                <div 
+                  style={{ 
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    paddingLeft: "180px"
+                  }}
+                >
+                  <h3 
+                  className="uppercase leading-none"
+                  style={{ 
+                    color: '#44494D', 
+                    fontSize: '40px', 
+                    fontFamily: 'var(--font-beausans)',
+                    fontWeight: 700,
+                    fontStyle: 'normal',
+                    lineHeight: 'normal'
+                  }}
+                >
+                  VỊ THẾ THỊ TRƯỜNG
+                </h3>
+                </div>
+              </>
+            )}
           </div>
-        </div>
-      </section>
 
-      {/* 4. Danh Hiệu & Giải Thưởng */}
-      <section className="py-24 bg-gray-50">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-[#EE0033] font-bold text-4xl md:text-5xl uppercase tracking-wider">Danh Hiệu Tập Thể</h2>
-          </div>
-          
-          <div className="flex flex-col md:flex-row gap-8 items-center justify-center">
-             {/* Left Card */}
-             <div className="bg-white p-8 md:p-10 rounded-[32px] shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-gray-100 flex-1 relative transform md:rotate-[-2deg] hover:rotate-0 transition-transform duration-300">
-               <div className="absolute -top-4 -right-4 w-12 h-12 bg-[#EE0033] rounded-full flex items-center justify-center text-white text-xl shadow-lg">🏆</div>
-               <h3 className="text-2xl font-bold mb-4 text-[#EE0033]">Cờ thi đua Tập đoàn</h3>
-               <p className="text-gray-600 leading-relaxed">Ghi nhận những thành tích xuất sắc và sự nỗ lực không ngừng nghỉ của tập thể Viettel Store trong việc hoàn thành các chỉ tiêu sản xuất kinh doanh, góp phần vào sự phát triển chung của Tập đoàn.</p>
-             </div>
-             
-             {/* Middle Card (Featured) */}
-             <div className="bg-[#EE0033] text-white p-8 md:p-12 rounded-[32px] shadow-[0_20px_40px_rgba(238,0,51,0.2)] flex-1 z-10 transform scale-105">
-               <h3 className="text-3xl font-black mb-4 tracking-wide">Tập thể xuất sắc</h3>
-               <p className="text-red-100 leading-relaxed mb-6">Đơn vị dẫn đầu phong trào thi đua, luôn hoàn thành vượt mức các kế hoạch được giao, đem lại giá trị cao nhất cho khách hàng.</p>
-               <div className="flex gap-2">
-                 {[1,2,3,4,5].map(i => <span key={i} className="text-yellow-400 text-2xl">★</span>)}
-               </div>
-             </div>
-
-             {/* Right Card */}
-             <div className="bg-white p-8 md:p-10 rounded-[32px] shadow-[0_10px_30px_rgba(0,0,0,0.05)] border border-gray-100 flex-1 relative transform md:rotate-[2deg] hover:rotate-0 transition-transform duration-300">
-               <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-white border-[3px] border-[#EE0033] rounded-full flex items-center justify-center text-[#EE0033] text-xl shadow-lg">🏅</div>
-               <h3 className="text-2xl font-bold mb-4 text-gray-900">Bằng khen các cấp</h3>
-               <p className="text-gray-600 leading-relaxed">Liên tục nhận được nhiều bằng khen, giấy khen từ các cấp Bộ, Ban ngành và Tập đoàn vì những đóng góp tích cực cho xã hội.</p>
-             </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* 5. Cúp và Hình Ảnh Nổi Bật */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-4 max-w-6xl text-center">
-          <h2 className="text-[#EE0033] font-bold text-4xl uppercase mb-16 tracking-wider">Hình Ảnh Nổi Bật</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="flex flex-wrap justify-center gap-8 mx-auto" style={{ width: '1152px' }}>
             {[
-              '/images/IMG_0006.JPG',
-              '/images/IMG_0041.JPG',
-              '/images/OK5A7235.JPG',
-              '/images/OK5A7255.JPG'
-            ].map((img, idx) => (
-              <div key={idx} className="group overflow-hidden rounded-2xl shadow-md aspect-[4/5] relative cursor-pointer">
-                <Image
-                  src={img}
-                  alt={`Hoạt động Viettel Store ${idx}`}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-left">
-                  <h4 className="text-white font-bold text-lg mb-1 tracking-wide">Khoảnh Khắc Tự Hào</h4>
-                  <p className="text-gray-200 text-sm">Hoạt động nội bộ</p>
-                </div>
+              { 
+                title: <>HỆ THỐNG <br /> & ĐỔI MỚI</>, 
+                items: ["Hệ sinh thái đa kênh", "Phủ sóng toàn quốc", "Tiên phong bán lẻ", "Tích hợp tài chính", "Mở rộng kinh doanh"],
+                hoverItems: [
+                  "Hệ sinh thái bán lẻ “1 điểm đến, đa dịch vụ”",
+                  "Hệ thống bán hàng đa kênh toàn diện (Offline – Online – B2B)",
+                  "Tiên phong xu hướng: trợ giá, thanh toán số, chuyển dịch online",
+                  "Liên tục đổi mới, mở rộng lĩnh vực kinh doanh",
+                  "Thích ứng linh hoạt, tăng trưởng bền vững"
+                ]
+              },
+              { 
+                title: <span className="whitespace-nowrap">KHÁCH HÀNG</span>, 
+                items: ["Tiên phong bán lẻ ĐTDĐ (2006)", "20 triệu khách/năm", "Phân phối toàn quốc", "Cửa hàng trải nghiệm chuẩn"],
+                hoverItems: [
+                  "Khai trương siêu thị điện thoại đầu tiên tại Hà Nội & miền Bắc (2006)",
+                  "Tiên phong phân phối BlackBerry tại Việt Nam (2008)",
+                  "Phục vụ gần 20 triệu khách hàng/năm, hoạt động 24/7",
+                  "Cung cấp gần 2 triệu thiết bị chính hãng mỗi năm",
+                  "Điểm trải nghiệm sản phẩm lớn nhất của Viettel tại Việt Nam"
+                ]
+              },
+              { 
+                title: <><span className="whitespace-nowrap">ĐỐI TÁC - XÃ HỘI</span> <br /> NHÂN SỰ</>, 
+                items: ["Đối tác công nghệ lớn", "2.000+ nhân sự", "Môi trường chuyên nghiệp", "Hoạt động cộng đồng", "Chuyển đổi số quốc gia"],
+                hoverItems: [
+                  "Đối tác chiến lược của các thương hiệu công nghệ lớn",
+                  "2.000+ nhân sự, môi trường làm việc chuyên nghiệp",
+                  "Gắn kết thương hiệu with hình ảnh “Bộ đội cụ Hồ”",
+                  "Tham gia chuyển đổi số quốc gia (dịch vụ công)",
+                  "Đóng góp tích cực cho cộng đồng & xã hội"
+                ]
+              }
+            ].map((card, idx) => (
+              <div 
+                key={idx} 
+                className="shadow-xl border border-gray-100 transition-all p-8 flex flex-col items-center text-center"
+                onMouseEnter={() => setHoveredCardIndex(idx)}
+                onMouseLeave={() => setHoveredCardIndex(null)}
+                style={{
+                  width: '252.249px',
+                  height: '347.454px',
+                  borderRadius: '20px',
+                  backgroundColor: hoveredCardIndex === idx && card.hoverItems ? 'rgba(0, 0, 0, 0.80)' : '#FFF',
+                  cursor: card.hoverItems ? 'pointer' : 'default'
+                }}
+              >
+                {hoveredCardIndex === idx && card.hoverItems ? (
+                  <div 
+                    style={{
+                      width: '239px',
+                      color: '#FFF',
+                      fontFamily: roboto.style.fontFamily,
+                      fontSize: '16px',
+                      fontStyle: 'normal',
+                      fontWeight: 400,
+                      lineHeight: 'normal',
+                      textAlign: 'left',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'center',
+                      height: '100%',
+                      gap: '8px',
+                      padding: '0 10px'
+                    }}
+                  >
+                    {card.hoverItems.map((text, i) => (
+                      <div key={i} className="flex items-center gap-3">
+                        <span className="w-1 h-1 rounded-full bg-white shrink-0" />
+                        <span>{text}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <>
+                    <h4 
+                      className="mb-6 uppercase tracking-tight text-center"
+                      style={{
+                        color: '#ED1C24',
+                        fontFamily: 'var(--font-beausans)',
+                        fontSize: '30px',
+                        fontStyle: 'normal',
+                        fontWeight: 700,
+                        lineHeight: 'normal'
+                      }}
+                    >
+                      {card.title}
+                    </h4>
+                    <ul className="space-y-0 text-left w-full">
+                      {card.items.map((item, i) => (
+                        <li key={i} className="flex items-center gap-3">
+                          <span className="w-1.5 h-1.5 bg-viettel rounded-full shrink-0"></span>
+                          <span 
+                            style={{
+                              color: '#000',
+                              fontFamily: 'var(--font-beausans)',
+                              fontSize: '16px',
+                              fontStyle: 'normal',
+                              fontWeight: 400,
+                              lineHeight: 'normal'
+                            }}
+                          >
+                            {item}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
               </div>
             ))}
           </div>
         </div>
       </section>
 
-    </div>
+
+      {/* 5. DANH HIỆU */}
+      <section className="honors-section relative z-10">
+        <div className="honors-pattern">
+          <Image src="/images/diahinh1.1.png" fill className="object-cover" alt="" />
+        </div>
+
+        <div className="honors-container">
+          <h2 className="honors-title">DANH HIỆU</h2>
+
+          <div className="honors-carousel">
+            {awards.map((award, i) => {
+              const total = awards.length;
+              const diff = (i - awardsActiveIndex + total) % total;
+              let positionClass = "";
+              let isMain = diff === 0;
+              let relDiff = diff;
+              if (relDiff > total / 2) relDiff -= total;
+
+              if (relDiff === 0) { } 
+              else if (relDiff === 1) positionClass = "right-near";
+              else if (relDiff === 2) positionClass = "right-mid";
+              else if (relDiff === 3) positionClass = "right-far";
+              else if (relDiff >= 4) positionClass = "right-extra";
+              else if (relDiff === -1) positionClass = "left-near";
+              else if (relDiff === -2) positionClass = "left-mid";
+              else if (relDiff === -3) positionClass = "left-far";
+              else if (relDiff <= -4) positionClass = "left-extra";
+
+              const sizeClass = isMain ? "honor-card-main" : "honor-card-side";
+
+              return (
+                <div
+                  key={i}
+                  className={`${sizeClass} ${positionClass} transition-all duration-700`}
+                  style={{ pointerEvents: Math.abs(relDiff) > 4 ? 'none' : 'auto' }}
+                  onClick={() => setAwardsActiveIndex(i)}
+                >
+                  <span className="honor-year">Năm {award.year}</span>
+                  <h3 className="honor-card-title">{award.title}</h3>
+                  <div className="honor-divider"></div>
+                  <p className="honor-desc">{award.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="flex justify-center gap-6 mt-20 relative z-30">
+            <button
+              onClick={() => setAwardsActiveIndex((awardsActiveIndex - 1 + awards.length) % awards.length)}
+              className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-viettel transition-all group text-white"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              onClick={() => setAwardsActiveIndex((awardsActiveIndex + 1) % awards.length)}
+              className="w-14 h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center hover:bg-white hover:text-viettel transition-all group text-white"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. CÚP VÀ GIẢI THƯỞNG */}
+      <div className="mt-16">
+        <TrophyAwardsSection />
+      </div>
+    </main>
   );
 }

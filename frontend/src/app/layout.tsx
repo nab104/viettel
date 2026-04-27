@@ -30,12 +30,20 @@ const fsMagistral = localFont({
   variable: "--font-fs-magistral",
 });
 
-// Note: FS PF BeauSans Pro Bold is a commercial font. 
-// Using FS Magistral as a placeholder for now until the font files are provided.
 const fsBeauSans = localFont({
   src: [
     {
-      path: "./fonts/FS Magistral-Bold.ttf", // Placeholder
+      path: "./fonts/FS PFBeauSansPro/FS PFBeauSansPro-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "./fonts/FS PFBeauSansPro/FS PFBeauSansPro-SemiBold.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "./fonts/FS PFBeauSansPro/FS PFBeauSansPro-Bold.ttf",
       weight: "700",
       style: "normal",
     },
@@ -74,7 +82,7 @@ export default function RootLayout({
         <LoadingIntro />
         <Providers>
           <Header />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 overflow-x-clip">{children}</main>
         </Providers>
       </body>
     </html>
