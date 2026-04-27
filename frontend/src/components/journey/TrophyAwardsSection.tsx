@@ -2,6 +2,7 @@
 
 import React from "react";
 import { TrophyGridOrCarousel } from "./TrophyGridOrCarousel";
+import { RipplePattern } from "./RipplePattern";
 
 export const TrophyAwardsSection: React.FC = () => {
   return (
@@ -32,11 +33,18 @@ export const TrophyAwardsSection: React.FC = () => {
 
       {/* CONTENT */}
       <div className="mx-auto max-w-[1680px] px-8 relative z-10">
-        <div className="mb-16">
+        <div className="mb-16 relative inline-block">
           <h2 className="text-[#EE0033] text-[32px] md:text-[40px] lg:text-[48px] font-bold uppercase leading-tight font-beausans">
             CÚP VÀ GIẢI THƯỞNG
           </h2>
-
+          <RipplePattern 
+            className="absolute" 
+            style={{ top: '-80px', right: '1200px', width: '150px', height: '150px' }} 
+          />
+          <RipplePattern 
+            className="absolute" 
+            style={{ top: '-140px', right: '1100px', width: '100px', height: '100px' }} 
+          />
         </div>
 
         <TrophyGridOrCarousel />

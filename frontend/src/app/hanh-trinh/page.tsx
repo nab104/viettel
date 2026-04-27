@@ -14,6 +14,7 @@ import { TrophyAwardsSection } from "@/components/journey/TrophyAwardsSection";
 import { AboutUsRedSection } from "@/components/journey/AboutUsRedSection";
 import { ProudJourneySection } from "@/components/journey/ProudJourneySection";
 import { JourneySection } from "@/components/journey/JourneySection";
+import { RipplePattern } from "@/components/journey/RipplePattern";
 const HonorsStyles = () => (
   <style dangerouslySetInnerHTML={{
     __html: `
@@ -22,7 +23,6 @@ const HonorsStyles = () => (
       width: 100%;
       min-height: 850px;
       padding: 110px 0 140px;
-      background: #EE0033 !important;
       overflow: hidden;
       display: flex;
       flex-direction: column;
@@ -31,10 +31,10 @@ const HonorsStyles = () => (
     .honors-pattern {
       position: absolute;
       top: 0;
-      left: 0;
-      width: 100%;
-      height: 400px;
-      opacity: 0.3;
+      left: -25%;
+      width: 150%;
+      height: 100%;
+      opacity: 0.2;
       pointer-events: none;
       z-index: 1;
     }
@@ -214,8 +214,26 @@ export default function HanhTrinhPage() {
       <JourneySection />
 
       {/* 3. THÀNH TỰU */}
-      <section className="py-24 bg-gray-50 mt-16">
-        <div className="container mx-auto px-6 max-w-7xl">
+      <section className="py-24 bg-gray-50 mt-16 relative overflow-hidden">
+        {/* Background Ripples */}
+        <RipplePattern 
+          className="absolute" 
+          style={{ top: '160px', right: '280px', width: '200px', height: '200px' }} 
+        />
+        <RipplePattern 
+          className="absolute" 
+          style={{ top: '450px', left: '340px', width: '100px', height: '100px' }} 
+        />
+        <RipplePattern 
+          className="absolute" 
+          style={{ bottom: '-20px', left: '360px', width: '220px', height: '220px' }} 
+        />
+        <RipplePattern 
+          className="absolute" 
+          style={{ bottom: '320px', right: '460px', width: '120px', height: '120px' }} 
+        />
+
+        <div className="container mx-auto px-6 max-w-7xl relative z-10">
           <div className="mx-auto" style={{ width: '1152px', paddingLeft: '30px' }}>
             <h2 
               className="uppercase relative z-10 mb-16"
@@ -418,7 +436,7 @@ export default function HanhTrinhPage() {
                       </h4>
                       <ul className="space-y-0 text-left w-full">
                         {card.items.map((item, i) => (
-                          <li key={i} className="flex items-center gap-3">
+                          <li key={i} className={`flex items-center gap-3 ${idx === 1 && i === 0 ? "mt-8" : ""}`}>
                             <span className="w-1.5 h-1.5 bg-viettel rounded-full shrink-0"></span>
                             <span 
                               style={{
