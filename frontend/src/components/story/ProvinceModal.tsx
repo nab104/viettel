@@ -1,0 +1,209 @@
+"use client";
+import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { StoryCard } from "./map-data/provincesContent";
+
+interface ProvinceModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  provinceName: string | null;
+  stories?: StoryCard[] | null;
+}
+
+export const ProvinceModal: React.FC<ProvinceModalProps> = ({ 
+  isOpen, 
+  onClose, 
+  provinceName,
+  stories
+}) => {
+  const [mounted, setMounted] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Reset index when opening modal for a new province
+  useEffect(() => {
+    if (isOpen) {
+      setCurrentIndex(0);
+    }
+  }, [isOpen, provinceName]);
+
+  if (!mounted) return null;
+
+  const currentStory = stories && stories.length > 0 ? stories[currentIndex] : null;
+  const hasMultipleStories = stories && stories.length > 1;
+
+  const handlePrev = () => {
+    if (!stories) return;
+    setCurrentIndex((prev) => (prev - 1 + stories.length) % stories.length);
+  };
+
+  const handleNext = () => {
+    if (!stories) return;
+    setCurrentIndex((prev) => (prev + 1) % stories.length);
+  };
+
+  return createPortal(
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+            className="absolute inset-0 bg-black/40 backdrop-blur-md"
+          />
+          
+          {/* Content Box */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="relative"
+            style={{
+              width: "900px",
+              height: "650px",
+              flexShrink: 0,
+              borderRadius: "37px",
+              background: "#FFF",
+              boxShadow: "0 0 8.3px 0 rgba(0, 0, 0, 0.52)",
+              zIndex: 10000,
+              display: "flex",
+              flexDirection: "column",
+              padding: "60px 80px",
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button 
+              onClick={onClose}
+              className="absolute top-8 right-10 text-gray-400 hover:text-[#ED1C24] transition-colors"
+              aria-label="Close"
+            >
+              <X size={32} />
+            </button>
+
+            {/* Navigation Buttons (Floating on sides if multiple stories) */}
+            {hasMultipleStories && (
+              <>
+                <button
+                  onClick={handlePrev}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-md text-[#ED1C24] hover:bg-gray-50 transition-colors z-[10001]"
+                >
+                  <ChevronLeft size={32} />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 flex items-center justify-center rounded-full bg-white shadow-md text-[#ED1C24] hover:bg-gray-50 transition-colors z-[10001]"
+                >
+                  <ChevronRight size={32} />
+                </button>
+              </>
+            )}
+
+            {/* Content Section: Row with Text and Image */}
+            <div className="flex flex-row justify-between items-start h-full">
+              {/* Left Column: Text */}
+              <div className="flex flex-col flex-1 pr-8">
+                {/* Province Name */}
+                <h2 
+                  style={{
+                    width: "350px",
+                    height: "44px",
+                    color: "#ED1C24",
+                    fontFamily: 'var(--font-beausans), sans-serif',
+                    fontSize: "32px",
+                    fontStyle: "normal",
+                    fontWeight: 600,
+                    lineHeight: "normal",
+                    textTransform: "uppercase",
+                    margin: 0,
+                    display: "flex",
+                    alignItems: "center"
+                  }}
+                >
+                  {provinceName}
+                </h2>
+
+                {/* Subheader */}
+                <h3
+                  style={{
+                    width: "100%",
+                    minHeight: "21.156px",
+                    color: "#ED1C24",
+                    fontFamily: 'var(--font-beausans), sans-serif',
+                    fontSize: "14px",
+                    fontStyle: "normal",
+                    fontWeight: 600,
+                    lineHeight: "normal",
+                    textTransform: "uppercase",
+                    marginTop: "8px",
+                    marginBottom: 0,
+                    display: "flex",
+                    alignItems: "center"
+                  }}
+                >
+                  {currentStory?.subheader || "Hệ thống cửa hàng Viettel Store"}
+                </h3>
+
+                {/* Paragraph */}
+                <div 
+                  className="custom-scrollbar overflow-y-auto pr-4 mt-6"
+                  style={{ maxHeight: "380px" }}
+                >
+                  <p
+                    style={{
+                      width: "100%",
+                      color: "#000",
+                      fontFamily: 'var(--font-roboto), sans-serif',
+                      fontSize: "16px",
+                      fontStyle: "normal",
+                      fontWeight: 400,
+                      lineHeight: "1.6",
+                      marginBottom: 0,
+                      whiteSpace: "pre-line"
+                    }}
+                  >
+                    {currentStory?.paragraph || `Chào mừng bạn đến với Viettel Store tại ${provinceName}. Chúng tôi tự hào cung cấp những sản phẩm công nghệ mới nhất cùng dịch vụ chăm sóc khách hàng chuyên nghiệp, tận tâm nhất.`}
+                  </p>
+                </div>
+
+                {/* Pagination Dots */}
+                {hasMultipleStories && (
+                  <div className="flex flex-row gap-2 mt-auto pt-4 justify-center">
+                    {stories.map((_, idx) => (
+                      <div 
+                        key={idx}
+                        className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === currentIndex ? 'bg-[#ED1C24] w-6' : 'bg-gray-300'}`}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Right Column: Picture */}
+              <div
+                key={currentIndex} // Force re-animation if needed or just update background
+                style={{
+                  width: "320px",
+                  height: "500px",
+                  borderRadius: "22px",
+                  background: `url(${currentStory?.image || '/images/story-map/province-preview.png'}) lightgray 50% / cover no-repeat`,
+                  flexShrink: 0
+                }}
+              />
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>,
+    document.body
+  );
+};

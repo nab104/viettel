@@ -40,11 +40,11 @@ export const JourneyCarousel = () => {
               [2]: 0.72,
             };
             const opacityMap: Record<number, number> = {
-              [-2]: 0.55,
-              [-1]: 0.85,
+              [-2]: 0.75,
+              [-1]: 0.95,
               [0]: 1,
-              [1]: 0.85,
-              [2]: 0.55,
+              [1]: 0.95,
+              [2]: 0.75,
             };
             return (
               <div
