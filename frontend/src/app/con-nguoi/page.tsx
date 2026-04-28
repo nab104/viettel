@@ -1,9 +1,10 @@
 "use client"; // test
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { createPortal } from "react-dom";
 import useEmblaCarousel from 'embla-carousel-react';
+import { scale } from "framer-motion";
 
 // Mock Data
 const leaders = [
@@ -389,8 +390,8 @@ const provinces = [
     map: encodeURI("/images/provinces/tuyen_quang_thumb.png"),
     mapWithText: encodeURI("/images/provinces/tuyen_quang_thumb chữ.png"),
     stores: [
-      { id: "TQG01", img: "/images/hethongsieuthi/tuyenquang/tuyenquang-1.jpg" },
-      { id: "TQG02", img: "/images/hethongsieuthi/tuyenquang/tuyenquang-2.jpg" },
+      { id: "TQG01", img: "/images/hethongsieuthi/tuyenquang/tuyenquang-1.jpg", objectPosition: "center 60%" },
+      { id: "TQG02", img: "/images/hethongsieuthi/tuyenquang/tuyenquang-2.jpg", objectPosition: "center 60%" },
       { id: "TQG03", img: "/images/hethongsieuthi/tuyenquang/tuyenquang-3.jpg" },
       { id: "TQG04", img: "/images/hethongsieuthi/tuyenquang/tuyenquang-4.jpg" },
       { id: "TQG05", img: "/images/hethongsieuthi/tuyenquang/tuyenquang-5.jpg" },
@@ -403,7 +404,7 @@ const provinces = [
     stores: [
       { id: "CBG01", img: "/images/hethongsieuthi/caobang/caobang-1.jpg" },
       { id: "CBG02", img: "/images/hethongsieuthi/caobang/caobang-2.jpg" },
-      { id: "CBG03", img: "/images/hethongsieuthi/caobang/caobang-3.jpg" },
+      { id: "CBG03", img: "/images/hethongsieuthi/caobang/caobang-3.jpg", objectPosition: "center 20%" },
     ]
   },
   {
@@ -417,9 +418,9 @@ const provinces = [
       { id: "TNN04", img: "/images/hethongsieuthi/thainguyen/thainguyen-4.jpg" },
       { id: "TNN05", img: "/images/hethongsieuthi/thainguyen/thainguyen-5.jpg" },
       { id: "TNN06", img: "/images/hethongsieuthi/thainguyen/thainguyen-6.jpg" },
-      { id: "TNN07", img: "/images/hethongsieuthi/thainguyen/thainguyen-7.jpg" },
+      { id: "TNN07", img: "/images/hethongsieuthi/thainguyen/thainguyen-7.jpg", objectPosition: "center 5%" },
       { id: "TNN08", img: "/images/hethongsieuthi/thainguyen/thainguyen-8.jpg" },
-      { id: "TNN09", img: "/images/hethongsieuthi/thainguyen/thainguyen-9.jpg" },
+      { id: "TNN09", img: "/images/hethongsieuthi/thainguyen/thainguyen-9.jpg", objectPosition: "center 40%" },
       { id: "TNN10", img: "/images/hethongsieuthi/thainguyen/thainguyen-10.jpg" },
     ]
   },
@@ -429,7 +430,7 @@ const provinces = [
     mapWithText: encodeURI("/images/provinces/điện biên chữ.png"),
     stores: [
       { id: "DBN01", img: "/images/hethongsieuthi/dienbien/dienbien-1.jpg" },
-      { id: "DBN02", img: "/images/hethongsieuthi/dienbien/dienbien-2.jpg" },
+      { id: "DBN02", img: "/images/hethongsieuthi/dienbien/dienbien-2.jpg", objectPosition: "center 50%" },
     ]
   },
   {
@@ -438,7 +439,7 @@ const provinces = [
     mapWithText: encodeURI("/images/provinces/lang_son_thumb chữ.png"),
     stores: [
       { id: "LSN01", img: "/images/hethongsieuthi/langson/langson-2.jpg" },
-      { id: "LSN02", img: "/images/hethongsieuthi/langson/langson-1.jpg" },
+      { id: "LSN02", img: "/images/hethongsieuthi/langson/langson-1.jpg", objectPosition: "center 40%" },
     ]
   },
   {
@@ -446,10 +447,10 @@ const provinces = [
     map: encodeURI("/images/provinces/son_la_thumb.png"),
     mapWithText: encodeURI("/images/provinces/son_la_thumb chữ.png"),
     stores: [
-      { id: "SLA01", img: "/images/hethongsieuthi/sonla/sonla-3.jpg", objectPosition: "center 70%" },
-      { id: "SLA02", img: "/images/hethongsieuthi/sonla/sonla-1.jpg" },
+      { id: "SLA01", img: "/images/hethongsieuthi/sonla/sonla-3.jpg", objectPosition: "center 85%" },
+      { id: "SLA02", img: "/images/hethongsieuthi/sonla/sonla-1.jpg", objectPosition: "center 85%", scale: "scale-140" },
       { id: "SLA03", img: "/images/hethongsieuthi/sonla/sonla-4.jpg" },
-      { id: "SLA04", img: "/images/hethongsieuthi/sonla/sonla-2.jpg" },
+      { id: "SLA04", img: "/images/hethongsieuthi/sonla/sonla-2.jpg", scale: "scale-150", objectPosition: "center 60%" },
     ]
   },
   {
@@ -460,25 +461,25 @@ const provinces = [
       { id: "PTO01", img: "/images/hethongsieuthi/phutho/pt001.jpg" },
       { id: "PTO02", img: "/images/hethongsieuthi/phutho/pt002.jpg" },
       { id: "PTO03", img: "/images/hethongsieuthi/phutho/pt003.jpg" },
-      { id: "PTO04", img: "/images/hethongsieuthi/phutho/pt004.jpg" },
-      { id: "PTO05", img: "/images/hethongsieuthi/phutho/pt005.jpg" },
+      { id: "PTO04", img: "/images/hethongsieuthi/phutho/pt004.jpg", objectPosition: "center 30%" },
+      { id: "PTO05", img: "/images/hethongsieuthi/phutho/pt005.jpg", scale: "scale-120", objectPosition: "60% center" },
       { id: "PTO06", img: "/images/hethongsieuthi/phutho/pt006.jpg" },
       { id: "PTO07", img: "/images/hethongsieuthi/phutho/pt007.jpg" },
       { id: "PTO08", img: "/images/hethongsieuthi/phutho/pt008.png" },
-      { id: "PTO10", img: "/images/hethongsieuthi/phutho/pt010.jpg" },
-      { id: "PTO11", img: "/images/hethongsieuthi/phutho/pt011.jpg" },
+      { id: "PTO10", img: "/images/hethongsieuthi/phutho/pt010.jpg", objectPosition: "center 80%" },
+      { id: "PTO11", img: "/images/hethongsieuthi/phutho/pt011.jpg", objectPosition: "center 80%" },
       { id: "PTO12", img: "/images/hethongsieuthi/phutho/pt012.jpg" },
       { id: "PTO13", img: "/images/hethongsieuthi/phutho/pt013.jpg" },
-      { id: "PTO14", img: "/images/hethongsieuthi/phutho/pt014.jpg" },
+      { id: "PTO14", img: "/images/hethongsieuthi/phutho/pt014.jpg", objectPosition: "center 80%" },
       { id: "PTO15", img: "/images/hethongsieuthi/phutho/pt015.jpg" },
       { id: "PTO16", img: "/images/hethongsieuthi/phutho/pt016.jpg" },
       { id: "PTO17", img: "/images/hethongsieuthi/phutho/pt017.jpg" },
-      { id: "PTO18", img: "/images/hethongsieuthi/phutho/pt018.jpg" },
+      { id: "PTO18", img: "/images/hethongsieuthi/phutho/pt018.jpg", objectPosition: "center 20%" },
       { id: "PTO19", img: "/images/hethongsieuthi/phutho/pt019.jpg" },
-      { id: "PTO20", img: "/images/hethongsieuthi/phutho/pt020.jpg" },
+      { id: "PTO20", img: "/images/hethongsieuthi/phutho/pt020.jpg", objectPosition: "center 80%" },
       { id: "PTO21", img: "/images/hethongsieuthi/phutho/pt021.jpg" },
-      { id: "PTO22", img: "/images/hethongsieuthi/phutho/pt022.jpg" },
-      { id: "PTO-CH01", img: "/images/hethongsieuthi/phutho/pto-ch01.jpg" },
+      { id: "PTO22", img: "/images/hethongsieuthi/phutho/pt022.jpg", objectPosition: "center 60%" },
+      { id: "PTO-CH01", img: "/images/hethongsieuthi/phutho/pto-ch01.jpg", objectPosition: "center 80%" },
       { id: "PTO-CH02", img: "/images/hethongsieuthi/phutho/pto-ch2.jpg" },
     ]
   },
@@ -488,18 +489,18 @@ const provinces = [
     mapWithText: encodeURI("/images/provinces/bắc nih chữ.png"),
     stores: [
       { id: "BNH01", img: "/images/hethongsieuthi/bacninh/bnh01.jpg" },
-      { id: "BNH02", img: "/images/hethongsieuthi/bacninh/bnh02.jpg" },
+      { id: "BNH02", img: "/images/hethongsieuthi/bacninh/bnh02.jpg", objectPosition: "center 30%" },
       { id: "BNH03", img: "/images/hethongsieuthi/bacninh/bnh03.jpg" },
-      { id: "BNH04", img: "/images/hethongsieuthi/bacninh/bnh04.jpg" },
+      { id: "BNH04", img: "/images/hethongsieuthi/bacninh/bnh04.jpg", scale: "scale-[1.5]", objectPosition: "center 80%" },
       { id: "BNH05", img: "/images/hethongsieuthi/bacninh/bnh05.jpg" },
-      { id: "BNH06", img: "/images/hethongsieuthi/bacninh/bnh06.jpg" },
+      { id: "BNH06", img: "/images/hethongsieuthi/bacninh/bnh06.jpg", scale: "scale-110" },
       { id: "BNH07", img: "/images/hethongsieuthi/bacninh/bnh07.jpg" },
       { id: "BNH08", img: "/images/hethongsieuthi/bacninh/bnh08.jpg" },
-      { id: "BNH09", img: "/images/hethongsieuthi/bacninh/bnh09.jpg" },
-      { id: "BNH10", img: "/images/hethongsieuthi/bacninh/bnh10.jpg" },
-      { id: "BNH11", img: "/images/hethongsieuthi/bacninh/bnh11.jpg" },
-      { id: "BNH12", img: "/images/hethongsieuthi/bacninh/bnh12.jpg" },
-      { id: "BNH-CH01", img: "/images/hethongsieuthi/bacninh/bnh-ch01.jpg" },
+      { id: "BNH09", img: "/images/hethongsieuthi/bacninh/bnh09.jpg", objectPosition: "center 80%" },
+      { id: "BNH10", img: "/images/hethongsieuthi/bacninh/bnh10.jpg", objectPosition: "center 90%" },
+      { id: "BNH11", img: "/images/hethongsieuthi/bacninh/bnh11.jpg", objectPosition: "42% center", scale: "scale-[1.2]" },
+      { id: "BNH12", img: "/images/hethongsieuthi/bacninh/bnh12.jpg", objectPosition: "center 70%" },
+      { id: "BNH-CH01", img: "/images/hethongsieuthi/bacninh/bnh-ch01.jpg", objectPosition: "center 70%" },
     ]
   },
   {
@@ -509,13 +510,13 @@ const provinces = [
     stores: [
       { id: "QNH01", img: "/images/hethongsieuthi/quangninh/qnh01.jpg" },
       { id: "QNH02", img: "/images/hethongsieuthi/quangninh/qnh02.jpg" },
-      { id: "QNH03", img: "/images/hethongsieuthi/quangninh/qnh03.jpg", objectPosition: "center 25%" },
-      { id: "QNH04", img: "/images/hethongsieuthi/quangninh/qnh04.jpg" },
+      { id: "QNH03", img: "/images/hethongsieuthi/quangninh/qnh03.jpg", objectPosition: "center 25%", scale: "scale-100" },
+      { id: "QNH04", img: "/images/hethongsieuthi/quangninh/qnh04.jpg", objectPosition: "center 80%" },
       { id: "QNH05", img: "/images/hethongsieuthi/quangninh/qnh05.jpg" },
       { id: "QNH06", img: "/images/hethongsieuthi/quangninh/qnh06.jpg" },
-      { id: "QNH07", img: "/images/hethongsieuthi/quangninh/qnh07.jpg" },
-      { id: "QNH08", img: "/images/hethongsieuthi/quangninh/qnh08.jpg" },
-      { id: "QNH09", img: "/images/hethongsieuthi/quangninh/qnh09.jpg" },
+      { id: "QNH07", img: "/images/hethongsieuthi/quangninh/qnh07.jpg", objectPosition: "center 70%" },
+      { id: "QNH08", img: "/images/hethongsieuthi/quangninh/qnh08.jpg", objectPosition: "center 40%" },
+      { id: "QNH09", img: "/images/hethongsieuthi/quangninh/qnh09.jpg", objectPosition: "center 40%" },
       { id: "QNH-CH01", img: "/images/hethongsieuthi/quangninh/ch-01.jpg" },
     ]
   },
@@ -525,20 +526,20 @@ const provinces = [
     mapWithText: encodeURI("/images/provinces/hà nội chữ.png"),
     stores: [
       { id: "HNI01", img: "/images/hethongsieuthi/hanoi/hni01.jpg" },
-      { id: "HNI02", img: "/images/hethongsieuthi/hanoi/hni02.jpg" },
-      { id: "HNI03", img: "/images/hethongsieuthi/hanoi/hni03.jpg" },
-      { id: "HNI04", img: "/images/hethongsieuthi/hanoi/hni04.jpg" },
+      { id: "HNI02", img: "/images/hethongsieuthi/hanoi/hni02.jpg", scale: "scale-[1.6]", objectPosition: "center 90%" },
+      { id: "HNI03", img: "/images/hethongsieuthi/hanoi/hni03.jpg", objectPosition: "center 70%" },
+      { id: "HNI04", img: "/images/hethongsieuthi/hanoi/hni04.jpg", objectPosition: "center 40%" },
       { id: "HNI05", img: "/images/hethongsieuthi/hanoi/hni05.jpg" },
-      { id: "HNI06", img: "/images/hethongsieuthi/hanoi/hni06.jpg", objectPosition: "center 20%" },
+      { id: "HNI06", img: "/images/hethongsieuthi/hanoi/hni06.jpg", objectPosition: "center 30%" },
       { id: "HNI07", img: "/images/hethongsieuthi/hanoi/hni07.jpg", objectPosition: "center 20%" },
-      { id: "HNI08", img: "/images/hethongsieuthi/hanoi/hni08.jpg" },
+      { id: "HNI08", img: "/images/hethongsieuthi/hanoi/hni08.jpg", objectPosition: "center 70%" },
       { id: "HNI09", img: "/images/hethongsieuthi/hanoi/hni09.jpg" },
       { id: "HNI10", img: "/images/hethongsieuthi/hanoi/hni010.jpg" },
       { id: "HNI11", img: "/images/hethongsieuthi/hanoi/hni011.jpg" },
       { id: "HNI12", img: "/images/hethongsieuthi/hanoi/hni012.jpg" },
       { id: "HNI13", img: "/images/hethongsieuthi/hanoi/hni013.jpg" },
       { id: "HNI14", img: "/images/hethongsieuthi/hanoi/hni014.jpg" },
-      { id: "HNI15", img: "/images/hethongsieuthi/hanoi/hni015.jpg" },
+      { id: "HNI15", img: "/images/hethongsieuthi/hanoi/hni015.jpg", objectPosition: "center 60%" },
       { id: "HNI16", img: "/images/hethongsieuthi/hanoi/hni016.jpg" },
       { id: "HNI17", img: "/images/hethongsieuthi/hanoi/hni017.jpg", objectPosition: "center 20%" },
       { id: "HNI18", img: "/images/hethongsieuthi/hanoi/hni018.png" },
@@ -546,22 +547,22 @@ const provinces = [
       { id: "HNI21", img: "/images/hethongsieuthi/hanoi/hni021.jpg" },
       { id: "HNI22", img: "/images/hethongsieuthi/hanoi/hni022.jpg" },
       { id: "HNI23", img: "/images/hethongsieuthi/hanoi/hni023.jpg" },
-      { id: "HNI24", img: "/images/hethongsieuthi/hanoi/hni024.jpg" },
-      { id: "HNI25", img: "/images/hethongsieuthi/hanoi/hni025.jpg" },
-      { id: "HNI26", img: "/images/hethongsieuthi/hanoi/hni026.jpg" },
-      { id: "HNI27", img: "/images/hethongsieuthi/hanoi/hni-ch027.jpg" },
+      { id: "HNI24", img: "/images/hethongsieuthi/hanoi/hni024.jpg", scale: "scale-[1.4]" },
+      { id: "HNI25", img: "/images/hethongsieuthi/hanoi/hni025.jpg", objectPosition: "center 40%" },
+      { id: "HNI26", img: "/images/hethongsieuthi/hanoi/hni026.jpg", scale: "scale-[1.4]" },
+      { id: "HNI27", img: "/images/hethongsieuthi/hanoi/hni-ch027.jpg", scale: "scale-[1.2]", objectPosition: "center 45%" },
       { id: "HNI28", img: "/images/hethongsieuthi/hanoi/hni028.jpg" },
-      { id: "HNI-CH01", img: "/images/hethongsieuthi/hanoi/hni-ch01.png" },
-      { id: "HNI-CH02", img: "/images/hethongsieuthi/hanoi/hni-ch02.jpg" },
+      { id: "HNI-CH01", img: "/images/hethongsieuthi/hanoi/hni-ch01.png", objectPosition: "center 30%" },
+      { id: "HNI-CH02", img: "/images/hethongsieuthi/hanoi/hni-ch02.jpg", objectPosition: "center 40%" },
       { id: "HNI-CH03", img: "/images/hethongsieuthi/hanoi/hni-ch03.jpg" },
-      { id: "HNI-CH04", img: "/images/hethongsieuthi/hanoi/hni-ch04.jpg", objectPosition: "center 05%" },
+      { id: "HNI-CH04", img: "/images/hethongsieuthi/hanoi/hni-ch04.jpg", objectPosition: "center 10%" },
       { id: "HNI-CH06", img: "/images/hethongsieuthi/hanoi/hni-ch06.jpg" },
       { id: "HNI-CH07", img: "/images/hethongsieuthi/hanoi/hni-ch07.jpg" },
-      { id: "HNI-CH11", img: "/images/hethongsieuthi/hanoi/hni-ch011.jpg" },
+      { id: "HNI-CH11", img: "/images/hethongsieuthi/hanoi/hni-ch011.jpg", objectPosition: "center 40%" },
       { id: "HNI-CH12", img: "/images/hethongsieuthi/hanoi/hni-ch012.jpg" },
-      { id: "HNI-CH13", img: "/images/hethongsieuthi/hanoi/hni-ch013.jpg" },
-      { id: "HNI-CH14", img: "/images/hethongsieuthi/hanoi/hni-ch014.jpg" },
-      { id: "HNI-CH16", img: "/images/hethongsieuthi/hanoi/hni-ch016.jpg", objectPosition: "center 35%" },
+      { id: "HNI-CH13", img: "/images/hethongsieuthi/hanoi/hni-ch013.jpg", objectPosition: "center 70%" },
+      { id: "HNI-CH14", img: "/images/hethongsieuthi/hanoi/hni-ch014.jpg", objectPosition: "center 40%" },
+      { id: "HNI-CH16", img: "/images/hethongsieuthi/hanoi/hni-ch016.jpg", objectPosition: "center 40%" },
       { id: "HNI-CH19", img: "/images/hethongsieuthi/hanoi/hni-ch019.jpg" },
     ]
   },
@@ -570,20 +571,20 @@ const provinces = [
     map: encodeURI("/images/provinces/hải phòng.png"),
     mapWithText: encodeURI("/images/provinces/hải phòng chữ.png"),
     stores: [
-      { id: "HPG01", img: "/images/hethongsieuthi/haiphong/hpg01.jpg" },
+      { id: "HPG01", img: "/images/hethongsieuthi/haiphong/hpg01.jpg", objectPosition: "center 70%" },
       { id: "HPG02", img: "/images/hethongsieuthi/haiphong/hpg02.jpg" },
       { id: "HPG03", img: "/images/hethongsieuthi/haiphong/hpg03.jpg" },
       { id: "HPG04", img: "/images/hethongsieuthi/haiphong/hpg04.jpg", objectPosition: "center 80%" },
       { id: "HPG05", img: "/images/hethongsieuthi/haiphong/hpg05.jpg" },
-      { id: "HPG06", img: "/images/hethongsieuthi/haiphong/hpg06.jpg" },
+      { id: "HPG06", img: "/images/hethongsieuthi/haiphong/hpg06.jpg", objectPosition: "center 20%" },
       { id: "HPG07", img: "/images/hethongsieuthi/haiphong/hpg07.jpg" },
       { id: "HPG08", img: "/images/hethongsieuthi/haiphong/hpg08.jpg" },
       { id: "HPG09", img: "/images/hethongsieuthi/haiphong/hpg09.jpg" },
-      { id: "HPG10", img: "/images/hethongsieuthi/haiphong/hpg10.jpg" },
+      { id: "HPG10", img: "/images/hethongsieuthi/haiphong/hpg10.jpg", objectPosition: "center 30%" },
       { id: "HPG11", img: "/images/hethongsieuthi/haiphong/hpg11.jpg" },
       { id: "HPG12", img: "/images/hethongsieuthi/haiphong/hpg12.jpg" },
-      { id: "HPG13", img: "/images/hethongsieuthi/haiphong/hpg13.jpg" },
-      { id: "HPG14", img: "/images/hethongsieuthi/haiphong/hpg14.jpg" },
+      { id: "HPG13", img: "/images/hethongsieuthi/haiphong/hpg13.jpg", objectPosition: "center 70%" },
+      { id: "HPG14", img: "/images/hethongsieuthi/haiphong/hpg14.jpg", objectPosition: "center 30%" },
     ]
   },
   {
@@ -592,19 +593,19 @@ const provinces = [
     mapWithText: encodeURI("/images/provinces/hung_yen_thumb chữ.png"),
     stores: [
       { id: "HYN01", img: "/images/hethongsieuthi/hungyen/hyn01.jpg" },
-      { id: "HYN02", img: "/images/hethongsieuthi/hungyen/hyn02.jpg" },
+      { id: "HYN02", img: "/images/hethongsieuthi/hungyen/hyn02.jpg", objectPosition: "center 80%" },
       { id: "HYN03", img: "/images/hethongsieuthi/hungyen/hyn03.jpg", objectPosition: "center 80%" },
       { id: "HYN04", img: "/images/hethongsieuthi/hungyen/hyn04.jpg" },
       { id: "HYN05", img: "/images/hethongsieuthi/hungyen/hyn05.jpg" },
       { id: "HYN06", img: "/images/hethongsieuthi/hungyen/hyn06.jpg" },
       { id: "HYN07", img: "/images/hethongsieuthi/hungyen/hyn07.jpg" },
-      { id: "HYN08", img: "/images/hethongsieuthi/hungyen/hyn08.jpg" },
+      { id: "HYN08", img: "/images/hethongsieuthi/hungyen/hyn08.jpg", objectPosition: "center 60%" },
       { id: "HYN09", img: "/images/hethongsieuthi/hungyen/hyn09.jpg" },
       { id: "HYN10", img: "/images/hethongsieuthi/hungyen/hyn10.jpg" },
       { id: "HYN11", img: "/images/hethongsieuthi/hungyen/hyn11.jpg" },
       { id: "HYN12", img: "/images/hethongsieuthi/hungyen/hyn12.jpg" },
       { id: "HYN13", img: "/images/hethongsieuthi/hungyen/hyn13.jpg" },
-      { id: "HYN-CH01", img: "/images/hethongsieuthi/hungyen/hyn-ch01.jpg", objectPosition: "center 30%" },
+      { id: "HYN-CH01", img: "/images/hethongsieuthi/hungyen/hyn-ch01.jpg", objectPosition: "center 20%" },
     ]
   },
   {
@@ -616,15 +617,15 @@ const provinces = [
       { id: "NBH02", img: "/images/hethongsieuthi/ninhbinh/nbh02.jpg" },
       { id: "NBH03", img: "/images/hethongsieuthi/ninhbinh/nbh03.jpg" },
       { id: "NBH04", img: "/images/hethongsieuthi/ninhbinh/nbh04.jpg" },
-      { id: "NBH05", img: "/images/hethongsieuthi/ninhbinh/nbh05.jpg" },
+      { id: "NBH05", img: "/images/hethongsieuthi/ninhbinh/nbh05.jpg", objectPosition: "center 60%" },
       { id: "NBH06", img: "/images/hethongsieuthi/ninhbinh/nbh06.jpg" },
       { id: "NBH07", img: "/images/hethongsieuthi/ninhbinh/nbh07.jpg" },
-      { id: "NBH08", img: "/images/hethongsieuthi/ninhbinh/nbh08.jpg" },
-      { id: "NBH09", img: "/images/hethongsieuthi/ninhbinh/nbh09.jpg" },
+      { id: "NBH08", img: "/images/hethongsieuthi/ninhbinh/nbh08.jpg", objectPosition: "center 60%" },
+      { id: "NBH09", img: "/images/hethongsieuthi/ninhbinh/nbh09.jpg", objectPosition: "center 60%" },
       { id: "NBH10", img: "/images/hethongsieuthi/ninhbinh/nbh10.jpg", objectPosition: "center 30%" },
       { id: "NBH11", img: "/images/hethongsieuthi/ninhbinh/nbh11.jpg", objectPosition: "center 30%" },
-      { id: "NBH12", img: "/images/hethongsieuthi/ninhbinh/nbh12.png" },
-      { id: "NBH13", img: "/images/hethongsieuthi/ninhbinh/nbh13.jpg" },
+      { id: "NBH12", img: "/images/hethongsieuthi/ninhbinh/nbh12.png", objectPosition: "center 10%" },
+      { id: "NBH13", img: "/images/hethongsieuthi/ninhbinh/nbh13.jpg", objectPosition: "center 60%" },
     ]
   },
   {
@@ -633,13 +634,13 @@ const provinces = [
     mapWithText: encodeURI("/images/provinces/thanh_hoa_thumb chữ.png"),
     stores: [
       { id: "THA01", img: "/images/hethongsieuthi/thanhhoa/tha01.jpg" },
-      { id: "THA02", img: "/images/hethongsieuthi/thanhhoa/tha02.jpg" },
-      { id: "THA03", img: "/images/hethongsieuthi/thanhhoa/tha03.jpg" },
-      { id: "THA04", img: "/images/hethongsieuthi/thanhhoa/tha04.jpg" },
-      { id: "THA05", img: "/images/hethongsieuthi/thanhhoa/tha05.jpg" },
-      { id: "THA06", img: "/images/hethongsieuthi/thanhhoa/tha06.jpg" },
+      { id: "THA02", img: "/images/hethongsieuthi/thanhhoa/tha02.jpg", objectPosition: "center 60%" },
+      { id: "THA03", img: "/images/hethongsieuthi/thanhhoa/tha03.jpg", objectPosition: "center 60%" },
+      { id: "THA04", img: "/images/hethongsieuthi/thanhhoa/tha04.jpg", objectPosition: "center 80%" },
+      { id: "THA05", img: "/images/hethongsieuthi/thanhhoa/tha05.jpg", objectPosition: "center 80%" },
+      { id: "THA06", img: "/images/hethongsieuthi/thanhhoa/tha06.jpg", objectPosition: "center 40%" },
       { id: "THA07", img: "/images/hethongsieuthi/thanhhoa/tha07.jpg" },
-      { id: "THA08", img: "/images/hethongsieuthi/thanhhoa/tha08.jpg" },
+      { id: "THA08", img: "/images/hethongsieuthi/thanhhoa/tha08.jpg", objectPosition: "center 70%" },
       { id: "THA09", img: "/images/hethongsieuthi/thanhhoa/tha09.jpg" },
       { id: "THA-CH01", img: "/images/hethongsieuthi/thanhhoa/tha-ch01.jpg" },
     ]
@@ -651,17 +652,17 @@ const provinces = [
     stores: [
       { id: "NAN01", img: "/images/hethongsieuthi/nghean/nan01.jpg" },
       { id: "NAN02", img: "/images/hethongsieuthi/nghean/nan02.jpg" },
-      { id: "NAN03", img: "/images/hethongsieuthi/nghean/nan03.jpg" },
+      { id: "NAN03", img: "/images/hethongsieuthi/nghean/nan03.jpg", objectPosition: "center 60%" },
       { id: "NAN04", img: "/images/hethongsieuthi/nghean/nan04.jpg", objectPosition: "center 20%" },
       { id: "NAN05", img: "/images/hethongsieuthi/nghean/nan05.jpg" },
       { id: "NAN06", img: "/images/hethongsieuthi/nghean/nan06.jpg" },
       { id: "NAN07", img: "/images/hethongsieuthi/nghean/nan07.jpg" },
       { id: "NAN08", img: "/images/hethongsieuthi/nghean/nan08.jpg" },
-      { id: "NAN09", img: "/images/hethongsieuthi/nghean/nan09.jpg" },
+      { id: "NAN09", img: "/images/hethongsieuthi/nghean/nan09.jpg", objectPosition: "center 70%" },
       { id: "NAN10", img: "/images/hethongsieuthi/nghean/nan10.jpg" },
       { id: "NAN11", img: "/images/hethongsieuthi/nghean/nan11.jpg" },
       { id: "NAN12", img: "/images/hethongsieuthi/nghean/nan12.jpg", objectPosition: "center 10%" },
-      { id: "NAN13", img: "/images/hethongsieuthi/nghean/nan13.jpg" },
+      { id: "NAN13", img: "/images/hethongsieuthi/nghean/nan13.jpg", scale: "scale-[1.0]" },
       { id: "NAN14", img: "/images/hethongsieuthi/nghean/nan14.jpg" },
     ]
   },
@@ -671,10 +672,10 @@ const provinces = [
     mapWithText: encodeURI("/images/provinces/ha_tinh_thumb chữ.png"),
     stores: [
       { id: "HTH01", img: "/images/hethongsieuthi/hatinh/hth01.jpg" },
-      { id: "HTH02", img: "/images/hethongsieuthi/hatinh/hth02.jpg" },
+      { id: "HTH02", img: "/images/hethongsieuthi/hatinh/hth02.jpg", objectPosition: "center 60%" },
       { id: "HTH03", img: "/images/hethongsieuthi/hatinh/hth03.jpg" },
-      { id: "HTH04", img: "/images/hethongsieuthi/hatinh/hth04.jpg" },
-      { id: "HTH05", img: "/images/hethongsieuthi/hatinh/hth05.jpg" },
+      { id: "HTH04", img: "/images/hethongsieuthi/hatinh/hth04.jpg", objectPosition: "center 60%" },
+      { id: "HTH05", img: "/images/hethongsieuthi/hatinh/hth05.jpg", objectPosition: "center 20%" },
       { id: "HTH06", img: "/images/hethongsieuthi/hatinh/hth06.jpg" },
     ]
   },
@@ -686,12 +687,12 @@ const provinces = [
       { id: "QTI01", img: "/images/hethongsieuthi/quangtri/qti01.jpg" },
       { id: "QTI02", img: "/images/hethongsieuthi/quangtri/qti02.jpg" },
       { id: "QTI03", img: "/images/hethongsieuthi/quangtri/qti03.jpg" },
-      { id: "QTI04", img: "/images/hethongsieuthi/quangtri/qti04.jpg" },
-      { id: "QTI05", img: "/images/hethongsieuthi/quangtri/qti05.jpg" },
+      { id: "QTI04", img: "/images/hethongsieuthi/quangtri/qti04.jpg", objectPosition: "center 60%" },
+      { id: "QTI05", img: "/images/hethongsieuthi/quangtri/qti05.jpg", objectPosition: "center 30%" },
       { id: "QTI06", img: "/images/hethongsieuthi/quangtri/qti06.jpg" },
       { id: "QTI07", img: "/images/hethongsieuthi/quangtri/qti07.jpg" },
       { id: "QTI08", img: "/images/hethongsieuthi/quangtri/qti08.jpg" },
-      { id: "QTI-CH01", img: "/images/hethongsieuthi/quangtri/qti-ch01.jpg" },
+      { id: "QTI-CH01", img: "/images/hethongsieuthi/quangtri/qti-ch01.jpg", objectPosition: "center 60%" },
     ]
   },
   {
@@ -700,9 +701,9 @@ const provinces = [
     mapWithText: encodeURI("/images/provinces/huế chữ.png"),
     stores: [
       { id: "HUE01", img: "/images/hethongsieuthi/hue/hue01.jpg" },
-      { id: "HUE02", img: "/images/hethongsieuthi/hue/hue02.jpg" },
+      { id: "HUE02", img: "/images/hethongsieuthi/hue/hue02.jpg", objectPosition: "center 25%" },
       { id: "HUE03", img: "/images/hethongsieuthi/hue/hue03.jpg" },
-      { id: "HUE-CH01", img: "/images/hethongsieuthi/hue/hue-ch01.jpg" },
+      { id: "HUE-CH01", img: "/images/hethongsieuthi/hue/hue-ch01.jpg", objectPosition: "center 45%" },
     ]
   },
   {
@@ -710,18 +711,18 @@ const provinces = [
     map: encodeURI("/images/provinces/đà nẵng.png"),
     mapWithText: encodeURI("/images/provinces/đà nẵng chữ.png"),
     stores: [
-      { id: "DNG01", img: "/images/hethongsieuthi/danang/dng01.jpg" },
-      { id: "DNG02", img: "/images/hethongsieuthi/danang/dng02.jpg" },
+      { id: "DNG01", img: "/images/hethongsieuthi/danang/dng01.jpg", objectPosition: "center 60%" },
+      { id: "DNG02", img: "/images/hethongsieuthi/danang/dng02.jpg", objectPosition: "center 10%" },
       { id: "DNG03", img: "/images/hethongsieuthi/danang/dng03.jpg" },
-      { id: "DNG04", img: "/images/hethongsieuthi/danang/dng04.jpg" },
-      { id: "DNG05", img: "/images/hethongsieuthi/danang/dng05.jpg" },
-      { id: "DNG06", img: "/images/hethongsieuthi/danang/dng06.jpg" },
+      { id: "DNG04", img: "/images/hethongsieuthi/danang/dng04.jpg", objectPosition: "center 60%" },
+      { id: "DNG05", img: "/images/hethongsieuthi/danang/dng05.jpg", objectPosition: "center 40%" },
+      { id: "DNG06", img: "/images/hethongsieuthi/danang/dng06.jpg", objectPosition: "center 60%" },
       { id: "DNG07", img: "/images/hethongsieuthi/danang/dng07.jpg" },
-      { id: "DNG08", img: "/images/hethongsieuthi/danang/dng08.jpg" },
+      { id: "DNG08", img: "/images/hethongsieuthi/danang/dng08.jpg", objectPosition: "center 80%" },
       { id: "DNG09", img: "/images/hethongsieuthi/danang/DNG09.jpg" },
-      { id: "DNG10", img: "/images/hethongsieuthi/danang/dng10.jpg" },
+      { id: "DNG10", img: "/images/hethongsieuthi/danang/dng10.jpg", objectPosition: "center 60%" },
       { id: "DNG11", img: "/images/hethongsieuthi/danang/dng11.jpg" },
-      { id: "DNG-CH01", img: "/images/hethongsieuthi/danang/dng-ch01.jpg" },
+      { id: "DNG-CH01", img: "/images/hethongsieuthi/danang/dng-ch01.jpg", objectPosition: "center 70%" },
       { id: "DNG-CH02", img: "/images/hethongsieuthi/danang/dng-ch02.jpg" },
       { id: "DNG-CH03", img: "/images/hethongsieuthi/danang/dng-ch03.jpg" },
       { id: "DNG-CH04", img: "/images/hethongsieuthi/danang/dng-ch04.jpg" },
@@ -732,13 +733,13 @@ const provinces = [
     map: encodeURI("/images/provinces/gia_lai_thumb.png"),
     mapWithText: encodeURI("/images/provinces/gia_lai_thumb chữ.png"),
     stores: [
-      { id: "GLI01", img: "/images/hethongsieuthi/gialai/gli01.jpg", scale: "scale-100", objectFit: "object-contain" },
+      { id: "GLI01", img: "/images/hethongsieuthi/gialai/gli01.jpg", scale: "scale-[1.0]", objectFit: "object-contain" },
       { id: "GLI02", img: "/images/hethongsieuthi/gialai/gli02.jpg" },
       { id: "GLI03", img: "/images/hethongsieuthi/gialai/GLI03.jpg" },
-      { id: "GLI04", img: "/images/hethongsieuthi/gialai/gli04.jpg" },
+      { id: "GLI04", img: "/images/hethongsieuthi/gialai/gli04.jpg", objectPosition: "center 60%" },
       { id: "GLI05", img: "/images/hethongsieuthi/gialai/GLI05.jpg" },
       { id: "GLI06", img: "/images/hethongsieuthi/gialai/gli06.jpg" },
-      { id: "GLI-CH01", img: "/images/hethongsieuthi/gialai/gli-ch01.jpg", objectPosition: "center 50%" },
+      { id: "GLI-CH01", img: "/images/hethongsieuthi/gialai/gli-ch01.jpg", objectPosition: "center 20%" },
     ]
   },
   {
@@ -747,8 +748,8 @@ const provinces = [
     mapWithText: encodeURI("/images/provinces/quang_ngai_thumb chữ.png"),
     stores: [
       { id: "QNI01", img: "/images/hethongsieuthi/quangngai/QNI01.jpg" },
-      { id: "QNI02", img: "/images/hethongsieuthi/quangngai/qni02.jpg" },
-      { id: "QNI03", img: "/images/hethongsieuthi/quangngai/qni03.jpg" },
+      { id: "QNI02", img: "/images/hethongsieuthi/quangngai/qni02.jpg", objectPosition: "center 80%" },
+      { id: "QNI03", img: "/images/hethongsieuthi/quangngai/qni03.jpg", objectPosition: "center 60%" },
       { id: "QNI04", img: "/images/hethongsieuthi/quangngai/qni04.jpg" },
       { id: "QNI05", img: "/images/hethongsieuthi/quangngai/qni05.jpg" },
       { id: "QNI-CH01", img: "/images/hethongsieuthi/quangngai/qni-ch01.jpg" },
@@ -759,15 +760,15 @@ const provinces = [
     map: encodeURI("/images/provinces/đắk lắk.png"),
     mapWithText: encodeURI("/images/provinces/đắk lắk chữ.png"),
     stores: [
-      { id: "DLK01", img: "/images/hethongsieuthi/daklak/dlk01.png" },
-      { id: "DLK02", img: "/images/hethongsieuthi/daklak/dlk02.jpg" },
-      { id: "DLK03", img: "/images/hethongsieuthi/daklak/dlk03.jpg" },
+      { id: "DLK01", img: "/images/hethongsieuthi/daklak/dlk01.png", objectPosition: "center 40%" },
+      { id: "DLK02", img: "/images/hethongsieuthi/daklak/dlk02.jpg", objectPosition: "center 60%" },
+      { id: "DLK03", img: "/images/hethongsieuthi/daklak/dlk03.jpg", objectPosition: "center 70%" },
       { id: "DLK04", img: "/images/hethongsieuthi/daklak/DLK04.jpg" },
       { id: "DLK05", img: "/images/hethongsieuthi/daklak/dlk05.jpg" },
-      { id: "DLK06", img: "/images/hethongsieuthi/daklak/DLK06.jpg" },
+      { id: "DLK06", img: "/images/hethongsieuthi/daklak/DLK06.jpg", objectPosition: "center 80%" },
       { id: "DLK07", img: "/images/hethongsieuthi/daklak/dlk07.JPG" },
-      { id: "DLK09", img: "/images/hethongsieuthi/daklak/dlk09.jpg" },
-      { id: "DLK-CH01", img: "/images/hethongsieuthi/daklak/DLK-CH01.jpg" },
+      { id: "DLK09", img: "/images/hethongsieuthi/daklak/dlk09.jpg", objectPosition: "center 60%" },
+      { id: "DLK-CH01", img: "/images/hethongsieuthi/daklak/DLK-CH01.jpg", objectPosition: "center 30%" },
     ]
   },
   {
@@ -777,9 +778,9 @@ const provinces = [
     stores: [
       { id: "KHA01", img: "/images/hethongsieuthi/khanhhoa/kha01.jpg" },
       { id: "KHA02", img: "/images/hethongsieuthi/khanhhoa/kha02.jpg" },
-      { id: "KHA03", img: "/images/hethongsieuthi/khanhhoa/KHA03.jpg" },
+      { id: "KHA03", img: "/images/hethongsieuthi/khanhhoa/KHA03.jpg", objectPosition: "center 80%" },
       { id: "KHA04", img: "/images/hethongsieuthi/khanhhoa/kha04.jpg" },
-      { id: "KHA05", img: "/images/hethongsieuthi/khanhhoa/KHA05.jpg" },
+      { id: "KHA05", img: "/images/hethongsieuthi/khanhhoa/KHA05.jpg", objectPosition: "center 40%" },
       { id: "KHA06", img: "/images/hethongsieuthi/khanhhoa/KHA06.jpg" },
     ]
   },
@@ -788,16 +789,16 @@ const provinces = [
     map: encodeURI("/images/provinces/lam_dong_thumb.png"),
     mapWithText: encodeURI("/images/provinces/lam_dong_thumb chữ.png"),
     stores: [
-      { id: "LDG01", img: "/images/hethongsieuthi/lamdong/ldg01.jpg" },
-      { id: "LDG02", img: "/images/hethongsieuthi/lamdong/LDG02.jpg" },
+      { id: "LDG01", img: "/images/hethongsieuthi/lamdong/ldg01.jpg", objectPosition: "center 60%" },
+      { id: "LDG02", img: "/images/hethongsieuthi/lamdong/LDG02.jpg", objectPosition: "center 40%" },
       { id: "LDG03", img: "/images/hethongsieuthi/lamdong/ldg03.jpg" },
-      { id: "LDG04", img: "/images/hethongsieuthi/lamdong/LDG04.jpg", objectPosition: "center 20%" },
-      { id: "LDG05", img: "/images/hethongsieuthi/lamdong/ldg05.jpg" },
+      { id: "LDG04", img: "/images/hethongsieuthi/lamdong/LDG04.jpg", objectPosition: "center 30%" },
+      { id: "LDG05", img: "/images/hethongsieuthi/lamdong/ldg05.jpg", objectPosition: "center 30%" },
       { id: "LDG06", img: "/images/hethongsieuthi/lamdong/LDG06.jpg", objectPosition: "center 20%" },
       { id: "LDG07", img: "/images/hethongsieuthi/lamdong/LDG07.jpg" },
       { id: "LDG08", img: "/images/hethongsieuthi/lamdong/LDG08.jpg" },
-      { id: "LDG09", img: "/images/hethongsieuthi/lamdong/LDG09.jpg" },
-      { id: "LDG-CH01", img: "/images/hethongsieuthi/lamdong/ldg-ch01.jpg" },
+      { id: "LDG09", img: "/images/hethongsieuthi/lamdong/LDG09.jpg", objectPosition: "center 70%" },
+      { id: "LDG-CH01", img: "/images/hethongsieuthi/lamdong/ldg-ch01.jpg", objectPosition: "center 30%" },
     ]
   },
   {
@@ -814,14 +815,14 @@ const provinces = [
     map: encodeURI("/images/provinces/tay_ninh_thumb.png"),
     mapWithText: encodeURI("/images/provinces/tay_ninh_thumb chữ.png"),
     stores: [
-      { id: "TNH01", img: "/images/hethongsieuthi/tayninh/tnh01.jpg" },
-      { id: "TNH02", img: "/images/hethongsieuthi/tayninh/tnh02.jpg" },
-      { id: "TNH03", img: "/images/hethongsieuthi/tayninh/tnh03.jpg" },
-      { id: "TNH04", img: "/images/hethongsieuthi/tayninh/tnh04.jpg" },
-      { id: "TNH05", img: "/images/hethongsieuthi/tayninh/tnh05.jpg", objectPosition: "center 20%" },
+      { id: "TNH01", img: "/images/hethongsieuthi/tayninh/tnh01.jpg", objectPosition: "center 60%" },
+      { id: "TNH02", img: "/images/hethongsieuthi/tayninh/tnh02.jpg", objectPosition: "center 40%" },
+      { id: "TNH03", img: "/images/hethongsieuthi/tayninh/tnh03.jpg", objectPosition: "center 10%" },
+      { id: "TNH04", img: "/images/hethongsieuthi/tayninh/tnh04.jpg", objectPosition: "center 30%" },
+      { id: "TNH05", img: "/images/hethongsieuthi/tayninh/tnh05.jpg", objectPosition: "center 5%" },
       { id: "TNH06", img: "/images/hethongsieuthi/tayninh/tnh06.jpg" },
-      { id: "TNH07", img: "/images/hethongsieuthi/tayninh/tnh07.jpg" },
-      { id: "TNH08", img: "/images/hethongsieuthi/tayninh/tnh08.jpg" },
+      { id: "TNH07", img: "/images/hethongsieuthi/tayninh/tnh07.jpg", objectPosition: "center 40%" },
+      { id: "TNH08", img: "/images/hethongsieuthi/tayninh/tnh08.jpg", objectPosition: "center 30%" },
       { id: "TNH09", img: "/images/hethongsieuthi/tayninh/tnh09.jpg" },
     ]
   },
@@ -831,16 +832,16 @@ const provinces = [
     mapWithText: encodeURI("/images/provinces/sài gòn chữ.png"),
     stores: [
       { id: "HCM01", img: "/images/hethongsieuthi/hcm/hcm01.jpg" },
-      { id: "HCM02", img: "/images/hethongsieuthi/hcm/hcm02.jpg" },
+      { id: "HCM02", img: "/images/hethongsieuthi/hcm/hcm02.jpg", objectPosition: "center 30%" },
       { id: "HCM03", img: "/images/hethongsieuthi/hcm/hcm03.JPG" },
       { id: "HCM04", img: "/images/hethongsieuthi/hcm/hcm04.jpg" },
-      { id: "HCM05", img: "/images/hethongsieuthi/hcm/HCM05.jpg" },
-      { id: "HCM06", img: "/images/hethongsieuthi/hcm/hcm06.jpg" },
+      { id: "HCM05", img: "/images/hethongsieuthi/hcm/HCM05.jpg", objectPosition: "center 30%" },
+      { id: "HCM06", img: "/images/hethongsieuthi/hcm/hcm06.jpg", objectPosition: "center 70%" },
       { id: "HCM07", img: "/images/hethongsieuthi/hcm/hcm07.jpg" },
-      { id: "HCM08", img: "/images/hethongsieuthi/hcm/hcm08.jpg" },
-      { id: "HCM09", img: "/images/hethongsieuthi/hcm/HCM09.jpg" },
-      { id: "HCM10", img: "/images/hethongsieuthi/hcm/hcm10.jpg" },
-      { id: "HCM11", img: "/images/hethongsieuthi/hcm/hcm11.jpg" },
+      { id: "HCM08", img: "/images/hethongsieuthi/hcm/hcm08.jpg", objectPosition: "center 40%" },
+      { id: "HCM09", img: "/images/hethongsieuthi/hcm/HCM09.jpg", objectPosition: "center 60%" },
+      { id: "HCM10", img: "/images/hethongsieuthi/hcm/hcm10.jpg", objectPosition: "center 30%" },
+      { id: "HCM11", img: "/images/hethongsieuthi/hcm/hcm11.jpg", objectPosition: "center 40%" },
       { id: "HCM12", img: "/images/hethongsieuthi/hcm/hcm12.jpg" },
       { id: "HCM13", img: "/images/hethongsieuthi/hcm/hcm13.jpg" },
       { id: "HCM15", img: "/images/hethongsieuthi/hcm/HCM15.jpg" },
@@ -849,7 +850,7 @@ const provinces = [
       { id: "HCM19", img: "/images/hethongsieuthi/hcm/hcm19.jpg" },
       { id: "HCM20", img: "/images/hethongsieuthi/hcm/hcm20.jpg" },
       { id: "HCM21", img: "/images/hethongsieuthi/hcm/hcm21.jpg" },
-      { id: "HCM22", img: "/images/hethongsieuthi/hcm/hcm22.jpg" },
+      { id: "HCM22", img: "/images/hethongsieuthi/hcm/hcm22.jpg", objectPosition: "center 30%" },
       { id: "HCM23", img: "/images/hethongsieuthi/hcm/hcm23.jpg" },
       { id: "HCM24", img: "/images/hethongsieuthi/hcm/hcm24.jpg" },
       { id: "HCM25", img: "/images/hethongsieuthi/hcm/hcm25.jpg" },
@@ -861,41 +862,41 @@ const provinces = [
       { id: "HCM31", img: "/images/hethongsieuthi/hcm/hcm31.jpg" },
       { id: "HCM32", img: "/images/hethongsieuthi/hcm/hcm32.jpg" },
       { id: "HCM33", img: "/images/hethongsieuthi/hcm/hcm33.jpg" },
-      { id: "HCM34", img: "/images/hethongsieuthi/hcm/hcm34.jpg" },
+      { id: "HCM34", img: "/images/hethongsieuthi/hcm/hcm34.jpg", objectPosition: "center 30%" },
       { id: "HCM35", img: "/images/hethongsieuthi/hcm/hcm35.JPG" },
       { id: "HCM36", img: "/images/hethongsieuthi/hcm/hcm36.jpg" },
-      { id: "HCM37", img: "/images/hethongsieuthi/hcm/hcm37.jpg" },
+      { id: "HCM37", img: "/images/hethongsieuthi/hcm/hcm37.jpg", objectPosition: "center 50%" },
       { id: "HCM38", img: "/images/hethongsieuthi/hcm/hcm38.jpg" },
       { id: "HCM39", img: "/images/hethongsieuthi/hcm/HCM39.jpg" },
       { id: "HCM40", img: "/images/hethongsieuthi/hcm/hcm40.jpg" },
       { id: "HCM41", img: "/images/hethongsieuthi/hcm/hcm41.jpg" },
       { id: "HCM42", img: "/images/hethongsieuthi/hcm/HCM42.jpg" },
-      { id: "HCM43", img: "/images/hethongsieuthi/hcm/hcm43.jpg" },
+      { id: "HCM43", img: "/images/hethongsieuthi/hcm/hcm43.jpg", objectPosition: "center 60%" },
       { id: "HCM44", img: "/images/hethongsieuthi/hcm/hcm44.jpg" },
       { id: "HCM45", img: "/images/hethongsieuthi/hcm/HCM45.jpg" },
-      { id: "HCM46", img: "/images/hethongsieuthi/hcm/hcm46.jpg" },
+      { id: "HCM46", img: "/images/hethongsieuthi/hcm/hcm46.jpg", objectPosition: "center 70%" },
       { id: "HCM47", img: "/images/hethongsieuthi/hcm/hcm47.jpg" },
       { id: "HCM48", img: "/images/hethongsieuthi/hcm/hcm48.jpg" },
       { id: "HCM49", img: "/images/hethongsieuthi/hcm/hcm49.jpg" },
-      { id: "HCM50", img: "/images/hethongsieuthi/hcm/HCM50.jpeg" },
+      { id: "HCM50", img: "/images/hethongsieuthi/hcm/HCM50.jpeg", objectPosition: "center 30%" },
       { id: "HCM51", img: "/images/hethongsieuthi/hcm/HCM51.jpg" },
       { id: "HCM53", img: "/images/hethongsieuthi/hcm/hcm53.jpg" },
       { id: "HCM-CH01", img: "/images/hethongsieuthi/hcm/hcm-ch01.jpg" },
       { id: "HCM-CH02", img: "/images/hethongsieuthi/hcm/hcm-ch02.jpg" },
-      { id: "HCM-CH04", img: "/images/hethongsieuthi/hcm/hcm-ch04.jpg" },
-      { id: "HCM-CH05", img: "/images/hethongsieuthi/hcm/hcm-ch05.jpg" },
+      { id: "HCM-CH04", img: "/images/hethongsieuthi/hcm/hcm-ch04.jpg", objectPosition: "center 30%" },
+      { id: "HCM-CH05", img: "/images/hethongsieuthi/hcm/hcm-ch05.jpg", objectPosition: "center 60%" },
       { id: "HCM-CH06", img: "/images/hethongsieuthi/hcm/hcm-ch06.jpg" },
       { id: "HCM-CH08", img: "/images/hethongsieuthi/hcm/hcm-ch08.jpg" },
-      { id: "HCM-CH09", img: "/images/hethongsieuthi/hcm/hcm-ch09.jpg" },
+      { id: "HCM-CH09", img: "/images/hethongsieuthi/hcm/hcm-ch09.jpg", objectPosition: "center 40%" },
       { id: "HCM-CH10", img: "/images/hethongsieuthi/hcm/hcm-ch10.jpg" },
       { id: "HCM-CH11", img: "/images/hethongsieuthi/hcm/hcm-ch11.jpg" },
-      { id: "HCM-CH12", img: "/images/hethongsieuthi/hcm/hcm-ch12.jpg" },
-      { id: "HCM-CH14", img: "/images/hethongsieuthi/hcm/hcm-ch14.jpg" },
-      { id: "HCM-CH15", img: "/images/hethongsieuthi/hcm/hcm-ch15.jpg" },
-      { id: "HCM-CH16", img: "/images/hethongsieuthi/hcm/hcm-ch16.jpg" },
+      { id: "HCM-CH12", img: "/images/hethongsieuthi/hcm/hcm-ch12.jpg", objectPosition: "center 40%" },
+      { id: "HCM-CH14", img: "/images/hethongsieuthi/hcm/hcm-ch14.jpg", objectPosition: "center 40%" },
+      { id: "HCM-CH15", img: "/images/hethongsieuthi/hcm/hcm-ch15.jpg", objectPosition: "center 30%" },
+      { id: "HCM-CH16", img: "/images/hethongsieuthi/hcm/hcm-ch16.jpg", objectPosition: "center 40%" },
       { id: "HCM-CH17", img: "/images/hethongsieuthi/hcm/hcm-ch17.jpg" },
       { id: "HCM-CH18", img: "/images/hethongsieuthi/hcm/hcm-ch18.jpg" },
-      { id: "HCM-CH19", img: "/images/hethongsieuthi/hcm/hcm-ch19.jpg" },
+      { id: "HCM-CH19", img: "/images/hethongsieuthi/hcm/hcm-ch19.jpg", objectPosition: "center 30%" },
       { id: "HCM-CH20", img: "/images/hethongsieuthi/hcm/hcm-ch20.jpg" },
       { id: "HCM-CH21", img: "/images/hethongsieuthi/hcm/hcm-ch21.jpg", objectPosition: "center 20%" },
     ]
@@ -910,8 +911,8 @@ const provinces = [
       { id: "DTP03", img: "/images/hethongsieuthi/dongthap/dtp03.jpg" },
       { id: "DTP04", img: "/images/hethongsieuthi/dongthap/dtp04.jpg" },
       { id: "DTP05", img: "/images/hethongsieuthi/dongthap/dtp05.jpg" },
-      { id: "DTP06", img: "/images/hethongsieuthi/dongthap/dtp06.jpg" },
-      { id: "DTP07", img: "/images/hethongsieuthi/dongthap/dtp07.jpg", objectPosition: "center 20%" },
+      { id: "DTP06", img: "/images/hethongsieuthi/dongthap/dtp06.jpg", objectPosition: "center 30%" },
+      { id: "DTP07", img: "/images/hethongsieuthi/dongthap/dtp07.jpg", objectPosition: "center 30%" },
       { id: "DTP09", img: "/images/hethongsieuthi/dongthap/dtp09.jpg" },
       { id: "DTP-CH01", img: "/images/hethongsieuthi/dongthap/dtp-ch01.jpg" },
     ]
@@ -926,9 +927,9 @@ const provinces = [
       { id: "AGG03", img: "/images/hethongsieuthi/angiang/sthi agg03.jpg" },
       { id: "AGG04", img: "/images/hethongsieuthi/angiang/sthi agg04.jpg" },
       { id: "AGG05", img: "/images/hethongsieuthi/angiang/sthi agg05.jpg" },
-      { id: "AGG06", img: "/images/hethongsieuthi/angiang/sthi agg06.jpg" },
+      { id: "AGG06", img: "/images/hethongsieuthi/angiang/sthi agg06.jpg", objectPosition: "center 30%" },
       { id: "AGG07", img: "/images/hethongsieuthi/angiang/sthi agg07.jpg" },
-      { id: "AGG-CH01", img: "/images/hethongsieuthi/angiang/agg ch01.jpg" },
+      { id: "AGG-CH01", img: "/images/hethongsieuthi/angiang/agg ch01.jpg", objectPosition: "center 30%" },
       { id: "AGG-CH02", img: "/images/hethongsieuthi/angiang/agg-ch02.jpg" },
       { id: "AGG-CH03", img: "/images/hethongsieuthi/angiang/agg ch03.jpg" },
     ]
@@ -939,10 +940,10 @@ const provinces = [
     mapWithText: encodeURI("/images/provinces/vinh_long_thumb chữ.png"),
     stores: [
       { id: "VLG01", img: "/images/hethongsieuthi/vinhlong/vlg01.jpg" },
-      { id: "VLG02", img: "/images/hethongsieuthi/vinhlong/vlg02.jpg" },
+      { id: "VLG02", img: "/images/hethongsieuthi/vinhlong/vlg02.jpg", objectPosition: "center 40%" },
       { id: "VLG03", img: "/images/hethongsieuthi/vinhlong/vlg03.jpg" },
       { id: "VLG04", img: "/images/hethongsieuthi/vinhlong/vlg04.jpg" },
-      { id: "VLG05", img: "/images/hethongsieuthi/vinhlong/vlg05.jpg" },
+      { id: "VLG05", img: "/images/hethongsieuthi/vinhlong/vlg05.jpg", objectPosition: "center 35%" },
       { id: "VLG06", img: "/images/hethongsieuthi/vinhlong/vlg06.JPG" },
       { id: "VLG07", img: "/images/hethongsieuthi/vinhlong/vlg07.jpg" },
       { id: "VLG08", img: "/images/hethongsieuthi/vinhlong/vlg08.jpg" },
@@ -956,14 +957,14 @@ const provinces = [
     stores: [
       { id: "CTO01", img: "/images/hethongsieuthi/cto/cto01.jpg" },
       { id: "CTO02", img: "/images/hethongsieuthi/cto/cto02.jpg" },
-      { id: "CTO03", img: "/images/hethongsieuthi/cto/cto03.jpg" },
-      { id: "CTO04", img: "/images/hethongsieuthi/cto/cto04.jpg" },
+      { id: "CTO03", img: "/images/hethongsieuthi/cto/cto03.jpg", objectPosition: "center 40%" },
+      { id: "CTO04", img: "/images/hethongsieuthi/cto/cto04.jpg", objectPosition: "center 60%" },
       { id: "CTO05", img: "/images/hethongsieuthi/cto/cto05.jpg" },
       { id: "CTO06", img: "/images/hethongsieuthi/cto/CTO06..jpg" },
       { id: "CTO07", img: "/images/hethongsieuthi/cto/cto07.jpg" },
       { id: "CTO08", img: "/images/hethongsieuthi/cto/cto08.jpg" },
       { id: "CTO09", img: "/images/hethongsieuthi/cto/cto09.jpg" },
-      { id: "CTO-CH01", img: "/images/hethongsieuthi/cto/ch-cto01.jpg" },
+      { id: "CTO-CH01", img: "/images/hethongsieuthi/cto/ch-cto01.jpg", objectPosition: "center 40%" },
     ]
   },
   {
@@ -974,7 +975,7 @@ const provinces = [
       { id: "CMU01", img: "/images/hethongsieuthi/camau/cmu01.jpg" },
       { id: "CMU02", img: "/images/hethongsieuthi/camau/cmu02.jpg", objectPosition: "center 20%" },
       { id: "CMU03", img: "/images/hethongsieuthi/camau/cmu03.jpg", objectPosition: "center 20%" },
-      { id: "CMU04", img: "/images/hethongsieuthi/camau/cmu04.JPEG" },
+      { id: "CMU04", img: "/images/hethongsieuthi/camau/cmu04.JPEG", objectPosition: "center 40%" },
       { id: "CMU05", img: "/images/hethongsieuthi/camau/cmu05.jpg" },
     ]
   },
@@ -993,10 +994,10 @@ const provinces = [
     stores: [
       { id: "LCI01", img: "/images/hethongsieuthi/laocai/laocai-1.jpg" },
       { id: "LCI02", img: "/images/hethongsieuthi/laocai/laocai-2.jpg" },
-      { id: "LCI03", img: "/images/hethongsieuthi/laocai/laocai-3.jpg" },
+      { id: "LCI03", img: "/images/hethongsieuthi/laocai/laocai-3.jpg", objectPosition: "center 30%" },
       { id: "LCI04", img: "/images/hethongsieuthi/laocai/laocai-4.jpg" },
       { id: "LCI05", img: "/images/hethongsieuthi/laocai/laocai-5.jpg" },
-      { id: "LCI06", img: "/images/hethongsieuthi/laocai/laocai-6.jpg" },
+      { id: "LCI06", img: "/images/hethongsieuthi/laocai/laocai-6.jpg", objectPosition: "center 60%" },
     ]
   },
 ];
@@ -1028,27 +1029,51 @@ export default function ConNguoiPage() {
     // --- Các thông số khác ---
     gap: "gap-4 md:gap-[10cm]",
     leader: {
-      containerMaxWidth: "350px",
+      containerMaxWidth: "420px",
       width: "100%",
-      height: "450px",
+      height: "550px",
       mobileHeight: "220px",
       translateX: "translate-x-0"
     },
     group: {
-      containerMaxWidth: "800px",
-      width: "800px",
-      height: "450px"
+      containerMaxWidth: "1000px",
+      width: "1000px",
+      height: "550px"
     },
     deputy: {
-      containerMaxWidth: "350px",
+      containerMaxWidth: "420px",
       width: "100%",
-      height: "450px",
+      height: "550px",
       mobileHeight: "350px",
       translateX: "translate-x-0"
     }
   };
 
   const [positions, setPositions] = useState([0, 1, 2]);
+  const leadersSectionRef = useRef<HTMLDivElement>(null);
+
+  // Tự động reset Ban Giám đốc về mặc định khi kéo qua (ra khỏi tầm mắt)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Nếu không còn ở trong khung hình thì reset về mặc định (index 1 là Thiếu tá Đinh Thị Dung ở giữa)
+        if (!entry.isIntersecting) {
+          setPositions([0, 1, 2]);
+        }
+      },
+      { threshold: 0 }
+    );
+
+    if (leadersSectionRef.current) {
+      observer.observe(leadersSectionRef.current);
+    }
+
+    return () => {
+      if (leadersSectionRef.current) {
+        observer.unobserve(leadersSectionRef.current);
+      }
+    };
+  }, []);
   const [activeDeptPage, setActiveDeptPage] = useState(0);
   const [activeBranchPage, setActiveBranchPage] = useState(0);
   const [selectedDirector, setSelectedDirector] = useState<any>(null);
@@ -1234,12 +1259,12 @@ export default function ConNguoiPage() {
             </button>
 
             <div className="relative w-full max-w-[95vw] flex flex-col items-center">
-              <div className="flex flex-col items-center mb-12">
-                <h2 className="text-white font-beausans font-black text-2xl md:text-4xl uppercase tracking-[0.15em] text-center drop-shadow-lg">
+              <div className="flex flex-col items-center mb-32">
+                <h2 className="relative z-50 font-beausans font-black text-2xl md:text-4xl uppercase tracking-[0.15em] text-center" style={{ color: '#FFFFFF' }}>
                   {selectedDept.name}
                 </h2>
                 {deptPopupPage > 0 && selectedDept.details.extraPages[deptPopupPage - 1]?.title && (
-                  <h3 className="text-white font-beausans font-black text-xl md:text-3xl uppercase tracking-[0.15em] text-center mt-2 drop-shadow-lg">
+                  <h3 className="relative z-50 font-beausans font-black text-xl md:text-3xl uppercase tracking-[0.15em] text-center mt-2" style={{ color: '#FFFFFF' }}>
                     {selectedDept.details.extraPages[deptPopupPage - 1].title}
                   </h3>
                 )}
@@ -1304,7 +1329,7 @@ export default function ConNguoiPage() {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
                         <div className="mt-8 text-center h-[80px] flex flex-col justify-start">
-                          <h4 className="text-white font-bold text-lg md:text-xl tracking-tight mb-1">{selectedDept.details.leader.name}</h4>
+                          <h4 className="text-[#FFFFFF] font-bold text-lg md:text-xl tracking-tight mb-1">{selectedDept.details.leader.name}</h4>
                           <p className="text-gray-200 font-roboto text-xs md:text-sm leading-tight">{selectedDept.details.leader.role}</p>
                         </div>
                       </div>
@@ -1335,7 +1360,7 @@ export default function ConNguoiPage() {
                       </div>
 
                       <div className="mt-8 text-center w-full h-[80px] flex flex-col justify-start">
-                        <h4 className="text-white font-black text-xl md:text-2xl tracking-tight mb-2 leading-tight drop-shadow-md">
+                        <h4 className="text-[#FFFFFF] font-black text-xl md:text-2xl tracking-tight mb-2 leading-tight drop-shadow-md">
                           {selectedDept.details.group.name}
                         </h4>
                         {selectedDept.details.group.subName && (
@@ -1374,7 +1399,7 @@ export default function ConNguoiPage() {
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                               </div>
                               <div className={`mt-8 text-center ${isTwoDeputies ? "h-auto" : "h-[80px] flex flex-col justify-start"}`}>
-                                <h4 className={`text-white font-bold tracking-tight mb-0.5 ${isTwoDeputies ? "text-sm" : "text-lg md:text-xl"}`}>
+                                <h4 className={`text-[#FFFFFF] font-bold tracking-tight mb-0.5 ${isTwoDeputies ? "text-sm" : "text-lg md:text-xl"}`}>
                                   {deputy.name}
                                 </h4>
                                 <p className={`text-gray-200 font-roboto leading-tight ${isTwoDeputies ? "text-[10px]" : "text-xs md:text-sm"}`}>
@@ -1465,7 +1490,7 @@ export default function ConNguoiPage() {
                             </div>
                             {item.name && (
                               <div className="mt-4 text-center">
-                                <h4 className="text-white font-bold text-base md:text-lg tracking-tight drop-shadow-md">{item.name}</h4>
+                                <h4 className="text-[#FFFFFF] font-bold text-base md:text-lg tracking-tight drop-shadow-md">{item.name}</h4>
                               </div>
                             )}
                           </div>
@@ -1494,7 +1519,7 @@ export default function ConNguoiPage() {
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                           </div>
                           <div className="mt-8 text-center h-[100px] flex flex-col justify-start">
-                            <h4 className="text-white font-bold text-lg md:text-xl tracking-tight mb-1 drop-shadow-md">{item.name}</h4>
+                            <h4 className="text-[#FFFFFF] font-bold text-lg md:text-xl tracking-tight mb-1 drop-shadow-md">{item.name}</h4>
                             <p className="text-gray-200 font-roboto text-xs md:text-sm leading-tight">{item.role}</p>
                           </div>
                         </div>
@@ -1567,7 +1592,7 @@ export default function ConNguoiPage() {
             </button>
 
             <div className="relative w-full max-w-7xl flex flex-col items-center">
-              <h2 className="text-white font-beausans font-black text-2xl md:text-4xl uppercase mb-12 tracking-[0.15em] text-center drop-shadow-lg">
+              <h2 className="relative z-50 font-beausans font-black text-2xl md:text-4xl uppercase mb-32 tracking-[0.15em] text-center" style={{ color: '#FFFFFF' }}>
                 {selectedBranch.name}
               </h2>
 
@@ -1578,7 +1603,7 @@ export default function ConNguoiPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   </div>
                   <div className="mt-6 text-center">
-                    <h4 className="text-white font-bold text-lg md:text-xl uppercase tracking-tight mb-1">{selectedBranch.details.leader.name}</h4>
+                    <h4 className="text-[#FFFFFF] font-bold text-lg md:text-xl uppercase tracking-tight mb-1">{selectedBranch.details.leader.name}</h4>
                     <p className="text-gray-400 font-roboto text-xs md:text-sm italic leading-tight">{selectedBranch.details.leader.role}</p>
                   </div>
                 </div>
@@ -1594,8 +1619,8 @@ export default function ConNguoiPage() {
                       onError={(e) => e.currentTarget.src = "/images/logo-viettel-store.png"}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent flex flex-col justify-end p-6 md:p-10">
-                      <p className="text-white font-beausans font-bold text-sm md:text-base opacity-70 mb-1">{selectedBranch.details.group.subName}</p>
-                      <h3 className="text-white font-beausans font-black text-xl md:text-3xl uppercase tracking-tight leading-tight">{selectedBranch.details.group.name}</h3>
+                      <p className="text-[#FFFFFF] font-beausans font-bold text-sm md:text-base opacity-70 mb-1">{selectedBranch.details.group.subName}</p>
+                      <h3 className="text-[#FFFFFF] font-beausans font-black text-xl md:text-3xl uppercase tracking-tight leading-tight">{selectedBranch.details.group.name}</h3>
                     </div>
                   </div>
                 </div>
@@ -1606,7 +1631,7 @@ export default function ConNguoiPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   </div>
                   <div className="mt-6 text-center">
-                    <h4 className="text-white font-bold text-lg md:text-xl uppercase tracking-tight mb-1">{selectedBranch.details.deputy.name}</h4>
+                    <h4 className="text-[#FFFFFF] font-bold text-lg md:text-xl uppercase tracking-tight mb-1">{selectedBranch.details.deputy.name}</h4>
                     <p className="text-gray-400 font-roboto text-xs md:text-sm italic leading-tight">{selectedBranch.details.deputy.role}</p>
                   </div>
                 </div>
@@ -1630,7 +1655,7 @@ export default function ConNguoiPage() {
 
         <div className="relative z-10 w-full pt-0">
           {/* Section: BAN GIÁM ĐỐC */}
-          <section className="mb-24 w-full relative pt-24 md:pt-32 pb-0">
+          <section ref={leadersSectionRef} className="mb-24 w-full relative pt-24 md:pt-32 pb-0">
             <div className="container mx-auto max-w-7xl px-4 lg:px-8 mb-16 relative z-10">
               <h2 className="text-[#262626] font-black text-4xl md:text-5xl uppercase tracking-tighter text-left">BAN GIÁM ĐỐC</h2>
             </div>
@@ -1647,9 +1672,9 @@ export default function ConNguoiPage() {
                         <Image src={leader.img} alt={leader.name} fill className="object-cover object-top transform scale-[1.8] transition-all duration-[1500ms]" style={{ transition: 'all 1500ms cubic-bezier(0.25, 1, 0.5, 1)' }} onError={(e) => e.currentTarget.src = "/images/logo-viettel-store.png"} />
                       </div>
                     </div>
-                    <div className={`text-center px-4 max-w-[450px] mx-auto mt-8 transition-all duration-1000 ${isCenter ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-50'}`}>
-                      <h3 className="text-lg md:text-2xl font-black text-[#262626] uppercase mb-1 tracking-tighter leading-tight whitespace-pre-line">{leader.name}</h3>
-                      <p className="text-[10px] md:text-[13px] text-gray-600 font-roboto font-bold tracking-tight leading-tight whitespace-pre-line">{leader.role}</p>
+                    <div className={`text-center px-4 max-w-[600px] mx-auto mt-10 transition-all duration-1000 ${isCenter ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-50'}`}>
+                      <h3 className="text-xl md:text-4xl font-black text-[#262626] uppercase mb-2 tracking-tighter leading-tight whitespace-pre-line">{leader.name}</h3>
+                      <p className="text-[12px] md:text-[18px] text-gray-600 font-roboto font-bold tracking-tight leading-relaxed whitespace-pre-line">{leader.role}</p>
                     </div>
                   </div>
                 );
@@ -1987,7 +2012,7 @@ export default function ConNguoiPage() {
             backgroundSize: 'cover',
             backgroundPosition: 'center'
           }}
-          className="fixed inset-0 z-[2147483647] flex flex-col items-center justify-around py-16 px-4 animate-in fade-in duration-700"
+          className="fixed inset-0 z-[2147483647] flex flex-col items-center justify-around py-16 px-4"
         >
           {/* Artistic Background Elements */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -2006,8 +2031,8 @@ export default function ConNguoiPage() {
           </div>
 
           {/* Top Title Section */}
-          <div className="w-full text-center animate-in slide-in-from-top-8 duration-700 delay-100">
-            <h2 className="text-white font-beausans font-black text-3xl md:text-6xl uppercase tracking-[0.1em] drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]">
+          <div className="relative z-50 w-full text-center mb-12 md:mb-24">
+            <h2 className="font-beausans font-black text-3xl md:text-6xl uppercase tracking-[0.1em]" style={{ color: '#FFFFFF' }}>
               {selectedProvince.stores && selectedProvince.stores[activeStoreIndex].id.includes('CH')
                 ? `TẬP THỂ CÁC CỬA HÀNG TẠI TỈNH ${selectedProvince.name}`
                 : `TẬP THỂ CÁC SIÊU THỊ TẠI TỈNH ${selectedProvince.name}`}
@@ -2015,9 +2040,9 @@ export default function ConNguoiPage() {
           </div>
 
           {/* Center Content Group (Image + Caption) */}
-          <div className="flex-1 flex flex-col items-center justify-center gap-y-16 md:gap-y-32 w-full animate-in fade-in zoom-in-90 duration-1000 delay-200">
+          <div className="flex-1 flex flex-col items-center justify-center gap-y-12 md:gap-y-20 w-full animate-in fade-in zoom-in-90 duration-1000 delay-200">
             {/* Center Image Section */}
-            <div className="relative w-full max-w-4xl h-[600px] rounded-[2rem] overflow-hidden isolation-isolate transform translate-z-0 flex items-center justify-center">
+            <div className="relative w-full max-w-6xl h-[650px] rounded-[2rem] overflow-hidden isolation-isolate transform translate-z-0 flex items-center justify-center -mt-8 md:-mt-16">
               {/* Navigation Arrows */}
               {selectedProvince.stores && selectedProvince.stores.length > 1 && (
                 <>
@@ -2038,7 +2063,7 @@ export default function ConNguoiPage() {
 
               {/* Main Image Frame */}
               <div
-                style={{ height: '600px', maxWidth: '1000px', borderRadius: '2rem', overflow: 'hidden', position: 'relative' }}
+                style={{ height: '650px', maxWidth: '1152px', borderRadius: '2rem', overflow: 'hidden', position: 'relative' }}
                 className="w-full shadow-[0_0_120px_rgba(0,0,0,0.8)] border border-white/5 bg-black/40 group flex items-center justify-center isolation-isolate"
               >
                 {/* Blurred Background Layer */}
@@ -2055,8 +2080,21 @@ export default function ConNguoiPage() {
                   key={activeStoreIndex}
                   src={selectedProvince.stores ? encodeURI(selectedProvince.stores[activeStoreIndex].img) : "/images/logo-viettel-store.png"}
                   alt={selectedProvince.name}
-                  style={{ borderRadius: '2rem', objectPosition: selectedProvince.stores[activeStoreIndex].objectPosition || 'center' }}
-                  className={`relative z-10 w-full h-full ${selectedProvince.stores[activeStoreIndex].objectFit || 'object-cover'} transition-all duration-700 shadow-2xl ${selectedProvince.stores[activeStoreIndex].scale || 'scale-125'}`}
+                  style={{
+                    borderRadius: '2rem',
+                    objectPosition: selectedProvince.stores[activeStoreIndex].objectPosition || 'center',
+                    transform: `scale(${(() => {
+                      const s = selectedProvince.stores[activeStoreIndex].scale;
+                      if (!s) return 1.25;
+                      if (s.startsWith('scale-[')) return s.replace('scale-[', '').replace(']', '');
+                      if (s === 'scale-150') return 1.5;
+                      if (s === 'scale-125') return 1.25;
+                      if (s === 'scale-110') return 1.1;
+                      if (s === 'scale-100') return 1.0;
+                      return 1.25;
+                    })()})`
+                  }}
+                  className={`relative z-10 w-full h-full ${selectedProvince.stores[activeStoreIndex].objectFit || 'object-cover'} transition-all duration-700 shadow-2xl`}
                 />
                 {/* Subtle Overlay (Darker at bottom) */}
                 <div
@@ -2067,8 +2105,8 @@ export default function ConNguoiPage() {
             </div>
 
             {/* Bottom Caption Section */}
-            <div className="w-full text-center">
-              <h3 className="text-white font-beausans font-bold text-2xl md:text-5xl tracking-wide drop-shadow-2xl">
+            <div className="w-full text-center mt-8 md:mt-16">
+              <h3 className="relative z-50 font-beausans font-bold text-2xl md:text-5xl tracking-wide" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
                 {selectedProvince.stores
                   ? (selectedProvince.stores[activeStoreIndex].id.includes('CH')
                     ? `Cửa hàng ${selectedProvince.stores[activeStoreIndex].id}`
