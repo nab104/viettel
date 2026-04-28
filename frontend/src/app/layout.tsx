@@ -3,9 +3,17 @@ import localFont from "next/font/local";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 
-const roboto = Roboto({
-  subsets: ["latin", "vietnamese"],
-  weight: ["400", "500", "700"],
+const roboto = localFont({
+  src: [
+    {
+      path: "./fonts/roboto/Roboto-VariableFont_wdth_wght.ttf",
+      style: "normal",
+    },
+    {
+      path: "./fonts/roboto/Roboto-Italic-VariableFont_wdth_wght.ttf",
+      style: "italic",
+    },
+  ],
   variable: "--font-roboto",
 });
 

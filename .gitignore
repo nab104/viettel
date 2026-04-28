@@ -5,7 +5,7 @@ out/
 build/
 dist/
 .DS_Store
-frontend/public/images/
+Pictures/
 
 # Environment (anywhere in repo)
 .env
