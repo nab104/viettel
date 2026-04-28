@@ -8,4 +8,6 @@ export interface ProvinceData {
   top: number;
   left: number;
   svg: React.ReactNode;
+  dotX?: number;
+  dotY?: number;
 }

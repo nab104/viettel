@@ -33,7 +33,17 @@ export const JourneyModal: React.FC<JourneyModalProps> = ({ isOpen, onClose, mil
             className="relative bg-[#333] w-full max-w-[1200px] overflow-hidden rounded-lg shadow-2xl flex flex-col md:flex-row"
             style={{ minHeight: "600px" }}
           >
-
+            {/* Close Button */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onClose();
+              }}
+              className="absolute top-6 right-6 z-[110] p-2 text-white/70 hover:text-white transition-colors"
+              aria-label="Close modal"
+            >
+              <X size={32} />
+            </button>
 
             {/* Left Side - Image */}
             <div className="w-full md:w-1/2 relative min-h-[400px]">

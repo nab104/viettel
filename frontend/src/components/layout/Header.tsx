@@ -49,13 +49,6 @@ export const Header = () => {
                 style={{ fontFamily: 'var(--font-beausans)' }}
               >
                 {link.name}
-                {isActive && (
-                  <motion.div
-                    layoutId="header-active-link"
-                    className="absolute -bottom-1 left-0 right-0 h-1 bg-viettel"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
               </Link>
             );
           })}

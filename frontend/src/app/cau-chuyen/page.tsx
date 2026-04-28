@@ -21,7 +21,7 @@ const testimonials = [
 export default function CauChuyenPage() {
   return (
     <div className="w-full bg-[#F2F2F2] pt-24 min-h-screen relative">
-      <div 
+      <div
         style={{
           width: "100%",
           height: "3254px",
@@ -34,21 +34,21 @@ export default function CauChuyenPage() {
         <VietnamMap />
 
         {/* Header Text Section (Right side) */}
-        <div 
-          style={{ 
-            position: "absolute", 
-            right: "calc(16% + 5px)", 
+        <div
+          style={{
+            position: "absolute",
+            right: "calc(16% + 5px)",
             top: "96px",
             zIndex: 10
           }}
         >
-          <h1 
-            style={{ 
-              width: "410px", 
-              color: "#484848", 
-              textAlign: "right", 
-              fontFamily: "var(--font-beausans)", 
-              fontSize: "52px", 
+          <h1
+            style={{
+              width: "410px",
+              color: "#484848",
+              textAlign: "right",
+              fontFamily: "var(--font-beausans)",
+              fontSize: "52px",
               fontStyle: "normal",
               fontWeight: 700,
               lineHeight: "1",
@@ -57,13 +57,13 @@ export default function CauChuyenPage() {
           >
             CÂU CHUYỆN
           </h1>
-          <h2 
-            style={{ 
-              width: "410px", 
-              color: "#ED1C24", 
-              textAlign: "right", 
-              fontFamily: "var(--font-beausans)", 
-              fontSize: "52px", 
+          <h2
+            style={{
+              width: "410px",
+              color: "#ED1C24",
+              textAlign: "right",
+              fontFamily: "var(--font-beausans)",
+              fontSize: "52px",
               fontStyle: "normal",
               fontWeight: 700,
               lineHeight: "1",
@@ -73,18 +73,21 @@ export default function CauChuyenPage() {
             VIETTEL STORE
           </h2>
 
-          <p 
-            style={{ 
-              width: "324px", 
-              color: "#484848", 
-              textAlign: "right", 
-              fontFamily: "var(--font-roboto)", 
-              fontSize: "16px", 
+          <p
+            style={{
+              width: "324px",
+              color: "#484848",
+              textAlign: "right",
+              fontFamily: "var(--font-roboto)",
+              fontSize: "16px",
               fontStyle: "normal",
               fontWeight: 400,
               lineHeight: "normal",
-              margin: 0,
-              marginTop: "10px"
+              marginTop: "10px",
+              marginBottom: 0,
+              marginLeft: 0,
+              marginRight: 0,
+              transform: "translateX(80px)"
             }}
           >
             Những câu chuyện nhỏ, những con người thật góp phần tạo nên hành trình Viettel Store
