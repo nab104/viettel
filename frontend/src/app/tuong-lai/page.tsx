@@ -31,6 +31,7 @@ export default function TuongLaiPage() {
             >
               <h1 style={{ 
                 color: '#FFF', 
+                fontFamily: 'var(--font-beausans)',
                 fontSize: '52px', 
                 fontWeight: 700, 
                 lineHeight: 'normal',

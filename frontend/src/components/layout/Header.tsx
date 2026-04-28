@@ -46,6 +46,7 @@ export const Header = () => {
                   "relative text-xs xl:text-sm font-black transition-colors uppercase whitespace-nowrap tracking-tight py-1",
                   isActive ? "text-viettel" : "text-gray-500 hover:text-viettel"
                 )}
+                style={{ fontFamily: 'var(--font-beausans)' }}
               >
                 {link.name}
                 {isActive && (

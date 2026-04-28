@@ -3,7 +3,7 @@
 @theme {
   --color-viettel: #ee0033;
   --color-viettel-hover: #cc002b;
-  --font-sans: var(--font-beausans), var(--font-roboto), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-roboto), ui-sans-serif, system-ui, sans-serif;
   --font-beausans: var(--font-beausans), sans-serif;
   --font-roboto: var(--font-roboto), sans-serif;
   --font-fs-magistral: var(--font-fs-magistral), sans-serif;
@@ -23,7 +23,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-beausans);
+  font-family: var(--font-roboto);
   min-height: 100vh;
 }
 
@@ -193,11 +193,4 @@ h1, h2, h3, h4, h5, h6 {
   background: rgba(255, 255, 255, 0.3);
 }
 
-@keyframes pulse-slow {
-  0%, 100% { opacity: 0.15; }
-  50% { opacity: 0.25; }
-}
 
-.animate-pulse-slow {
-  animation: pulse-slow 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}

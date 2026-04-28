@@ -5,7 +5,7 @@ out/
 build/
 dist/
 .DS_Store
-Pictures/
+frontend/public/images/
 
 # Environment (anywhere in repo)
 .env
@@ -28,3 +28,6 @@ yarn-error.log*
 .pnpm-debug.log*
 .vercel
 *.tsbuildinfo
+
+# Large assets
+Pictures/
