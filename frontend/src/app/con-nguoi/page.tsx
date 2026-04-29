@@ -4,13 +4,13 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { createPortal } from "react-dom";
 import useEmblaCarousel from 'embla-carousel-react';
-import { scale } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 // Mock Data
 const leaders = [
-  { name: "THƯỢNG TÁ\nTRƯƠNG ĐẠI NGHĨA", role: "Phó giám đốc Viettel Store", img: "/images/truong-dai-nghia.jpg" },
-  { name: "THIẾU TÁ\nĐINH THỊ DUNG", role: "Phó giám đốc công ty Viettel Commerce\nGiám đốc Viettel Store", img: "/images/dinh-thi-dung-new.jpg" },
-  { name: "THIẾU TÁ\nĐINH SƠN TÙNG", role: "Phó giám đốc Viettel Store", img: "/images/dinh-son-tung.jpg" },
+  { name: "THƯỢNG TÁ\nTRƯƠNG ĐẠI NGHĨA", role: "Phó giám đốc Viettel Store", img: "/images/truong-dai-nghia.jpg", objectPosition: "20% 20%", scale: 1.2 },
+  { name: "THIẾU TÁ\nĐINH THỊ DUNG", role: "Phó giám đốc công ty Viettel Commerce\nGiám đốc Viettel Store", img: "/images/dinh-thi-dung-new.jpg", objectPosition: "50% 0%", scale: 1.8 },
+  { name: "THIẾU TÁ\nĐINH SƠN TÙNG", role: "Phó giám đốc Viettel Store", img: "/images/dinh-son-tung.jpg", objectPosition: "60% 0%", scale: 1.2 },
 ];
 
 const longService = [
@@ -1027,23 +1027,23 @@ export default function ConNguoiPage() {
     },
 
     // --- Các thông số khác ---
-    gap: "gap-4 md:gap-[10cm]",
+    gap: "gap-4 md:gap-10",
     leader: {
-      containerMaxWidth: "420px",
+      containerMaxWidth: "320px",
       width: "100%",
-      height: "550px",
+      height: "450px",
       mobileHeight: "220px",
       translateX: "translate-x-0"
     },
     group: {
-      containerMaxWidth: "1000px",
-      width: "1000px",
-      height: "550px"
+      containerMaxWidth: "850px",
+      width: "850px",
+      height: "450px"
     },
     deputy: {
-      containerMaxWidth: "420px",
+      containerMaxWidth: "320px",
       width: "100%",
-      height: "550px",
+      height: "450px",
       mobileHeight: "350px",
       translateX: "translate-x-0"
     }
@@ -1081,6 +1081,7 @@ export default function ConNguoiPage() {
   const [selectedBranch, setSelectedBranch] = useState<any>(null);
   const [activeProvince, setActiveProvince] = useState(2);
   const [activeStoreIndex, setActiveStoreIndex] = useState(0);
+  const [slideDirection, setSlideDirection] = useState(0);
   const [vdIndex, setVdIndex] = useState(0);
   const [selectedHonoree, setSelectedHonoree] = useState<any>(null);
   const [selectedProvince, setSelectedProvince] = useState<any>(null);
@@ -1259,7 +1260,7 @@ export default function ConNguoiPage() {
             </button>
 
             <div className="relative w-full max-w-[95vw] flex flex-col items-center">
-              <div className="flex flex-col items-center mb-32">
+              <div className="flex flex-col items-center mb-12">
                 <h2 className="relative z-50 font-beausans font-black text-2xl md:text-4xl uppercase tracking-[0.15em] text-center" style={{ color: '#FFFFFF' }}>
                   {selectedDept.name}
                 </h2>
@@ -1287,7 +1288,7 @@ export default function ConNguoiPage() {
                           >
                             <div
                               className="relative w-full rounded-2xl overflow-hidden shadow-xl border-2 border-white/40 group-hover:border-[#EE0033] transition-all duration-500 bg-white/10"
-                              style={{ height: '350px' }}
+                              style={{ height: '280px' }}
                             >
                               <Image
                                 src={item.img || "/images/logo-viettel-store.png"}
@@ -1315,7 +1316,7 @@ export default function ConNguoiPage() {
                       >
                         <div
                           className="relative w-full rounded-[2rem] overflow-hidden shadow-2xl border-2 border-white/80 group-hover:border-[#EE0033] transition-all duration-500"
-                          style={{ height: "450px", minHeight: "450px" }}
+                          style={{ height: popupConfig.leader.height, minHeight: popupConfig.leader.height }}
                         >
                           <Image
                             src={selectedDept.details.leader.img}
@@ -1417,7 +1418,7 @@ export default function ConNguoiPage() {
                 <div className="w-full flex flex-col items-center justify-center px-4 md:px-10 animate-in fade-in zoom-in-95 duration-500">
                   {/* Extra Pages Rendering */}
                   {selectedDept.details.extraPages[deptPopupPage - 1]?.layout === "page2-special" ? (
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-7xl md:h-[550px] mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-7xl md:h-[450px] mx-auto">
                       {/* Left side: Image 7 (Narrower) */}
                       <div className="md:col-span-1 relative rounded-2xl overflow-hidden border-2 border-white/40 shadow-xl h-[400px] md:h-full bg-white/10">
                         <Image
@@ -1477,7 +1478,7 @@ export default function ConNguoiPage() {
                             style={{ animationDelay: `${idx * 100}ms` }}
                           >
                             <div
-                              className="relative w-full rounded-2xl overflow-hidden shadow-xl border-2 border-white/40 group-hover:border-[#EE0033] transition-all duration-500 h-[280px] md:h-[350px]"
+                              className="relative w-full rounded-2xl overflow-hidden shadow-xl border-2 border-white/40 group-hover:border-[#EE0033] transition-all duration-500 h-[280px] md:h-[280px]"
                             >
                               <Image
                                 src={item.img || "/images/logo-viettel-store.png"}
@@ -1669,7 +1670,18 @@ export default function ConNguoiPage() {
 
                     <div className={`relative aspect-square overflow-hidden shadow-2xl transition-all duration-[1500ms] ${style.brightness}`} style={{ borderRadius: style.borderRadius, width: '100%', backgroundColor: '#fff', padding: '0', borderWidth: isCenter ? '6px' : '2px', borderStyle: 'solid', borderColor: isCenter ? '#EE0033' : 'rgba(0,0,0,0.05)', boxShadow: isCenter ? '0 15px 45px rgba(238,0,51,0.2)' : 'none', transition: 'all 1500ms cubic-bezier(0.25, 1, 0.5, 1)' }}>
                       <div className="w-full h-full relative overflow-hidden transition-all duration-[1500ms]" style={{ borderRadius: style.borderRadius, transition: 'all 1500ms cubic-bezier(0.25, 1, 0.5, 1)' }}>
-                        <Image src={leader.img} alt={leader.name} fill className="object-cover object-top transform scale-[1.8] transition-all duration-[1500ms]" style={{ transition: 'all 1500ms cubic-bezier(0.25, 1, 0.5, 1)' }} onError={(e) => e.currentTarget.src = "/images/logo-viettel-store.png"} />
+                        <Image
+                          src={leader.img}
+                          alt={leader.name}
+                          fill
+                          className="object-cover transform transition-all duration-[1500ms]"
+                          style={{
+                            transition: 'all 1500ms cubic-bezier(0.25, 1, 0.5, 1)',
+                            objectPosition: leader.objectPosition || 'top',
+                            transform: `scale(${leader.scale || 1.8})`
+                          }}
+                          onError={(e) => e.currentTarget.src = "/images/logo-viettel-store.png"}
+                        />
                       </div>
                     </div>
                     <div className={`text-center px-4 max-w-[600px] mx-auto mt-10 transition-all duration-1000 ${isCenter ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-10 scale-50'}`}>
@@ -1749,16 +1761,16 @@ export default function ConNguoiPage() {
 
           {/* Section: CÁC PHÒNG/KÊNH */}
           <section className="py-24 bg-[#F2F2F2] relative w-full overflow-hidden">
-            <div className="container mx-auto px-4 relative z-10 max-w-7xl">
+            <div className="container mx-auto px-4 relative z-10 max-w-[1500px]">
               <h2 className="text-[#4A4A4A] font-beausans font-black text-4xl md:text-5xl uppercase mb-16 text-center tracking-tight">CÁC PHÒNG/KÊNH</h2>
 
-              <div className="flex items-center justify-center gap-4 md:gap-20 w-full max-w-[1600px] mx-auto relative px-4">
+              <div className="flex items-center justify-center gap-4 md:gap-12 w-full max-w-[1700px] mx-auto relative px-4">
                 {/* Left Arrow - Circle shape fixed */}
                 <button
                   onClick={() => setActiveDeptPage(p => Math.max(0, p - 1))}
-                  className="shrink-0 w-14 h-14 md:w-28 md:h-28 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl border border-white/50 hover:bg-[#EE0033] group transition-all duration-500 z-30"
+                  className="shrink-0 w-12 h-12 md:w-20 md:h-20 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl border border-white/50 hover:bg-[#EE0033] group transition-all duration-500 z-30"
                 >
-                  <ChevronLeft size={48} className="text-gray-800 group-hover:text-white transition-colors duration-500" />
+                  <ChevronLeft size={32} className="text-gray-800 group-hover:text-white transition-colors duration-500" />
                 </button>
 
                 {/* 2x2 Grid Container - Center flex-1 with Slide Effect */}
@@ -1769,8 +1781,8 @@ export default function ConNguoiPage() {
                   >
                     {/* Group departments into pages of 4 */}
                     {Array.from({ length: Math.ceil(departments.length / 4) }).map((_, pageIdx) => (
-                      <div key={pageIdx} className="w-full shrink-0 px-2 md:px-4">
-                        <div className="grid grid-cols-2 gap-6 md:gap-12 w-full">
+                      <div key={pageIdx} className="w-full shrink-0 px-1 md:px-2">
+                        <div className="grid grid-cols-2 gap-4 md:gap-4 w-full">
                           {departments.slice(pageIdx * 4, pageIdx * 4 + 4).map((dept, idx) => (
                             <div
                               key={idx}
@@ -1811,9 +1823,9 @@ export default function ConNguoiPage() {
                 {/* Right Arrow - Circle shape fixed */}
                 <button
                   onClick={() => setActiveDeptPage(p => (p + 1) * 4 < departments.length ? p + 1 : p)}
-                  className="shrink-0 w-14 h-14 md:w-28 md:h-28 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl border border-white/50 hover:bg-[#EE0033] group transition-all duration-500 z-30"
+                  className="shrink-0 w-12 h-12 md:w-20 md:h-20 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl border border-white/50 hover:bg-[#EE0033] group transition-all duration-500 z-30"
                 >
-                  <ChevronRight size={48} className="text-gray-800 group-hover:text-white transition-colors duration-500" />
+                  <ChevronRight size={32} className="text-gray-800 group-hover:text-white transition-colors duration-500" />
                 </button>
               </div>
             </div>
@@ -1821,16 +1833,16 @@ export default function ConNguoiPage() {
 
           {/* Section: CHI NHÁNH BÁN LẺ KHU VỰC PHÍA NAM */}
           <section className="py-24 bg-[#F2F2F2] relative w-full overflow-hidden">
-            <div className="container mx-auto px-4 relative z-10 max-w-7xl">
+            <div className="container mx-auto px-4 relative z-10 max-w-[1500px]">
               <h2 className="text-[#4A4A4A] font-beausans font-black text-4xl md:text-5xl uppercase mb-16 text-center tracking-tight">CHI NHÁNH BÁN LẺ KHU VỰC PHÍA NAM</h2>
 
-              <div className="flex items-center justify-center gap-4 md:gap-20 w-full max-w-[1600px] mx-auto relative px-4">
+              <div className="flex items-center justify-center gap-4 md:gap-12 w-full max-w-[1700px] mx-auto relative px-4">
                 {/* Left Arrow */}
                 <button
                   onClick={() => setActiveBranchPage(p => Math.max(0, p - 1))}
-                  className="shrink-0 w-14 h-14 md:w-28 md:h-28 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl border border-white/50 hover:bg-[#EE0033] group transition-all duration-500 z-30"
+                  className="shrink-0 w-12 h-12 md:w-20 md:h-20 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl border border-white/50 hover:bg-[#EE0033] group transition-all duration-500 z-30"
                 >
-                  <ChevronLeft size={48} className="text-gray-800 group-hover:text-white transition-colors duration-500" />
+                  <ChevronLeft size={32} className="text-gray-800 group-hover:text-white transition-colors duration-500" />
                 </button>
 
                 {/* 2x2 Grid Container with Slide Effect */}
@@ -1840,13 +1852,17 @@ export default function ConNguoiPage() {
                     style={{ transform: `translateX(-${activeBranchPage * 100}%)` }}
                   >
                     {Array.from({ length: Math.ceil(branches.length / 4) }).map((_, pageIdx) => (
-                      <div key={pageIdx} className="w-full shrink-0 px-2 md:px-4">
-                        <div className="grid grid-cols-2 gap-6 md:gap-12 w-full">
+                      <div key={pageIdx} className="w-full shrink-0 px-1 md:px-2">
+                        <div className="grid grid-cols-2 gap-4 md:gap-4 w-full">
                           {branches.slice(pageIdx * 4, pageIdx * 4 + 4).map((branch, idx) => (
                             <div
                               key={idx}
-                              className="relative w-full h-[250px] md:h-[400px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] bg-transparent group cursor-pointer transition-all duration-500 hover:-translate-y-2 border-0 outline-none isolate"
-                              style={{ clipPath: 'inset(0 round 40px)', WebkitClipPath: 'inset(0 round 40px)' }}
+                              className="relative w-full shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] bg-transparent group cursor-pointer transition-all duration-500 hover:-translate-y-2 border-0 outline-none isolate"
+                              style={{
+                                aspectRatio: '4/3',
+                                clipPath: 'inset(0 round 40px)',
+                                WebkitClipPath: 'inset(0 round 40px)'
+                              }}
                               onClick={() => setSelectedBranch(branch)}
                             >
                               <div className="absolute inset-0 overflow-hidden" style={{ transform: 'translateZ(0)' }}>
@@ -1881,16 +1897,16 @@ export default function ConNguoiPage() {
                 {/* Right Arrow */}
                 <button
                   onClick={() => setActiveBranchPage(p => (p + 1) * 4 < branches.length ? p + 1 : p)}
-                  className="shrink-0 w-14 h-14 md:w-28 md:h-28 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl border border-white/50 hover:bg-[#EE0033] group transition-all duration-500 z-30"
+                  className="shrink-0 w-12 h-12 md:w-20 md:h-20 bg-white/90 backdrop-blur-md rounded-full flex items-center justify-center shadow-2xl border border-white/50 hover:bg-[#EE0033] group transition-all duration-500 z-30"
                 >
-                  <ChevronRight size={48} className="text-gray-800 group-hover:text-white transition-colors duration-500" />
+                  <ChevronRight size={32} className="text-gray-800 group-hover:text-white transition-colors duration-500" />
                 </button>
               </div>
             </div>
           </section>
 
           {/* Section: HỆ THỐNG SIÊU THỊ/CỬA HÀNG */}
-          <section id="store-system" className="relative z-10 w-full overflow-hidden bg-black pt-80 pb-40 min-h-[1000px]">
+          <section id="store-system" className="relative z-10 w-full overflow-hidden bg-black pt-16 pb-40 min-h-[1000px]">
             {/* Background Topographic Lines */}
             <div
               className="absolute inset-0 opacity-15 pointer-events-none"
@@ -1903,7 +1919,7 @@ export default function ConNguoiPage() {
             />
 
             <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 text-center">
-              <h2 className="text-white font-beausans font-black text-2xl md:text-4xl uppercase tracking-[0.15em] mt-16 mb-32 drop-shadow-2xl">
+              <h2 className="text-white font-beausans font-black text-2xl md:text-4xl uppercase tracking-[0.15em] mt-0 mb-32 drop-shadow-2xl">
                 HỆ THỐNG SIÊU THỊ/CỬA HÀNG
               </h2>
 
@@ -1983,7 +1999,7 @@ export default function ConNguoiPage() {
 
                   {/* Province Name */}
                   <div className="w-[300px] md:w-[600px] flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-1000">
-                    <span className="text-white font-beausans font-black text-2xl md:text-4xl uppercase tracking-[0.2em] drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]">
+                    <span className="text-white font-beausans font-black text-2xl md:text-4xl uppercase tracking-[0.2em]">
                       {provinces[activeProvince].name}
                     </span>
                     <div className="h-1 w-24 bg-[#EE0033] mt-2 rounded-full"></div>
@@ -2042,19 +2058,19 @@ export default function ConNguoiPage() {
           {/* Center Content Group (Image + Caption) */}
           <div className="flex-1 flex flex-col items-center justify-center gap-y-12 md:gap-y-20 w-full animate-in fade-in zoom-in-90 duration-1000 delay-200">
             {/* Center Image Section */}
-            <div className="relative w-full max-w-6xl h-[650px] rounded-[2rem] overflow-hidden isolation-isolate transform translate-z-0 flex items-center justify-center -mt-8 md:-mt-16">
+            <div className="relative w-full max-w-[1400px] h-[600px] rounded-[2rem] overflow-hidden isolation-isolate transform translate-z-0 flex items-center justify-center -mt-8 md:-mt-16">
               {/* Navigation Arrows */}
               {selectedProvince.stores && selectedProvince.stores.length > 1 && (
                 <>
                   <button
-                    onClick={(e) => { e.stopPropagation(); setActiveStoreIndex(prev => (prev - 1 + selectedProvince.stores.length) % selectedProvince.stores.length); }}
-                    className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-50 text-white/80 hover:text-[#EE0033] transition-all transform hover:scale-110 p-2"
+                    onClick={(e) => { e.stopPropagation(); setSlideDirection(-1); setActiveStoreIndex(prev => (prev - 1 + selectedProvince.stores.length) % selectedProvince.stores.length); }}
+                    className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-50 text-white/80 hover:text-[#EE0033] transition-all transform hover:scale-110 p-2"
                   >
                     <ChevronLeft size={70} strokeWidth={2.5} />
                   </button>
                   <button
-                    onClick={(e) => { e.stopPropagation(); setActiveStoreIndex(prev => (prev + 1) % selectedProvince.stores.length); }}
-                    className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-50 text-white/80 hover:text-[#EE0033] transition-all transform hover:scale-110 p-2"
+                    onClick={(e) => { e.stopPropagation(); setSlideDirection(1); setActiveStoreIndex(prev => (prev + 1) % selectedProvince.stores.length); }}
+                    className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-50 text-white/80 hover:text-[#EE0033] transition-all transform hover:scale-110 p-2"
                   >
                     <ChevronRight size={70} strokeWidth={2.5} />
                   </button>
@@ -2063,39 +2079,64 @@ export default function ConNguoiPage() {
 
               {/* Main Image Frame */}
               <div
-                style={{ height: '650px', maxWidth: '1152px', borderRadius: '2rem', overflow: 'hidden', position: 'relative' }}
+                style={{ height: '600px', maxWidth: '1100px', borderRadius: '2rem', overflow: 'hidden', position: 'relative' }}
                 className="w-full shadow-[0_0_120px_rgba(0,0,0,0.8)] border border-white/5 bg-black/40 group flex items-center justify-center isolation-isolate"
               >
                 {/* Blurred Background Layer */}
-                <img
-                  key={`blur-${activeStoreIndex}`}
-                  src={selectedProvince.stores ? encodeURI(selectedProvince.stores[activeStoreIndex].img) : "/images/logo-viettel-store.png"}
-                  alt=""
-                  style={{ borderRadius: '2rem', objectPosition: selectedProvince.stores[activeStoreIndex].objectPosition || 'center' }}
-                  className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-40 scale-125 pointer-events-none"
-                />
+                <AnimatePresence initial={false} custom={slideDirection}>
+                  <motion.img
+                    key={`blur-${activeStoreIndex}`}
+                    src={selectedProvince.stores ? encodeURI(selectedProvince.stores[activeStoreIndex].img) : "/images/logo-viettel-store.png"}
+                    alt=""
+                    custom={slideDirection}
+                    variants={{
+                      enter: (direction: number) => ({ opacity: 0, x: direction > 0 ? 500 : -500 }),
+                      center: { opacity: 0.4, x: 0 },
+                      exit: (direction: number) => ({ opacity: 0, x: direction < 0 ? 500 : -500 })
+                    }}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    style={{ borderRadius: '2rem', objectPosition: selectedProvince.stores[activeStoreIndex].objectPosition || 'center' }}
+                    className="absolute inset-0 w-full h-full object-cover blur-2xl scale-125 pointer-events-none"
+                  />
+                </AnimatePresence>
 
                 {/* Main Image Layer */}
-                <img
-                  key={activeStoreIndex}
-                  src={selectedProvince.stores ? encodeURI(selectedProvince.stores[activeStoreIndex].img) : "/images/logo-viettel-store.png"}
-                  alt={selectedProvince.name}
-                  style={{
-                    borderRadius: '2rem',
-                    objectPosition: selectedProvince.stores[activeStoreIndex].objectPosition || 'center',
-                    transform: `scale(${(() => {
-                      const s = selectedProvince.stores[activeStoreIndex].scale;
-                      if (!s) return 1.25;
-                      if (s.startsWith('scale-[')) return s.replace('scale-[', '').replace(']', '');
-                      if (s === 'scale-150') return 1.5;
-                      if (s === 'scale-125') return 1.25;
-                      if (s === 'scale-110') return 1.1;
-                      if (s === 'scale-100') return 1.0;
-                      return 1.25;
-                    })()})`
-                  }}
-                  className={`relative z-10 w-full h-full ${selectedProvince.stores[activeStoreIndex].objectFit || 'object-cover'} transition-all duration-700 shadow-2xl`}
-                />
+                <AnimatePresence initial={false} custom={slideDirection}>
+                  <motion.img
+                    key={activeStoreIndex}
+                    src={selectedProvince.stores ? encodeURI(selectedProvince.stores[activeStoreIndex].img) : "/images/logo-viettel-store.png"}
+                    alt={selectedProvince.name}
+                    custom={slideDirection}
+                    variants={{
+                      enter: (direction: number) => ({ opacity: 0, x: direction > 0 ? 1000 : -1000, scale: 1.1 }),
+                      center: {
+                        opacity: 1, x: 0, scale: (() => {
+                          const s = selectedProvince.stores[activeStoreIndex].scale;
+                          if (!s) return 1.25;
+                          if (s.startsWith('scale-[')) return parseFloat(s.replace('scale-[', '').replace(']', ''));
+                          if (s === 'scale-150') return 1.5;
+                          if (s === 'scale-125') return 1.25;
+                          if (s === 'scale-110') return 1.1;
+                          if (s === 'scale-100') return 1.0;
+                          return 1.25;
+                        })()
+                      },
+                      exit: (direction: number) => ({ opacity: 0, x: direction < 0 ? 1000 : -1000, scale: 1.1 })
+                    }}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    style={{
+                      borderRadius: '2rem',
+                      objectPosition: selectedProvince.stores[activeStoreIndex].objectPosition || 'center',
+                    }}
+                    className={`relative z-10 w-full h-full ${selectedProvince.stores[activeStoreIndex].objectFit || 'object-cover'} shadow-2xl`}
+                  />
+                </AnimatePresence>
                 {/* Subtle Overlay (Darker at bottom) */}
                 <div
                   style={{ borderRadius: '2rem' }}
@@ -2105,7 +2146,7 @@ export default function ConNguoiPage() {
             </div>
 
             {/* Bottom Caption Section */}
-            <div className="w-full text-center mt-8 md:mt-16">
+            <div className="w-full text-center mt-4 md:mt-4">
               <h3 className="relative z-50 font-beausans font-bold text-2xl md:text-5xl tracking-wide" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
                 {selectedProvince.stores
                   ? (selectedProvince.stores[activeStoreIndex].id.includes('CH')

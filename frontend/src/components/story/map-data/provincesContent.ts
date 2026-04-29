@@ -9,6 +9,20 @@ export interface ProvinceContent {
 }
 
 export const provincesContent: Record<string, ProvinceContent> = {
+  "lao-cai": {
+    stories: [
+      {
+        subheader: "HỆ THỐNG CỬA HÀNG VIETTEL STORE",
+        paragraph: "Chào mừng bạn đến với Viettel Store tại Lào Cai. Chúng tôi tự hào cung cấp những sản phẩm công nghệ mới nhất cùng dịch vụ chăm sóc khách hàng chuyên nghiệp, tận tâm nhất.",
+        image: "/images/story-map/province-preview.png"
+      },
+      {
+        subheader: "KHÁM PHÁ LÀO CAI",
+        paragraph: "Viettel Store Lào Cai không chỉ là nơi mua sắm, mà còn là điểm dừng chân tin cậy của khách hàng vùng cao. Chúng tôi luôn nỗ lực mang công nghệ đến mọi bản làng.",
+        image: "/images/story-map/province-preview.png"
+      }
+    ]
+  },
   "tuyen-quang": {
     stories: [
       {
